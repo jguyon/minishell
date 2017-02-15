@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/14 15:15:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/14 19:52:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/15 22:28:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "ft_streams.h"
 #include "ft_strings.h"
 #include <unistd.h>
+#ifdef linux
+# include <sys/wait.h>
+#endif
 
 int		main(int ac, char **av, char **envp)
 {
