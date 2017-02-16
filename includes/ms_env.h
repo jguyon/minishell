@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:17:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/16 22:04:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/16 22:17:37 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,10 @@ int				ms_env_start(t_env *env, char **envp);
 ** Free memory allocated in @env
 */
 void			ms_env_end(t_env *env);
+
+/*
+** Get the value of an environment variable
+*/
+const char		*ms_env_get(t_env *env, const char *name);
 
 #endif
