@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/14 18:30:23 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/16 19:30:55 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -57,6 +57,7 @@ NAME = minishell
 # Source names to compile the program
 # main does not need to be specified here, it will be added in the Makefile
 SOURCES = \
+	ms_error \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
