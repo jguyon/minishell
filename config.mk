@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/16 23:07:31 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/16 23:52:44 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -62,6 +62,7 @@ SOURCES = \
 	ms_env_end \
 	ms_env_get \
 	ms_env_set \
+	ms_env_unset \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
