@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:17:09 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/16 22:25:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/16 23:42:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 const char	*ms_env_get(t_env *env, const char *name)
 {
 	size_t	i;
-	char	*name_end;
+	size_t	name_len;
 
+	name_len = ft_strlen(name);
 	i = 0;
 	while (i < env->size)
 	{
-		if ((name_end = ft_strchr(env->envp[i], '='))
-			&& ft_strncmp(env->envp[i], name, name_end - env->envp[i]) == 0)
-			return (name_end + 1);
+		if (MS_ENV_ISVAR(env->envp[i], name, name_len))
+			return (env->envp[i] + name_len + 1);
 		++i;
 	}
 	return (NULL);
