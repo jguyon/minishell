@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/16 19:30:55 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/17 00:03:57 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -58,6 +58,12 @@ NAME = minishell
 # main does not need to be specified here, it will be added in the Makefile
 SOURCES = \
 	ms_error \
+	ms_env_start \
+	ms_env_end \
+	ms_env_get \
+	ms_env_set \
+	ms_env_unset \
+	ms_env_clear \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
