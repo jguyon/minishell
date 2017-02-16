@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:17:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 00:02:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 00:13:27 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct	s_env {
 
 /*
 ** Duplicate @envp into @env
+**
+** Returns 0 if successful, -1 otherwise.
 */
 int				ms_env_start(t_env *env, char **envp);
 
@@ -48,16 +50,22 @@ void			ms_env_end(t_env *env);
 
 /*
 ** Get the value of an environment variable
+**
+** Returns NULL if not found.
 */
 const char		*ms_env_get(t_env *env, const char *name);
 
 /*
 ** Set the value of an environment variable
+**
+** Returns 0 if successful, -1 otherwise.
 */
 int				ms_env_set(t_env *env, const char *name, const char *value);
 
 /*
 ** Unset the value of an environment variable if it exists
+**
+** If not found, nothing special happens.
 */
 void			ms_env_unset(t_env *env, const char *name);
 
