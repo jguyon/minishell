@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:36:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/16 23:58:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 00:06:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,25 @@ static void	test_env_unset(t_tap *t)
 	}
 }
 
+static void	test_env_clear(t_tap *t)
+{
+	char	*envp[] = {"USER=john", "HOST=desktop", "HOME=/home/john", NULL};
+	t_env	env;
+
+	if (FT_TAP_IEQ(t, ms_env_start(&env, envp), 0))
+	{
+		ms_env_clear(&env);
+		FT_TAP_UEQ(t, (ptrdiff_t)env.envp[0], (ptrdiff_t)NULL);
+		FT_TAP_UEQ(t, env.size, 0);
+		ms_env_end(&env);
+	}
+}
+
 void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_env_init);
 	FT_TAP_TEST(t, test_env_get);
 	FT_TAP_TEST(t, test_env_set);
 	FT_TAP_TEST(t, test_env_unset);
+	FT_TAP_TEST(t, test_env_clear);
 }

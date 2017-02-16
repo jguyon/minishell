@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:17:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/16 23:59:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 00:02:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,10 @@ int				ms_env_set(t_env *env, const char *name, const char *value);
 ** Unset the value of an environment variable if it exists
 */
 void			ms_env_unset(t_env *env, const char *name);
+
+/*
+** Clear all values in the environment
+*/
+void			ms_env_clear(t_env *env);
 
 #endif
