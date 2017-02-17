@@ -6,12 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:36:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 00:11:33 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 20:48:13 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 #include "ms_env.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 static void	test_env_init(t_tap *t)
 {
@@ -101,6 +103,30 @@ static void	test_env_clear(t_tap *t)
 	}
 }
 
+static void	test_resolve_bin(t_tap *t)
+{
+	char	*envp[] = {"PATH=.:/tmp", NULL};
+	t_env	env;
+	int		fd;
+
+	if ((fd = creat("/tmp/minishell_test_bin", S_IRWXU)) > 0
+		&& FT_TAP_IEQ(t, ms_env_start(&env, envp), 0))
+	{
+		FT_TAP_SEQ(t, ms_resolve_bin(&env, "minishell_test_bin"),
+			"/tmp/minishell_test_bin");
+		FT_TAP_OK(t, ms_resolve_bin(&env, "non-existing-minishell-bin") == NULL);
+		FT_TAP_SEQ(t, ms_resolve_bin(&env, "minishell_test_bin"),
+				   "/tmp/minishell_test_bin");
+		ms_env_set(&env, "PATH", ":.:");
+		FT_TAP_OK(t, ms_resolve_bin(&env, "minishell_test_bin") == NULL);
+		ms_env_set(&env, "PATH", ".:/tmp");
+		FT_TAP_SEQ(t, ms_resolve_bin(&env, "minishell_test_bin"),
+				   "/tmp/minishell_test_bin");
+		close(fd);
+		ms_env_end(&env);
+	}
+}
+
 void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_env_init);
@@ -108,4 +134,5 @@ void		run_tests(t_tap *t)
 	FT_TAP_TEST(t, test_env_set);
 	FT_TAP_TEST(t, test_env_unset);
 	FT_TAP_TEST(t, test_env_clear);
+	FT_TAP_TEST(t, test_resolve_bin);
 }
