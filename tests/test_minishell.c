@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 02:48:19 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 03:50:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 04:28:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@ static void	test_parse_cmd(t_tap *t)
 	char			str[LINE_MAX + 1];
 	t_dlist_node	*node;
 
+	ft_tap_plan(t, 12);
+	strcpy(str, " \t \t \n");
+	if ((stm = ft_fmemopen(str, strlen(str), "r")))
+	{
+		cmd = ms_parse_cmd(stm);
+		FT_TAP_OK(t, cmd == NULL);
+		ms_destroy_cmd(&cmd);
+		ft_fclose(stm);
+	}
 	strcpy(str, " \t ls\t \n");
 	if ((stm = ft_fmemopen(str, strlen(str), "r")))
 	{
