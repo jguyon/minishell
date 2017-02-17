@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 00:50:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 03:51:50 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 15:57:19 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "ms_env.h"
 # include "ft_dlists.h"
 # include "ft_streams.h"
 # include <stddef.h>
@@ -36,6 +37,11 @@ typedef struct	s_arg {
 ** Parse a command from a stream
 */
 t_cmd			*ms_parse_cmd(t_stream *stm);
+
+/*
+** Execute a command
+*/
+void			ms_exec_cmd(t_cmd *cmd, t_env *env);
 
 /*
 ** Free memory associated with a command

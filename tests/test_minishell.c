@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 02:48:19 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 04:28:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 16:35:14 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "minishell.h"
 #include <limits.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 static void	test_parse_cmd(t_tap *t)
 {
@@ -64,7 +66,45 @@ static void	test_parse_cmd(t_tap *t)
 	}
 }
 
+static void	test_exec_cmd(t_tap *t)
+{
+	t_cmd		*cmd;
+	t_stream	*stm;
+	char		str[256];
+	int			fd;
+	t_env		env;
+	char		*envp[] = {NULL};
+
+	ft_tap_plan(t, 3);
+	if ((fd = creat("/tmp/minishell_test_remove", S_IRWXU) < 0))
+		return ;
+	close(fd);
+	ms_env_start(&env, envp);
+	cmd = NULL;
+	strcpy(str, "/bin/rm /tmp/minishell_test_remove");
+	if ((stm = ft_fmemopen(str, strlen(str), "r"))
+		&& (cmd = ms_parse_cmd(stm)))
+	{
+		ms_exec_cmd(cmd, &env);
+		FT_TAP_NOTIEQ(t, access("/tmp/minishell_test_remove", F_OK), 0);
+		STDERR_EQ(t, "");
+	}
+	ms_destroy_cmd(&cmd);
+	ft_fclose(stm);
+	strcpy(str, "non/existing/file arg1 arg2");
+	if ((stm = ft_fmemopen(str, strlen(str), "r"))
+		&& (cmd = ms_parse_cmd(stm)))
+	{
+		ms_exec_cmd(cmd, &env);
+		STDERR_EQ(t, "minishell: non/existing/file: Not found\n");
+	}
+	ms_destroy_cmd(&cmd);
+	ft_fclose(stm);
+	ms_env_end(&env);
+}
+
 void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_parse_cmd);
+	FT_TAP_TEST(t, test_exec_cmd);
 }
