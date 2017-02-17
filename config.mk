@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/17 02:37:05 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/17 20:11:28 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -65,8 +65,10 @@ SOURCES = \
 	ms_env_set \
 	ms_env_unset \
 	ms_env_clear \
+	ms_resolve_bin \
 	\
 	ms_parse_cmd \
+	ms_exec_cmd \
 	ms_destroy_cmd \
 
 # Wildcard for test files, it makes experimentation easier
