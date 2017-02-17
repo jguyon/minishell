@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 01:20:18 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 03:17:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 04:29:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_cmd				*ms_parse_cmd(t_stream *stm)
 	char		str[LINE_MAX + 1];
 	t_cmd		*cmd;
 	char		*name;
-	const char		*args;
+	const char	*args;
 	ssize_t		count;
 
 	if (!(ft_fgets(str, sizeof(str), stm)))
