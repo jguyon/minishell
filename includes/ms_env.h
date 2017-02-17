@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:17:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 19:48:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 21:16:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ void			ms_env_clear(t_env *env);
 /*
 ** Search in the PATH for a binary and return the resulting pathname
 */
-const char		*ms_resolve_bin(t_env *env, const char *name);
+char			*ms_resolve_bin(t_env *env, char *name);
 
 #endif

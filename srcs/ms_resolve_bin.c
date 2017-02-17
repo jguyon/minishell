@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 19:00:50 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 20:44:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 21:16:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,13 @@ static t_bin	*create_bin(t_dlist *bins, const char *path, const char *name)
 	return (NULL);
 }
 
-const char		*ms_resolve_bin(t_env *env, const char *name)
+char			*ms_resolve_bin(t_env *env, char *name)
 {
 	const char	*path;
 	t_bin		*bin;
 
+	if (ft_strchr(name, '/'))
+		return (name);
 	if (!(path = ms_env_get(env, "PATH")))
 		return (NULL);
 	if (!(bin = find_bin(&(env->bins), path, name)))
