@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 02:48:19 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 16:35:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/17 21:05:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	test_exec_cmd(t_tap *t)
 	char		str[256];
 	int			fd;
 	t_env		env;
-	char		*envp[] = {NULL};
+	char		*envp[] = {"PATH=/bin", NULL};
 
 	ft_tap_plan(t, 3);
 	if ((fd = creat("/tmp/minishell_test_remove", S_IRWXU) < 0))
@@ -81,7 +81,7 @@ static void	test_exec_cmd(t_tap *t)
 	close(fd);
 	ms_env_start(&env, envp);
 	cmd = NULL;
-	strcpy(str, "/bin/rm /tmp/minishell_test_remove");
+	strcpy(str, "rm /tmp/minishell_test_remove");
 	if ((stm = ft_fmemopen(str, strlen(str), "r"))
 		&& (cmd = ms_parse_cmd(stm)))
 	{
