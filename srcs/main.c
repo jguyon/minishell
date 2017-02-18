@@ -6,43 +6,51 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/14 15:15:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/15 22:28:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 22:59:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+#include "ms_env.h"
+#include "ms_errors.h"
 #include "ft_program.h"
 #include "ft_streams.h"
-#include "ft_strings.h"
-#include <unistd.h>
-#ifdef linux
-# include <sys/wait.h>
-#endif
 
-int		main(int ac, char **av, char **envp)
+static void	clean_env(int status, void *env)
 {
-	char	cmd[LINE_MAX + 1];
-	pid_t	pid;
-	char	*argv[2];
+	(void)status;
+	ms_env_end(env);
+}
 
-	(void)av;
-	(void)ac;
-	ft_setvbuf(FT_STDOUT, NULL, FT_IONBF, 0);
-	argv[0] = cmd;
-	argv[1] = NULL;
-	while (!ft_fputs("$> ", FT_STDOUT) && ft_fgets(cmd, sizeof(cmd), FT_STDIN))
+static void	clean_cmd(int status, void *cmdp)
+{
+	(void)status;
+	ms_destroy_cmd(cmdp);
+}
+
+int			main(int argc, char *argv[], char *envp[])
+{
+	t_env	env;
+	t_cmd	*cmd;
+
+	(void)argc;
+	ft_setprogname(argv[0]);
+	ft_setvbuf(FT_STDIN, NULL, FT_IONBF, 0);
+	if (ms_env_start(&env, envp))
+		ms_error(FT_EXIT_FAILURE, MS_ERR_NOMEM, NULL);
+	ft_onexit(&clean_env, &env);
+	cmd = NULL;
+	ft_onexit(&clean_cmd, &cmd);
+	while (!ft_feof(FT_STDIN))
 	{
-		if (ft_feof(FT_STDIN))
+		ft_fputs("$ ", FT_STDERR);
+		if ((cmd = ms_parse_cmd(FT_STDIN)) && !ft_feof(FT_STDIN))
 		{
-			ft_clearerr(FT_STDIN);
-			ft_fputc('\n', FT_STDOUT);
+			ms_exec_cmd(cmd, &env);
+			ms_destroy_cmd(&cmd);
 		}
-		cmd[ft_strchrnul(cmd, '\n') - cmd] = '\0';
-		if ((pid = fork()) < 0)
-			break ;
-		else if (pid > 0)
-			wait(&pid);
-		else if (execve(cmd, argv, envp))
-			ft_exit(FT_EXIT_FAILURE);
+		else if (ft_feof(FT_STDIN))
+			ft_fputc('\n', FT_STDERR);
 	}
 	return (ft_cleanup(FT_EXIT_SUCCESS));
 }
