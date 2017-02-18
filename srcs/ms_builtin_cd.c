@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 12:47:31 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 18:40:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 23:40:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ int		ms_builtin_cd(int ac, char *const av[], t_env *env)
 
 	if (!(oldpwd = getcwd(NULL, 0)))
 		return (FT_EXIT_FAILURE);
-	if (ac < 2 || !(newpwd = av[1]) || chdir(newpwd))
+	if (ac < 2 || !(av[1]) || chdir(av[1]) || !(newpwd = getcwd(NULL, 0)))
 	{
 		free(oldpwd);
 		return (FT_EXIT_FAILURE);
 	}
 	ms_env_set(env, "OLDPWD", oldpwd);
 	ms_env_set(env, "PWD", newpwd);
+	free(newpwd);
 	free(oldpwd);
 	return (FT_EXIT_SUCCESS);
 }
