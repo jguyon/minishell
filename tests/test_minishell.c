@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 02:48:19 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 21:05:24 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 19:03:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	test_exec_cmd(t_tap *t)
 	t_env		env;
 	char		*envp[] = {"PATH=/bin", NULL};
 
-	ft_tap_plan(t, 3);
+	ft_tap_plan(t, 5);
 	if ((fd = creat("/tmp/minishell_test_remove", S_IRWXU) < 0))
 		return ;
 	close(fd);
@@ -97,6 +97,16 @@ static void	test_exec_cmd(t_tap *t)
 	{
 		ms_exec_cmd(cmd, &env);
 		STDERR_EQ(t, "minishell: non/existing/file: Not found\n");
+	}
+	ms_destroy_cmd(&cmd);
+	ft_fclose(stm);
+	strcpy(str, "env");
+	if ((stm = ft_fmemopen(str, strlen(str), "r"))
+		&& (cmd = ms_parse_cmd(stm)))
+	{
+		ms_exec_cmd(cmd, &env);
+		STDOUT_EQ(t, "PATH=/bin\n");
+		STDERR_EQ(t, "");
 	}
 	ms_destroy_cmd(&cmd);
 	ft_fclose(stm);

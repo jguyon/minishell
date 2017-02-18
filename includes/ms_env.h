@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:17:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 21:16:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 18:39:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 ** Utils to change the shell environment
 */
 
-# include "ft_dlists.h"
 # include <stddef.h>
 
 /*
@@ -35,20 +34,15 @@ typedef struct	s_env {
 	char	**envp;
 	size_t	size;
 	size_t	alloc_size;
-	t_dlist	bins;
 }				t_env;
 
 /*
-** Type holding a path to an executable
-**
-** This is used for caching found binaries.
+** Type representing a built-in utility
 */
-typedef struct	s_bin {
-	const char		*old_path;
-	const char		*name;
-	t_dlist_node	node;
-	char			*file;
-}				t_bin;
+typedef struct	s_builtin {
+	const char	*name;
+	int			(*fn)(int ac, char *const av[], t_env *env);
+}				t_builtin;
 
 /*
 ** Duplicate @envp into @env
@@ -89,8 +83,25 @@ void			ms_env_unset(t_env *env, const char *name);
 void			ms_env_clear(t_env *env);
 
 /*
-** Search in the PATH for a binary and return the resulting pathname
+** Search in the PATH and return the resulting pathname if it exists
 */
-char			*ms_resolve_bin(t_env *env, char *name);
+char			*ms_resolve_path(t_env *env, const char *name);
+
+/*
+** Execute the binary pointer to by @path
+**
+** Returns 0 if successful, -1 otherwise.
+*/
+int				ms_exec_bin(t_env *env, char *path, char *const argv[]);
+
+/*
+** Search for a builtin and return its function if it exists
+*/
+t_builtin		*ms_resolve_builtin(const char *name);
+
+/*
+** Execute the built-in utility @bt
+*/
+void			ms_exec_builtin(t_env *env, t_builtin *bt, char *const argv[]);
 
 #endif

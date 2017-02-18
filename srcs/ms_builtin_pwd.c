@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_end.c                                       :+:      :+:    :+:   */
+/*   ms_builtin_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/16 21:52:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 16:55:37 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/18 13:37:29 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/18 18:40:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_env.h"
-#include "ft_memory.h"
+#include "ms_builtins.h"
+#include "ft_program.h"
+#include "ft_streams.h"
+#include <unistd.h>
 
-void		ms_env_end(t_env *env)
+int		ms_builtin_pwd(int ac, char *const av[], t_env *env)
 {
-	size_t	i;
+	char	*pwd;
 
-	i = 0;
-	while (i < env->size)
-	{
-		ft_memdel((void **)&(env->envp[i]));
-		++i;
-	}
-	ft_memdel((void **)&(env->envp));
+	(void)ac;
+	(void)av;
+	(void)env;
+	if (!(pwd = getcwd(NULL, 0)))
+		return (FT_EXIT_FAILURE);
+	ft_fputs(pwd, FT_STDOUT);
+	ft_fputc('\n', FT_STDOUT);
+	free(pwd);
+	return (FT_EXIT_SUCCESS);
 }

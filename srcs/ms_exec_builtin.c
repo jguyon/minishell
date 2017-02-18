@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_end.c                                       :+:      :+:    :+:   */
+/*   ms_exec_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/16 21:52:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 16:55:37 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/18 18:34:08 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/18 18:39:27 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ms_env.h"
-#include "ft_memory.h"
 
-void		ms_env_end(t_env *env)
+void	ms_exec_builtin(t_env *env, t_builtin *bt, char *const argv[])
 {
-	size_t	i;
+	int		argc;
 
-	i = 0;
-	while (i < env->size)
-	{
-		ft_memdel((void **)&(env->envp[i]));
-		++i;
-	}
-	ft_memdel((void **)&(env->envp));
+	argc = 0;
+	while (argv[argc])
+		++argc;
+	bt->fn(argc, argv, env);
 }

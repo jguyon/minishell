@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_env_end.c                                       :+:      :+:    :+:   */
+/*   ms_resolve_builtin.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/16 21:52:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 16:55:37 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/18 18:15:16 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/18 19:02:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ms_env.h"
-#include "ft_memory.h"
+#include "ms_builtins.h"
+#include "ft_strings.h"
 
-void		ms_env_end(t_env *env)
+static t_builtin	g_builtins[] = {
+	{ .name = "cd", .fn = &ms_builtin_cd },
+	{ .name = "pwd", .fn = &ms_builtin_pwd },
+	{ .name = "env", .fn = &ms_builtin_env },
+};
+
+t_builtin			*ms_resolve_builtin(const char *name)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < env->size)
+	while (i < sizeof(g_builtins) / sizeof(*g_builtins))
 	{
-		ft_memdel((void **)&(env->envp[i]));
+		if (ft_strcmp(g_builtins[i].name, name) == 0)
+			return (&(g_builtins[i]));
 		++i;
 	}
-	ft_memdel((void **)&(env->envp));
+	return (NULL);
 }

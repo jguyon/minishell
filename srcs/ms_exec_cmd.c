@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 14:22:41 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 21:17:20 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 18:59:14 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,56 +14,53 @@
 #include "ms_errors.h"
 #include "ms_env.h"
 #include "ft_memory.h"
+#include "ft_strings.h"
 #include "ft_program.h"
-#include <unistd.h>
-#include <sys/wait.h>
 
-static char	**get_argv(t_cmd *cmd, t_env *env)
+static char	**get_argv(char *name, size_t arg_count, t_dlist *args)
 {
-	char			*name;
 	char			**argv;
 	size_t			i;
 	t_dlist_node	*node;
 
-	argv = NULL;
-	if (!(name = ms_resolve_bin(env, cmd->name)) || access(name, F_OK))
-		ms_error(0, MS_ERR_NOTFOUND, "%s", cmd->name);
-	else if (access(name, X_OK))
-		ms_error(0, MS_ERR_PERM, "%s", cmd->name);
-	else if (!(argv = (char **)ft_memalloc(
-				sizeof(*argv) * (cmd->arg_count + 2))))
-		ms_error(FT_EXIT_FAILURE, MS_ERR_NOMEM, NULL);
-	else
+	if (!(argv = (char **)ft_memalloc(sizeof(*argv) * (arg_count + 2))))
+		return (NULL);
+	argv[0] = name;
+	i = 0;
+	node = ft_dlst_first(args);
+	while (node && i < arg_count)
 	{
-		argv[0] = name;
-		i = 0;
-		node = ft_dlst_first(&(cmd->args));
-		while (node)
-		{
-			argv[++i] = ((t_arg *)FT_DLST_ENTRY(&(cmd->args), node))->str;
-			node = ft_dlst_next(&(cmd->args), node);
-		}
+		argv[++i] = ((t_arg *)FT_DLST_ENTRY(args, node))->str;
+		node = ft_dlst_next(args, node);
 	}
 	return (argv);
 }
 
-static void	exec_argv(t_cmd *cmd, char *const *argv, t_env *env)
-{
-	pid_t	pid;
-
-	if ((pid = fork()) > 0)
-		waitpid(pid, NULL, 0);
-	else if (pid < 0)
-		ms_error(0, MS_ERR_NOEXEC, "%s", cmd->name);
-	else if (execve(argv[0], argv, env->envp))
-		ms_error(FT_EXIT_FAILURE, MS_ERR_NOEXEC, "%s", cmd->name);
-}
-
 void		ms_exec_cmd(t_cmd *cmd, t_env *env)
 {
-	char *const	*argv;
+	char		*path;
+	char		**argv;
+	t_builtin	*builtin;
 
-	if ((argv = get_argv(cmd, env)))
-		exec_argv(cmd, argv, env);
+	path = NULL;
+	if (!(argv = get_argv(cmd->name, cmd->arg_count, &(cmd->args))))
+		ms_error(FT_EXIT_FAILURE, MS_ERR_NOMEM, NULL);
+	else if ((builtin = ms_resolve_builtin(cmd->name)))
+		ms_exec_builtin(env, builtin, argv);
+	else
+	{
+		if (ft_strchr(cmd->name, '/'))
+			path = cmd->name;
+		else
+			path = ms_resolve_path(env, cmd->name);
+		if (!path || access(path, F_OK))
+			ms_error(0, MS_ERR_NOTFOUND, "%s", cmd->name);
+		else if (access(path, X_OK))
+			ms_error(0, MS_ERR_NOEXEC, "%s", cmd->name);
+		else if (ms_exec_bin(env, path, argv))
+			ms_error(0, MS_ERR_NOEXEC, "%s", cmd->name);
+		if (path != cmd->name)
+			ft_memdel((void **)&path);
+	}
 	ft_memdel((void **)&argv);
 }

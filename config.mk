@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/17 20:11:28 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/18 18:33:53 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -65,11 +65,18 @@ SOURCES = \
 	ms_env_set \
 	ms_env_unset \
 	ms_env_clear \
-	ms_resolve_bin \
+	ms_resolve_path \
+	ms_exec_bin \
+	ms_resolve_builtin \
+	ms_exec_builtin \
 	\
 	ms_parse_cmd \
 	ms_exec_cmd \
 	ms_destroy_cmd \
+	\
+	ms_builtin_cd \
+	ms_builtin_pwd \
+	ms_builtin_env \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
