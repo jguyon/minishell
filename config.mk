@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/18 14:36:21 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/18 17:15:13 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -65,7 +65,8 @@ SOURCES = \
 	ms_env_set \
 	ms_env_unset \
 	ms_env_clear \
-	ms_resolve_bin \
+	ms_resolve_path \
+	ms_exec_bin \
 	\
 	ms_parse_cmd \
 	ms_exec_cmd \
