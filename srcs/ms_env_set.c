@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:32:41 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/16 23:41:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 17:51:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	grow_env(t_env *env)
 	size_t	size;
 	size_t	i;
 
-	size = env->alloc_size * 2;
+	size = env->alloc_size ? env->alloc_size * 2 : 1;
 	if (!(envp = (char **)ft_memalloc(sizeof(*envp) * (size + 1))))
 		return (-1);
 	i = 0;

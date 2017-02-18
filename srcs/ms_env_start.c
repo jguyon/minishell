@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:50:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 19:02:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 16:55:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		ms_env_start(t_env *env, char **envp)
 		++size;
 	env->size = size;
 	env->alloc_size = size;
-	FT_DLST_INIT(&(env->bins), t_bin, node);
 	if (!(env->envp = (char **)ft_memalloc(sizeof(*(env->envp)) * (size + 1))))
 		return (-1);
 	while (size)
