@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/14 15:42:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/16 19:39:09 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 14:13:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	stderr_reopen(void)
 {
 	g_errbuff[0] = '\0';
 	ft_fclose(FT_STDERR);
-	FT_STDOUT = ft_fmemopen(g_errbuff, sizeof(g_errbuff), "w");
+	FT_STDERR = ft_fmemopen(g_errbuff, sizeof(g_errbuff), "w");
 	ft_setvbuf(FT_STDERR, NULL, FT_IONBF, 0);
 }
 
