@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 12:47:31 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 13:38:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 18:40:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int		ms_builtin_cd(int ac, char *av[], t_env *env)
+int		ms_builtin_cd(int ac, char *const av[], t_env *env)
 {
 	char	*oldpwd;
 	char	*newpwd;
