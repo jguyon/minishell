@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 21:17:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 17:54:09 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 18:39:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ typedef struct	s_env {
 	size_t	size;
 	size_t	alloc_size;
 }				t_env;
+
+/*
+** Type representing a built-in utility
+*/
+typedef struct	s_builtin {
+	const char	*name;
+	int			(*fn)(int ac, char *const av[], t_env *env);
+}				t_builtin;
 
 /*
 ** Duplicate @envp into @env
@@ -85,5 +93,15 @@ char			*ms_resolve_path(t_env *env, const char *name);
 ** Returns 0 if successful, -1 otherwise.
 */
 int				ms_exec_bin(t_env *env, char *path, char *const argv[]);
+
+/*
+** Search for a builtin and return its function if it exists
+*/
+t_builtin		*ms_resolve_builtin(const char *name);
+
+/*
+** Execute the built-in utility @bt
+*/
+void			ms_exec_builtin(t_env *env, t_builtin *bt, char *const argv[]);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 13:37:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 14:13:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/18 18:40:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_streams.h"
 #include <unistd.h>
 
-int		ms_builtin_pwd(int ac, char *av[], t_env *env)
+int		ms_builtin_pwd(int ac, char *const av[], t_env *env)
 {
 	char	*pwd;
 

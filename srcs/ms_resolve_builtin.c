@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
+/*   ms_resolve_builtin.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/18 14:14:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 18:41:09 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/18 18:15:16 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/18 19:02:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ms_env.h"
 #include "ms_builtins.h"
-#include "ft_streams.h"
-#include "ft_program.h"
+#include "ft_strings.h"
 
-int		ms_builtin_env(int ac, char *const av[], t_env *env)
+static t_builtin	g_builtins[] = {
+	{ .name = "cd", .fn = &ms_builtin_cd },
+	{ .name = "pwd", .fn = &ms_builtin_pwd },
+	{ .name = "env", .fn = &ms_builtin_env },
+};
+
+t_builtin			*ms_resolve_builtin(const char *name)
 {
 	size_t	i;
 
-	(void)ac;
-	(void)av;
 	i = 0;
-	while (env->envp[i])
+	while (i < sizeof(g_builtins) / sizeof(*g_builtins))
 	{
-		ft_fputs(env->envp[i], FT_STDOUT);
-		ft_fputc('\n', FT_STDOUT);
+		if (ft_strcmp(g_builtins[i].name, name) == 0)
+			return (&(g_builtins[i]));
 		++i;
 	}
-	return (FT_EXIT_SUCCESS);
+	return (NULL);
 }

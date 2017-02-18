@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_env.c                                   :+:      :+:    :+:   */
+/*   ms_exec_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/18 14:14:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 18:41:09 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/18 18:34:08 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/18 18:39:27 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_builtins.h"
-#include "ft_streams.h"
-#include "ft_program.h"
+#include "ms_env.h"
 
-int		ms_builtin_env(int ac, char *const av[], t_env *env)
+void	ms_exec_builtin(t_env *env, t_builtin *bt, char *const argv[])
 {
-	size_t	i;
+	int		argc;
 
-	(void)ac;
-	(void)av;
-	i = 0;
-	while (env->envp[i])
-	{
-		ft_fputs(env->envp[i], FT_STDOUT);
-		ft_fputc('\n', FT_STDOUT);
-		++i;
-	}
-	return (FT_EXIT_SUCCESS);
+	argc = 0;
+	while (argv[argc])
+		++argc;
+	bt->fn(argc, argv, env);
 }
