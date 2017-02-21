@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 19:13:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/17 15:43:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/21 18:08:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 static const char	*g_errlist[MS_ERR_MAX + 1] = {
 	[0] = "Unkown error",
 	[MS_ERR_NOMEM] = "Out of memory",
+	[MS_ERR_IO] = "IO error",
 	[MS_ERR_NOTFOUND] = "Not found",
 	[MS_ERR_PERM] = "Permission denied",
 	[MS_ERR_NOEXEC] = "Could not execute",
