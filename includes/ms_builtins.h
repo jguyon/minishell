@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 12:44:58 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 22:57:21 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/21 22:58:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ int			ms_builtin_echo(int ac, char *const av[], t_env *env);
 ** With "-" arg, goes to previous directory.
 */
 int			ms_builtin_cd(int ac, char *const av[], t_env *env);
+
+/*
+** Print the current working directory
+*/
 int			ms_builtin_pwd(int ac, char *const av[], t_env *env);
+
 int			ms_builtin_env(int ac, char *const av[], t_env *env);
 
 #endif
