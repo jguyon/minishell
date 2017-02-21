@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 19:11:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 18:08:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/21 22:36:28 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 # define MS_ERR_NOTFOUND	3
 # define MS_ERR_PERM		4
 # define MS_ERR_NOEXEC		5
+# define MS_ERR_NOTDIR		6
 
 /*
 ** Max error code, needs to be updated when adding new errors
 */
-# define MS_ERR_MAX 5
+# define MS_ERR_MAX 6
 
 /*
 ** Print an error message to stderr

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 13:21:19 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 16:51:09 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/21 20:53:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,43 +17,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-
-static void	test_cd(t_tap *t)
-{
-	t_env	env;
-	char	*envp[] = {NULL};
-	char	*pwd;
-	char	*argv[] = {"cd", "/tmp/minishell_wd", NULL};
-	char	*oldwd;
-	char	*newwd;
-	char	*str;
-
-	ft_tap_plan(t, 8);
-	if (mkdir("/tmp/minishell_wd", S_IRWXU))
-		return ;
-	if (!(pwd = getcwd(NULL, 0)) || ms_env_start(&env, envp))
-		return ;
-	oldwd = pwd;
-	FT_TAP_IEQ(t, ms_builtin_cd(2, argv, &env), 0);
-	FT_TAP_SEQ(t, (newwd = getcwd(NULL, 0)),
-		(str = realpath("/tmp/minishell_wd", NULL)));
-	free(str);
-	FT_TAP_SEQ(t, ms_env_get(&env, "PWD"), newwd);
-	FT_TAP_SEQ(t, ms_env_get(&env, "OLDPWD"), oldwd);
-	argv[1] = "..";
-	oldwd = newwd;
-	FT_TAP_IEQ(t, ms_builtin_cd(2, argv, &env), 0);
-	FT_TAP_SEQ(t, (newwd = getcwd(NULL, 0)),
-		(str = realpath("/tmp", NULL)));
-	FT_TAP_SEQ(t, ms_env_get(&env, "PWD"), newwd);
-	FT_TAP_SEQ(t, ms_env_get(&env, "OLDPWD"), oldwd);
-	chdir(pwd);
-	rmdir("/tmp/minishell_wd");
-	free(newwd);
-	free(oldwd);
-	free(pwd);
-	ms_env_end(&env);
-}
 
 static void	test_pwd(t_tap *t)
 {
@@ -88,7 +51,6 @@ static void	test_env(t_tap *t)
 
 void		run_tests(t_tap *t)
 {
-	FT_TAP_TEST(t, test_cd);
 	FT_TAP_TEST(t, test_pwd);
 	FT_TAP_TEST(t, test_env);
 }
