@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 20:53:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 22:41:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/21 22:54:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 #include "ms_builtins.h"
+#include "ft_strings.h"
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -53,7 +54,7 @@ static void	test_oldpwd(t_tap *t)
 	char	*newpwd = NULL;
 	char	*real = NULL;
 
-	ft_tap_plan(t, 4);
+	ft_tap_plan(t, 5);
 	if ((oldpwd = getcwd(NULL, 0))
 		&& mkdir("/tmp/minishell_oldpwd", S_IRWXU) == 0
 		&& ms_env_start(&env, ep) == 0)
@@ -63,6 +64,9 @@ static void	test_oldpwd(t_tap *t)
 		FT_TAP_SEQ(t, (newpwd = getcwd(NULL, 0)), real);
 		FT_TAP_SEQ(t, ms_env_get(&env, "PWD"), real);
 		FT_TAP_SEQ(t, ms_env_get(&env, "OLDPWD"), oldpwd);
+		free(real);
+		real = ft_strjoin(newpwd, "\n");
+		STDOUT_EQ(t, real);
 		ms_env_end(&env);
 	}
 	remove("/tmp/minishell_oldpwd");

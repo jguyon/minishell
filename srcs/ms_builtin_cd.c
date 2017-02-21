@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 12:47:31 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 22:41:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/21 22:51:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ms_errors.h"
 #include "ft_program.h"
 #include "ft_strings.h"
+#include "ft_printf.h"
 #include <unistd.h>
 #include <stdlib.h>
 
@@ -58,6 +59,8 @@ int					ms_builtin_cd(int ac, char *const av[], t_env *env)
 	}
 	ms_env_set(env, "OLDPWD", oldpwd);
 	ms_env_set(env, "PWD", (newpwd = getcwd(NULL, 0)) ? newpwd : dir);
+	if (av[1] && ft_strcmp(av[1], "-") == 0)
+		ft_fprintf(FT_STDOUT, "%s\n", newpwd);
 	free(newpwd);
 	free(oldpwd);
 	return (FT_EXIT_SUCCESS);
