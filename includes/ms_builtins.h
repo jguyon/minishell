@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 12:44:58 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 23:12:50 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/22 19:01:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ int			ms_builtin_cd(int ac, char *const av[], t_env *env);
 ** Print the current working directory
 */
 int			ms_builtin_pwd(int ac, char *const av[], t_env *env);
+
+/*
+** Set an environment variable
+**
+** Sets the variable given in the first argument to the value
+** given in the second argument. If only one arg is given, sets
+** the variable to an empty string.
+*/
+int			ms_builtin_setenv(int ac, char *const av[], t_env *env);
 
 /*
 ** Execute a command in a modified environment

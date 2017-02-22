@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/21 17:39:21 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/22 19:10:22 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -78,6 +78,7 @@ SOURCES = \
 	ms_builtin_cd \
 	ms_builtin_pwd \
 	ms_builtin_env \
+	ms_builtin_setenv \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
