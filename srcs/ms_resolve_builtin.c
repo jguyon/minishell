@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 18:15:16 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 19:02:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/22 19:09:42 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 #include "ft_strings.h"
 
 static t_builtin	g_builtins[] = {
+	{ .name = "echo", .fn = &ms_builtin_echo },
 	{ .name = "cd", .fn = &ms_builtin_cd },
 	{ .name = "pwd", .fn = &ms_builtin_pwd },
 	{ .name = "env", .fn = &ms_builtin_env },
+	{ .name = "setenv", .fn = &ms_builtin_setenv },
 };
 
 t_builtin			*ms_resolve_builtin(const char *name)

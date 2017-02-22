@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_pwd.c                                   :+:      :+:    :+:   */
+/*   ms_builtin_setenv.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/18 13:37:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 22:59:42 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/22 19:01:38 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/22 19:14:14 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,36 @@
 #include "ms_errors.h"
 #include "ft_program.h"
 #include "ft_streams.h"
-#include <unistd.h>
 
-int		ms_builtin_pwd(int ac, char *const av[], t_env *env)
+static void	print_env(t_env *env)
 {
-	char	*pwd;
+	size_t	i;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	if (!(pwd = getcwd(NULL, 0)))
+	i = 0;
+	while (env->envp[i])
 	{
-		ms_error(0, MS_ERR_IO, "%s", av[0]);
+		ft_fputs(env->envp[i], FT_STDOUT);
+		ft_fputc('\n', FT_STDOUT);
+		++i;
+	}
+}
+
+int			ms_builtin_setenv(int ac, char *const av[], t_env *env)
+{
+	if (ac > 3)
+	{
+		ms_error(0, 0, "%s: Too many arguments", av[0]);
 		return (FT_EXIT_FAILURE);
 	}
-	ft_fputs(pwd, FT_STDOUT);
-	ft_fputc('\n', FT_STDOUT);
-	free(pwd);
+	if (ac == 1)
+	{
+		print_env(env);
+		return (FT_EXIT_SUCCESS);
+	}
+	if (ms_env_set(env, av[1], av[2] ? av[2] : ""))
+	{
+		ms_error(0, MS_ERR_NOMEM, "%s", av[0]);
+		return (FT_EXIT_FAILURE);
+	}
 	return (FT_EXIT_SUCCESS);
 }

@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_pwd.c                                   :+:      :+:    :+:   */
+/*   ms_builtin_unsetenv.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/18 13:37:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 22:59:42 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/22 19:34:30 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/22 19:37:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ms_builtins.h"
 #include "ms_errors.h"
 #include "ft_program.h"
-#include "ft_streams.h"
-#include <unistd.h>
 
-int		ms_builtin_pwd(int ac, char *const av[], t_env *env)
+int		ms_builtin_unsetenv(int ac, char *const av[], t_env *env)
 {
-	char	*pwd;
-
-	(void)ac;
-	(void)av;
-	(void)env;
-	if (!(pwd = getcwd(NULL, 0)))
+	if (ac < 2)
 	{
-		ms_error(0, MS_ERR_IO, "%s", av[0]);
+		ms_error(0, 0, "%s: Too few arguments", av[0]);
 		return (FT_EXIT_FAILURE);
 	}
-	ft_fputs(pwd, FT_STDOUT);
-	ft_fputc('\n', FT_STDOUT);
-	free(pwd);
+	if (ac > 2)
+	{
+		ms_error(0, 0, "%s: Too many arguments", av[0]);
+		return (FT_EXIT_FAILURE);
+	}
+	ms_env_unset(env, av[1]);
 	return (FT_EXIT_SUCCESS);
 }

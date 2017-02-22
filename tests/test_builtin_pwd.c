@@ -1,35 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_pwd.c                                   :+:      :+:    :+:   */
+/*   test_builtin_pwd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/18 13:37:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 22:59:42 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/21 23:00:22 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/21 23:05:42 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "common.h"
 #include "ms_builtins.h"
-#include "ms_errors.h"
-#include "ft_program.h"
-#include "ft_streams.h"
+#include "ft_strings.h"
 #include <unistd.h>
+#include <stdlib.h>
 
-int		ms_builtin_pwd(int ac, char *const av[], t_env *env)
+static void	test_dir(t_tap *t)
 {
+	char	*ep[] = {NULL};
+	char	*av[] = {"pwd", NULL};
+	t_env	env;
 	char	*pwd;
+	char	*all;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	if (!(pwd = getcwd(NULL, 0)))
+	pwd = getcwd(NULL, 0);
+	all = ft_strjoin(pwd, "\n");
+	ft_tap_plan(t, 2);
+	if (ms_env_start(&env, ep) == 0)
 	{
-		ms_error(0, MS_ERR_IO, "%s", av[0]);
-		return (FT_EXIT_FAILURE);
+		FT_TAP_IEQ(t, ms_builtin_pwd(1, av, &env), 0);
+		STDOUT_EQ(t, all);
+		ms_env_end(&env);
 	}
-	ft_fputs(pwd, FT_STDOUT);
-	ft_fputc('\n', FT_STDOUT);
 	free(pwd);
-	return (FT_EXIT_SUCCESS);
+	free(all);
+}
+
+void		run_tests(t_tap *t)
+{
+	FT_TAP_TEST(t, test_dir);
 }

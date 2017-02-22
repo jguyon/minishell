@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/16 22:32:41 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 17:51:00 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/21 23:32:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			ms_env_set(t_env *env, const char *name, const char *value)
 	size_t	name_len;
 	char	*var;
 
-	name_len = ft_strlen(name);
+	name_len = ft_strchrnul(name, '=') - name;
 	i = 0;
 	while (i < env->size)
 	{
