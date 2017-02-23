@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:23:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/23 19:18:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/23 22:24:53 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ char *const		*sh_env_vars(t_sh_env *env);
 const char		*sh_env_getvar(t_sh_env *env, const char *name);
 int				sh_env_setvar(t_sh_env *env, const char *name, const char *val);
 void			sh_env_unsetvar(t_sh_env *env, const char *name);
+
+int				sh_env_binpath(t_sh_env *env, const char *name, char **path);
 
 #endif

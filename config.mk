@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/23 19:31:52 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/23 23:00:17 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -90,6 +90,7 @@ SOURCES = \
 	sh_env_getvar \
 	sh_env_setvar \
 	sh_env_unsetvar \
+	sh_env_binpath \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
