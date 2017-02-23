@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 23:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/23 23:58:05 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/24 00:21:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	test_miss_envpath_bin(t_tap *t)
 	t_sh_env	env;
 	char		*binpath = NULL;
 
+	ft_tap_plan(t, 2);
 	if (sh_env_start(&env, ep) == 0)
 	{
 		FT_TAP_IEQ(t, sh_env_binpath(&env, "sh_non_existing", &binpath),
@@ -96,6 +97,7 @@ static void	test_perm_envpath_bin(t_tap *t)
 	int			binfd;
 	char		*binpath = NULL;
 
+	ft_tap_plan(t, 2);
 	if ((binfd = creat("/tmp/sh_noperm_bin", 0))
 		&& sh_env_start(&env, ep) == 0)
 	{
@@ -115,6 +117,7 @@ static void	test_perm_abspath_bin(t_tap *t)
 	int			binfd;
 	char		*binpath = NULL;
 
+	ft_tap_plan(t, 2);
 	if ((binfd = creat("/tmp/sh_noperm_bin", 0))
 		&& sh_env_start(&env, ep) == 0)
 	{
@@ -127,6 +130,36 @@ static void	test_perm_abspath_bin(t_tap *t)
 	unlink("/tmp/sh_noperm_bin");
 }
 
+static void	test_find_builtin(t_tap *t)
+{
+	char			*ep[] = {NULL};
+	t_sh_env		env;
+	t_sh_builtin	*bt;
+
+	ft_tap_plan(t, 2);
+	if (sh_env_start(&env, ep) == 0)
+	{
+		FT_TAP_IEQ(t, sh_env_builtin(&env, "echo", &bt), 0);
+		FT_TAP_OK(t, bt != NULL);
+		sh_env_end(&env);
+	}
+}
+
+static void	test_miss_builtin(t_tap *t)
+{
+	char			*ep[] = {NULL};
+	t_sh_env		env;
+	t_sh_builtin	*bt;
+
+	ft_tap_plan(t, 2);
+	if (sh_env_start(&env, ep) == 0)
+	{
+		FT_TAP_IEQ(t, sh_env_builtin(&env, "nonexisting", &bt), SH_ERR_NOTFOUND);
+		FT_TAP_OK(t, bt == NULL);
+		sh_env_end(&env);
+	}
+}
+
 void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_find_envpath_bin);
@@ -135,4 +168,7 @@ void		run_tests(t_tap *t)
 	FT_TAP_TEST(t, test_find_abspath_bin);
 	FT_TAP_TEST(t, test_miss_abspath_bin);
 	FT_TAP_TEST(t, test_perm_abspath_bin);
+
+	FT_TAP_TEST(t, test_find_builtin);
+	FT_TAP_TEST(t, test_miss_builtin);
 }
