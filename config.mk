@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/24 00:58:47 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/24 01:11:18 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -93,6 +93,7 @@ SOURCES = \
 	sh_env_binpath \
 	sh_env_builtin \
 	sh_env_exec_bin \
+	sh_env_exec_builtin \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))

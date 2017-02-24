@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 23:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 01:05:38 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/24 01:17:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 #include "sh_env.h"
 #include "sh_errors.h"
+#include "ft_streams.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -175,6 +176,37 @@ static void	test_exec_bin(t_tap *t)
 	}
 }
 
+static int	print(int ac, char *const av[], t_sh_env *env)
+{
+	(void)ac;
+	(void)env;
+	if (av[1])
+	{
+		ft_fputs(av[1], FT_STDOUT);
+		return (0);
+	}
+	return (1);
+}
+
+static void	test_exec_builtin(t_tap *t)
+{
+	char			*ep[] = {NULL};
+	t_sh_env		env;
+	char			*av[] = {"print", "hello", NULL};
+	t_sh_builtin	bt = {"print", &print};
+
+	ft_tap_plan(t, 4);
+	if (sh_env_start(&env, ep) == 0)
+	{
+		FT_TAP_IEQ(t, sh_env_exec_builtin(&env, &bt, av), 0);
+		STDOUT_EQ(t, "hello");
+		av[1] = NULL;
+		FT_TAP_IEQ(t, sh_env_exec_builtin(&env, &bt, av), 1);
+		STDOUT_EQ(t, "");
+		sh_env_end(&env);
+	}
+}
+
 void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_find_envpath_bin);
@@ -188,4 +220,5 @@ void		run_tests(t_tap *t)
 	FT_TAP_TEST(t, test_miss_builtin);
 
 	FT_TAP_TEST(t, test_exec_bin);
+	FT_TAP_TEST(t, test_exec_builtin);
 }
