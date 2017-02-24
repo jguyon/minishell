@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/24 02:04:31 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/24 23:23:36 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -98,6 +98,18 @@ SOURCES = \
 	sh_env_exit \
 	sh_env_should_exit \
 	sh_env_status \
+	\
+	sh_init_input \
+	sh_parse_word \
+	sh_parse_cmd \
+	\
+	sh_word_new \
+	sh_word_tostr \
+	sh_word_del \
+	sh_cmd_new \
+	sh_cmd_push \
+	sh_cmd_toargv \
+	sh_cmd_del \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
