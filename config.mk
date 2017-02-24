@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/24 23:23:36 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/25 00:31:55 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -110,6 +110,8 @@ SOURCES = \
 	sh_cmd_push \
 	sh_cmd_toargv \
 	sh_cmd_del \
+	\
+	sh_exec_cmd \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
