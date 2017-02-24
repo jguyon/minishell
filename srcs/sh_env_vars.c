@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_strerror.c                                      :+:      :+:    :+:   */
+/*   sh_env_vars.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/23 15:58:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/23 22:23:45 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/23 18:00:27 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/23 18:01:19 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh_errors.h"
-#include <stddef.h>
+#include "sh_env.h"
 
-static char	*g_errors[] = {
-	[0] = "unkown error",
-	[SH_ERR_NOMEM] = "out of memory",
-	[SH_ERR_IO] = "input/output error",
-	[SH_ERR_NOTFOUND] = "not found",
-	[SH_ERR_NOPERM] = "permission denied",
-};
-
-char		*sh_strerror(int errnum)
+char *const	*sh_env_vars(t_sh_env *env)
 {
-	if (errnum < 0 || (size_t)errnum >= sizeof(g_errors) / sizeof(g_errors[0]))
-		return (NULL);
-	return (g_errors[errnum]);
+	return (env->vars.array);
 }

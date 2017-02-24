@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/23 16:14:28 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/24 02:04:31 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -47,6 +47,7 @@ LIBFT_MODULES = \
 	numbers \
 	unicode \
 	dlists \
+	darrays \
 	streams \
 	printf \
 	program \
@@ -82,6 +83,21 @@ SOURCES = \
 	ms_builtin_unsetenv \
 	\
 	sh_strerror \
+	\
+	sh_env_start \
+	sh_env_end \
+	sh_env_vars \
+	sh_env_getvar \
+	sh_env_setvar \
+	sh_env_unsetvar \
+	sh_env_binpath \
+	sh_env_builtin \
+	sh_env_exec_bin \
+	sh_env_exec_builtin \
+	sh_env_exec \
+	sh_env_exit \
+	sh_env_should_exit \
+	sh_env_status \
 
 # Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))

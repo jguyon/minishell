@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_strerror.c                                      :+:      :+:    :+:   */
+/*   sh_env_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/23 15:58:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/23 22:23:45 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/24 01:39:15 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/24 01:42:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh_errors.h"
-#include <stddef.h>
+#include "sh_env.h"
 
-static char	*g_errors[] = {
-	[0] = "unkown error",
-	[SH_ERR_NOMEM] = "out of memory",
-	[SH_ERR_IO] = "input/output error",
-	[SH_ERR_NOTFOUND] = "not found",
-	[SH_ERR_NOPERM] = "permission denied",
-};
-
-char		*sh_strerror(int errnum)
+void	sh_env_exit(t_sh_env *env, int status)
 {
-	if (errnum < 0 || (size_t)errnum >= sizeof(g_errors) / sizeof(g_errors[0]))
-		return (NULL);
-	return (g_errors[errnum]);
+	if (status >= 0)
+		env->exit_status = SH_EXIT_STATUS(status);
+	env->should_exit = 1;
 }
