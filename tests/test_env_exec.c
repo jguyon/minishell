@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 23:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 01:17:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/24 02:04:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,36 @@ static void	test_exec_builtin(t_tap *t)
 	}
 }
 
+static void	test_exec_success(t_tap *t)
+{
+	char		*ep[] = {"PATH=/bin", NULL};
+	t_sh_env	env;
+	char		*av[] = {"false", NULL};
+
+	ft_tap_plan(t, 2);
+	if (sh_env_start(&env, ep) == 0)
+	{
+		FT_TAP_IEQ(t, sh_env_exec(&env, av), 0);
+		FT_TAP_IEQ(t, sh_env_status(&env), 1);
+		sh_env_end(&env);
+	}
+}
+
+static void	test_exec_failure(t_tap *t)
+{
+	char		*ep[] = {NULL};
+	t_sh_env	env;
+	char		*av[] = {"non/existing", NULL};
+
+	ft_tap_plan(t, 2);
+	if (sh_env_start(&env, ep) == 0)
+	{
+		FT_TAP_IEQ(t, sh_env_exec(&env, av), SH_ERR_NOTFOUND);
+		FT_TAP_IEQ(t, sh_env_status(&env), SH_EXIT_NOTFOUND);
+		sh_env_end(&env);
+	}
+}
+
 void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_find_envpath_bin);
@@ -221,4 +251,7 @@ void		run_tests(t_tap *t)
 
 	FT_TAP_TEST(t, test_exec_bin);
 	FT_TAP_TEST(t, test_exec_builtin);
+
+	FT_TAP_TEST(t, test_exec_success);
+	FT_TAP_TEST(t, test_exec_failure);
 }

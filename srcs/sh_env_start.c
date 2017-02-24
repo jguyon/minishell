@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:29:20 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/23 18:39:15 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/24 02:05:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int		sh_env_start(t_sh_env *env, char *const envp[])
 	size_t	size;
 	char	**vars;
 
+	env->exit_status = SH_EXIT_SUCCESS;
+	env->should_exit = 0;
 	size = 0;
 	while (envp[size])
 		++size;

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:23:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 01:07:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/24 02:04:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "ft_strings.h"
 
 typedef struct	s_sh_env {
+	int			exit_status;
+	int			should_exit;
 	t_darray	vars;
 }				t_sh_env;
 
@@ -40,6 +42,8 @@ typedef struct	s_sh_builtin {
 # define SH_EXIT_NOTFOUND	127
 # define SH_EXIT_SIGNAL		128
 
+# define SH_EXIT_STATUS(status) (status & 0xFF)
+
 int				sh_env_binpath(t_sh_env *env, const char *name, char **path);
 int				sh_env_builtin(t_sh_env *env, const char *name,
 					t_sh_builtin **builtin);
@@ -47,5 +51,10 @@ int				sh_env_exec_bin(t_sh_env *env, const char *path,
 					char *const argv[]);
 int				sh_env_exec_builtin(t_sh_env *env, t_sh_builtin *builtin,
 					char *const argv[]);
+
+int				sh_env_exec(t_sh_env *env, char *const argv[]);
+void			sh_env_exit(t_sh_env *env, int status);
+int				sh_env_should_exit(t_sh_env *env);
+int				sh_env_status(t_sh_env *env);
 
 #endif
