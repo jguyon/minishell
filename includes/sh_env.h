@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:23:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 00:15:05 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/24 00:52:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,16 @@ typedef struct	s_sh_builtin {
 	int			(*fn)(int ac, char *const av[], t_sh_env *env);
 }				t_sh_builtin;
 
+# define SH_EXIT_SUCCESS	0
+# define SH_EXIT_NOFORK		125
+# define SH_EXIT_NOEXEC		126
+# define SH_EXIT_NOTFOUND	127
+# define SH_EXIT_SIGNAL		128
+
 int				sh_env_binpath(t_sh_env *env, const char *name, char **path);
 int				sh_env_builtin(t_sh_env *env, const char *name,
 					t_sh_builtin **builtin);
+int				sh_env_exec_bin(t_sh_env *env, const char *path,
+					char *const argv[]);
 
 #endif
