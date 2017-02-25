@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:06:44 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:22:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 02:30:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,10 @@ int			sh_builtin_pwd(int ac, char *const av[], t_sh_env *env);
 ** the variable to an empty string.
 */
 int			sh_builtin_setenv(int ac, char *const av[], t_sh_env *env);
+
+/*
+** Unset an environment variable
+*/
+int			sh_builtin_unsetenv(int ac, char *const av[], t_sh_env *env);
 
 #endif
