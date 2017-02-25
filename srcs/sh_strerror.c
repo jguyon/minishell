@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 15:58:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:32:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 23:33:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static char	*g_errors[] = {
 	[SH_ERR_NOOLDPWD] = "OLDPWD not set",
 	[SH_ERR_ARGS2BIG] = "too many arguments",
 	[SH_ERR_ARGS2SMALL] = "too few arguments",
+	[SH_ERR_BADNUM] = "illegal number",
 };
 
 char		*sh_strerror(int errnum)

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 15:19:37 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:31:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 23:33:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define SH_ERR_NOOLDPWD	7
 # define SH_ERR_ARGS2BIG	8
 # define SH_ERR_ARGS2SMALL	9
+# define SH_ERR_BADNUM		10
 
 /*
 ** Get the error message corresponding to an error number
