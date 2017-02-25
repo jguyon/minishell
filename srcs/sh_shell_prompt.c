@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:48:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 17:22:21 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 22:07:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int		sh_shell_prompt(t_sh_env *env)
 		return (-1);
 	if (!(prompt = sh_env_getvar(env, "PS1")))
 		prompt = "";
+	ft_fputs(prompt, FT_STDOUT);
 	ft_fflush(FT_STDOUT);
-	ft_fputs(prompt, FT_STDERR);
 	cmd = NULL;
 	if ((err = sh_init_input(&input, FT_STDIN))
 		|| (err = sh_parse_cmd(&input, &cmd))
