@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/25 16:20:31 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/25 18:14:58 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -58,22 +58,7 @@ NAME = minishell
 # Source names to compile the program
 # main does not need to be specified here, it will be added in the Makefile
 SOURCES = \
-	ms_error \
-	\
-	ms_env_start \
-	ms_env_end \
-	ms_env_get \
-	ms_env_set \
-	ms_env_unset \
-	ms_env_clear \
-	ms_resolve_path \
-	ms_exec_bin \
-	ms_resolve_builtin \
-	ms_exec_builtin \
-	\
-	ms_parse_cmd \
-	ms_exec_cmd \
-	ms_destroy_cmd \
+	sh_strerror \
 	\
 	sh_builtin_echo \
 	sh_builtin_cd \
@@ -82,8 +67,6 @@ SOURCES = \
 	sh_builtin_setenv \
 	sh_builtin_unsetenv \
 	sh_builtin_exit \
-	\
-	sh_strerror \
 	\
 	sh_env_start \
 	sh_env_end \
