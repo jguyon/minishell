@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 12:44:58 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:17:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 02:22:02 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 # define MS_BUILTINS_H
 
 # include "ms_env.h"
-
-/*
-** Set an environment variable
-**
-** Sets the variable given in the first argument to the value
-** given in the second argument. If only one arg is given, sets
-** the variable to an empty string.
-*/
-int			ms_builtin_setenv(int ac, char *const av[], t_env *env);
 
 /*
 ** Unset an environment variable

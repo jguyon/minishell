@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 18:15:16 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:17:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 02:22:27 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 static t_builtin	g_builtins[] = {
 	{ .name = "env", .fn = &ms_builtin_env },
-	{ .name = "setenv", .fn = &ms_builtin_setenv },
 };
 
 t_builtin			*ms_resolve_builtin(const char *name)

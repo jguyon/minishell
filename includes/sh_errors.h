@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 15:19:37 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 01:43:02 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 02:26:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define SH_ERR_NOTDIR		5
 # define SH_ERR_NOHOME		6
 # define SH_ERR_NOOLDPWD	7
+# define SH_ERR_ARGS2BIG	8
 
 /*
 ** Get the error message corresponding to an error number
