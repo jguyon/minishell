@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 18:15:16 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 01:17:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 02:17:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "ft_strings.h"
 
 static t_builtin	g_builtins[] = {
-	{ .name = "pwd", .fn = &ms_builtin_pwd },
 	{ .name = "env", .fn = &ms_builtin_env },
 	{ .name = "setenv", .fn = &ms_builtin_setenv },
 };
