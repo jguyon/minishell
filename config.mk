@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/25 02:45:14 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/25 03:14:30 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -81,6 +81,7 @@ SOURCES = \
 	sh_builtin_env \
 	sh_builtin_setenv \
 	sh_builtin_unsetenv \
+	sh_builtin_exit \
 	\
 	sh_strerror \
 	\

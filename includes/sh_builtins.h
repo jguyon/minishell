@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:06:44 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:35:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 03:03:52 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,13 @@ int			sh_builtin_unsetenv(int ac, char *const av[], t_sh_env *env);
 ** With -i option, clears the environment before modifying it.
 */
 int			sh_builtin_env(int ac, char *const av[], t_sh_env *env);
+
+/*
+** Exit the shell with a given status
+**
+** If no status is given as argument, exits with the
+** exit status of the last executed command.
+*/
+int			sh_builtin_exit(int ac, char *const av[], t_sh_env *env);
 
 #endif
