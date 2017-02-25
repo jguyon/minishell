@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:30:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:32:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 22:50:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@
 
 int		sh_builtin_unsetenv(int ac, char *const av[], t_sh_env *env)
 {
+	size_t	i;
+
 	if (ac < 2)
 	{
 		ft_error(0, SH_ERR_ARGS2SMALL, "%s", av[0]);
 		return (FT_EXIT_FAILURE);
 	}
-	if (ac > 2)
+	i = 1;
+	while (av[i])
 	{
-		ft_error(0, SH_ERR_ARGS2BIG, "%s", av[0]);
-		return (FT_EXIT_FAILURE);
+		sh_env_unsetvar(env, av[i]);
+		++i;
 	}
-	sh_env_unsetvar(env, av[1]);
 	return (FT_EXIT_SUCCESS);
 }
