@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_pwd.c                                   :+:      :+:    :+:   */
+/*   sh_builtin_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/18 13:37:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 22:59:42 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/25 02:18:40 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/25 02:19:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_builtins.h"
-#include "ms_errors.h"
+#include "sh_builtins.h"
+#include "sh_errors.h"
 #include "ft_program.h"
 #include "ft_streams.h"
 #include <unistd.h>
 
-int		ms_builtin_pwd(int ac, char *const av[], t_env *env)
+int		sh_builtin_pwd(int ac, char *const av[], t_sh_env *env)
 {
 	char	*pwd;
 
@@ -25,7 +25,7 @@ int		ms_builtin_pwd(int ac, char *const av[], t_env *env)
 	(void)env;
 	if (!(pwd = getcwd(NULL, 0)))
 	{
-		ms_error(0, MS_ERR_IO, "%s", av[0]);
+		ft_error(0, SH_ERR_IO, "%s", av[0]);
 		return (FT_EXIT_FAILURE);
 	}
 	ft_fputs(pwd, FT_STDOUT);

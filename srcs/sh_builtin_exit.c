@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_builtin_unsetenv.c                              :+:      :+:    :+:   */
+/*   sh_builtin_exit.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/22 19:34:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/22 19:37:21 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/25 03:04:10 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/25 03:13:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_builtins.h"
-#include "ms_errors.h"
-#include "ft_program.h"
+#include "sh_builtins.h"
+#include "ft_numbers.h"
 
-int		ms_builtin_unsetenv(int ac, char *const av[], t_env *env)
+int		sh_builtin_exit(int ac, char *const av[], t_sh_env *env)
 {
-	if (ac < 2)
-	{
-		ms_error(0, 0, "%s: Too few arguments", av[0]);
-		return (FT_EXIT_FAILURE);
-	}
-	if (ac > 2)
-	{
-		ms_error(0, 0, "%s: Too many arguments", av[0]);
-		return (FT_EXIT_FAILURE);
-	}
-	ms_env_unset(env, av[1]);
-	return (FT_EXIT_SUCCESS);
+	int		status;
+
+	status = ac > 1 ? ft_atoi(av[1]) : sh_env_status(env);
+	sh_env_exit(env, status);
+	return (status);
 }

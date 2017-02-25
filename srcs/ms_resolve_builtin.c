@@ -6,20 +6,35 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 18:15:16 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/22 19:09:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 02:38:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ms_env.h"
 #include "ms_builtins.h"
 #include "ft_strings.h"
+#include "ft_streams.h"
+
+static int			builtin_echo(int ac, char *const av[], t_env *env)
+{
+	int		i;
+
+	(void)ac;
+	(void)env;
+	i = 1;
+	while (av[i])
+	{
+		ft_fputs(av[i], FT_STDOUT);
+		++i;
+		if (av[i])
+			ft_fputc(' ', FT_STDOUT);
+	}
+	ft_fputc('\n', FT_STDOUT);
+	return (0);
+}
 
 static t_builtin	g_builtins[] = {
-	{ .name = "echo", .fn = &ms_builtin_echo },
-	{ .name = "cd", .fn = &ms_builtin_cd },
-	{ .name = "pwd", .fn = &ms_builtin_pwd },
-	{ .name = "env", .fn = &ms_builtin_env },
-	{ .name = "setenv", .fn = &ms_builtin_setenv },
+	{ .name = "echo", .fn = &builtin_echo },
 };
 
 t_builtin			*ms_resolve_builtin(const char *name)
