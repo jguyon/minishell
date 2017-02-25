@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 22:20:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/23 23:55:09 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 23:08:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			sh_env_binpath(t_sh_env *env, const char *name, char **path)
 	*path = NULL;
 	if (ft_strchr(name, '/'))
 		return (check_absolute(name, path));
-	if (!(envpaths = sh_env_getvar(env, "PATH")))
-		return (SH_ERR_NOTFOUND);
+	if (!(envpaths = sh_env_getvar(env, "PATH")) || envpaths[0] == '\0')
+		return (check_paths(".", name, path));
 	return (check_paths(envpaths, name, path));
 }

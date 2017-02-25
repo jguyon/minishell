@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 23:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 02:04:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 23:10:33 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,30 @@ static void	test_perm_abspath_bin(t_tap *t)
 	unlink("/tmp/sh_noperm_bin");
 }
 
+static void	test_empty_envpath(t_tap *t)
+{
+	char		*ep[] = {"PATH=", NULL};
+	t_sh_env	env;
+	int			binfd;
+	char		*binpath = NULL;
+	char		*cwd;
+
+	if ((binfd = creat("/tmp/sh_bin", S_IRWXU))
+		&& sh_env_start(&env, ep) == 0)
+	{
+		cwd = getcwd(NULL, 0);
+		chdir("/tmp");
+		FT_TAP_IEQ(t, sh_env_binpath(&env, "sh_bin", &binpath), 0);
+		FT_TAP_SEQ(t, binpath, "./sh_bin");
+		chdir(cwd);
+		free(cwd);
+		free(binpath);
+		sh_env_end(&env);
+	}
+	close(binfd);
+	unlink("/tmp/sh_bin");
+}
+
 static void	test_find_builtin(t_tap *t)
 {
 	char			*ep[] = {NULL};
@@ -245,6 +269,7 @@ void		run_tests(t_tap *t)
 	FT_TAP_TEST(t, test_find_abspath_bin);
 	FT_TAP_TEST(t, test_miss_abspath_bin);
 	FT_TAP_TEST(t, test_perm_abspath_bin);
+	FT_TAP_TEST(t, test_empty_envpath);
 
 	FT_TAP_TEST(t, test_find_builtin);
 	FT_TAP_TEST(t, test_miss_builtin);
