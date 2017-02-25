@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/14 15:42:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:11:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 16:36:14 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,19 @@
 #include "sh_errors.h"
 #include "ft_streams.h"
 #include "ft_program.h"
+#include "ft_strings.h"
 
+char	g_inbuff[];
 char	g_outbuff[];
 char	g_errbuff[];
+
+void	stdin_reopen(const char *str)
+{
+	ft_strncpy(g_inbuff, str, sizeof(g_inbuff));
+	ft_fclose(FT_STDIN);
+	FT_STDIN = ft_fmemopen(g_inbuff, ft_strlen(str), "r");
+	ft_setvbuf(FT_STDIN, NULL, FT_IONBF, 0);
+}
 
 void	stdout_reopen(void)
 {
