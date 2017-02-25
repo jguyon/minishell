@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:49:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:10:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 02:50:14 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			sh_env_setvar(t_sh_env *env, const char *name, const char *val)
 		++i;
 	}
 	if (!(old = vars[i]))
-		namlen = ft_strlen(name);
+		namlen = SH_ENV_NAMLEN(name);
 	if (!(new = new_var(name, namlen, val))
 		|| (!old && ft_darr_set(&(env->vars), i + 1, NULL))
 		|| ft_darr_set(&(env->vars), i, &new))

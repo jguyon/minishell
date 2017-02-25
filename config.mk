@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/25 02:33:08 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/25 02:45:14 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -78,7 +78,7 @@ SOURCES = \
 	sh_builtin_echo \
 	sh_builtin_cd \
 	sh_builtin_pwd \
-	ms_builtin_env \
+	sh_builtin_env \
 	sh_builtin_setenv \
 	sh_builtin_unsetenv \
 	\

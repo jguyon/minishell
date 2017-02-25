@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:06:44 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:30:10 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 02:35:27 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,15 @@ int			sh_builtin_setenv(int ac, char *const av[], t_sh_env *env);
 ** Unset an environment variable
 */
 int			sh_builtin_unsetenv(int ac, char *const av[], t_sh_env *env);
+
+/*
+** Execute a command in a modified environment
+**
+** With no args, prints the environment.
+** Adds each KEY=value pairs to the environment before executing
+** the specified command.
+** With -i option, clears the environment before modifying it.
+*/
+int			sh_builtin_env(int ac, char *const av[], t_sh_env *env);
 
 #endif
