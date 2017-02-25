@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/18 12:44:58 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 01:08:20 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 01:17:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 # define MS_BUILTINS_H
 
 # include "ms_env.h"
-
-/*
-** Change the working directory
-**
-** With no args, goes to HOME.
-** With "-" arg, goes to previous directory.
-*/
-int			ms_builtin_cd(int ac, char *const av[], t_env *env);
 
 /*
 ** Print the current working directory

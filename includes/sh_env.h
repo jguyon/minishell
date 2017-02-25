@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:23:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 02:33:03 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 01:58:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 /*
 ** Get the length of the variable name in a string of type "NAME=value"
 */
-# define SH_ENV_NAMLEN(var) ((size_t)(ft_strchrnul(var, '=') - (var)))
+# define SH_ENV_NAMLEN(var) ((size_t)(ft_strchrnul((var), '=') - (var)))
 
 /*
 ** Exit statuses of commands on success and on specific errors

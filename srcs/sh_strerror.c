@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 15:58:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/23 22:23:45 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 01:44:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ static char	*g_errors[] = {
 	[SH_ERR_IO] = "input/output error",
 	[SH_ERR_NOTFOUND] = "not found",
 	[SH_ERR_NOPERM] = "permission denied",
+	[SH_ERR_NOTDIR] = "no such directory",
+	[SH_ERR_NOHOME] = "HOME not set",
+	[SH_ERR_NOOLDPWD] = "OLDPWD not set",
 };
 
 char		*sh_strerror(int errnum)

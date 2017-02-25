@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/25 01:11:45 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/25 01:45:11 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -76,7 +76,7 @@ SOURCES = \
 	ms_destroy_cmd \
 	\
 	sh_builtin_echo \
-	ms_builtin_cd \
+	sh_builtin_cd \
 	ms_builtin_pwd \
 	ms_builtin_env \
 	ms_builtin_setenv \

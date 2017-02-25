@@ -6,11 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/14 15:42:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/18 14:13:00 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 02:11:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
+#include "sh_errors.h"
 #include "ft_streams.h"
 #include "ft_program.h"
 
@@ -38,6 +39,7 @@ int		main(void)
 	t_tap	t;
 
 	ft_setprogname("minishell");
+	g_ft_strerror = &sh_strerror;
 	stdout_reopen();
 	stderr_reopen();
 	ft_tap_start(&t);
