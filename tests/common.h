@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/14 15:42:46 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/16 19:36:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/25 16:33:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "ft_tap.h"
 
 void	run_tests(t_tap *t);
+
+char	g_inbuff[4096];
+void	stdin_reopen(const char *str);
 
 char	g_outbuff[4096];
 void	stdout_reopen(void);
