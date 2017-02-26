@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 16:16:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/26 18:50:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/26 18:57:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int			sh_path_canonical(const char *path, char **canon)
 	const char	*end;
 	char		*curr;
 
+	*canon = NULL;
 	if (path[0] != '/')
 		return (-1);
 	if (!(*canon = ft_strnew(ft_strlen(path))))
