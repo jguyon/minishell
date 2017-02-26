@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 20:53:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/26 21:28:01 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/26 22:07:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,11 +154,41 @@ static void	test_error(t_tap *t)
 	free(newpwd);
 }
 
+static void	test_real_path(t_tap *t)
+{
+	char		*ep[] = {NULL};
+	char		*av[] = {"cd", "-P", "/tmp/minishell_link", NULL};
+	t_sh_env	env;
+	char		*oldpwd = NULL;
+	char		*newpwd = NULL;
+	char		*real = NULL;
+
+	ft_tap_plan(t, 4);
+	mkdir("/tmp/minishell_target", S_IRWXU);
+	symlink("/tmp/minishell_target", "/tmp/minishell_link");
+	if ((oldpwd = getcwd(NULL, 0)) && sh_env_start(&env, ep) == 0)
+	{
+		FT_TAP_IEQ(t, sh_builtin_cd(3, av, &env), 0);
+		real = realpath("/tmp/minishell_link/", NULL);
+		FT_TAP_SEQ(t, (newpwd = getcwd(NULL, 0)), real);
+		FT_TAP_SEQ(t, sh_env_getvar(&env, "PWD"), real);
+		FT_TAP_SEQ(t, sh_env_getvar(&env, "OLDPWD"), oldpwd);
+		sh_env_end(&env);
+	}
+	chdir(oldpwd);
+	remove("/tmp/minishell_link");
+	remove("/tmp/minishell_target");
+	free(oldpwd);
+	free(newpwd);
+	free(real);
+}
+
 void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_home);
 	FT_TAP_TEST(t, test_oldpwd);
 	FT_TAP_TEST(t, test_dir);
 	FT_TAP_TEST(t, test_relative);
+	FT_TAP_TEST(t, test_real_path);
 	FT_TAP_TEST(t, test_error);
 }

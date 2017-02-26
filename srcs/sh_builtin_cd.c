@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:18:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/26 21:21:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/26 23:07:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,29 @@
 #include "ft_strings.h"
 #include <unistd.h>
 #include <stdlib.h>
+
+static int			keep_links(int ac, char *const av[])
+{
+	int		keep;
+	int		opt;
+
+	keep = 1;
+	g_ft_opterr = 0;
+	g_ft_optind = 0;
+	while ((opt = ft_getopt(ac, av, "LP")) != -1)
+	{
+		if (opt == 'L')
+			keep = 1;
+		else if (opt == 'P')
+			keep = 0;
+		else
+		{
+			ft_error(0, 0, "%s: illegal option -- %c", av[0], g_ft_optopt);
+			return (-1);
+		}
+	}
+	return (keep);
+}
 
 static int			get_cwd(t_sh_env *env, char **cwd)
 {
@@ -65,11 +88,13 @@ static int			get_newwd(t_sh_env *env, const char *arg,
 	return (0);
 }
 
-static int			change_wd(t_sh_env *env, const char *old, const char *new)
+static int			change_wd(t_sh_env *env, const char *old, const char *new,
+						int keep_links)
 {
 	int		err;
 	char	*canon;
 
+	canon = NULL;
 	if (access(new, F_OK))
 		return (SH_ERR_NOTDIR);
 	if (access(new, X_OK))
@@ -80,6 +105,12 @@ static int			change_wd(t_sh_env *env, const char *old, const char *new)
 	{
 		free(canon);
 		return (SH_ERR_IO);
+	}
+	if (!keep_links)
+	{
+		free(canon);
+		if (!(canon = getcwd(NULL, 0)))
+			return (SH_ERR_IO);
 	}
 	if ((err = sh_env_setvar(env, "PWD", canon))
 		|| (err = sh_env_setvar(env, "OLDPWD", old)))
@@ -97,13 +128,15 @@ int					sh_builtin_cd(int ac, char *const av[], t_sh_env *env)
 	char	*newpwd;
 	int		err;
 	int		status;
+	int		keep;
 
-	(void)ac;
+	if ((keep = keep_links(ac, av)) < 0)
+		return (FT_EXIT_FAILURE);
 	oldpwd = NULL;
 	newpwd = NULL;
 	if ((err = get_cwd(env, &oldpwd))
-		|| (err = get_newwd(env, av[1], oldpwd, &newpwd))
-		|| (err = change_wd(env, oldpwd, newpwd)))
+		|| (err = get_newwd(env, av[g_ft_optind], oldpwd, &newpwd))
+		|| (err = change_wd(env, oldpwd, newpwd, keep)))
 	{
 		ft_error(0, err, "%s", av[0]);
 		status = FT_EXIT_FAILURE;
@@ -111,7 +144,7 @@ int					sh_builtin_cd(int ac, char *const av[], t_sh_env *env)
 	else
 	{
 		status = FT_EXIT_SUCCESS;
-		if (av[1] && ft_strcmp(av[1], "-") == 0)
+		if (av[g_ft_optind] && ft_strcmp(av[g_ft_optind], "-") == 0)
 			ft_fprintf(FT_STDOUT, "%s\n", newpwd);
 	}
 	free(oldpwd);
