@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 18:04:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/26 18:47:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/26 20:54:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	test_dotdot(t_tap *t)
 {
 	char	*canon;
 
-	FT_TAP_IEQ(t, sh_path_canonical("/some/sub/../dir", &canon), 0);
-	FT_TAP_SEQ(t, canon, "/some/dir");
+	FT_TAP_IEQ(t, sh_path_canonical("/some/..", &canon), 0);
+	FT_TAP_SEQ(t, canon, "/");
 	free(canon);
 	FT_TAP_IEQ(t, sh_path_canonical("/some/sub/../dir/", &canon), 0);
 	FT_TAP_SEQ(t, canon, "/some/dir");

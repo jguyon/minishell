@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 16:16:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/26 18:57:58 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/26 21:00:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*process_element(char *root, char *curr,
 	else if (start != end && (start[0] != '.' || end != start + 1))
 	{
 		ft_memcpy(curr, start, end - start + 1);
-		curr += end - start + 1;
+		curr += *end ? end - start + 1 : end - start;
 	}
 	return (curr);
 }

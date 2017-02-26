@@ -6,92 +6,115 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:18:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 01:43:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/26 21:21:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_builtins.h"
 #include "sh_errors.h"
+#include "sh_files.h"
 #include "ft_program.h"
-#include "ft_strings.h"
 #include "ft_printf.h"
+#include "ft_strings.h"
 #include <unistd.h>
 #include <stdlib.h>
 
-static const char	*get_new_pwd(char *const av[], t_sh_env *env)
+static int			get_cwd(t_sh_env *env, char **cwd)
 {
 	const char	*pwd;
 
-	if (!av[1])
+	if ((pwd = sh_env_getvar(env, "PWD")) && pwd[0] == '/')
 	{
-		if (!(pwd = sh_env_getvar(env, "HOME")))
-			ft_error(0, SH_ERR_NOHOME, "%s", av[0]);
-	}
-	else if (ft_strcmp(av[1], "-") == 0)
-	{
-		if (!(pwd = sh_env_getvar(env, "OLDPWD")))
-			ft_error(0, SH_ERR_NOOLDPWD, "%s", av[0]);
+		if (!(*cwd = ft_strdup(pwd)))
+			return (SH_ERR_NOMEM);
 	}
 	else
-		pwd = av[1];
-	return (pwd);
-}
-
-static int			set_env_vars(t_sh_env *env, char *const av[],
-						const char *oldpwd, const char *newpwd)
-{
-	int		err;
-
-	if ((err = sh_env_setvar(env, "OLDPWD", oldpwd))
-		|| (err = sh_env_setvar(env, "PWD", newpwd)))
 	{
-		ft_error(0, err, "%s", av[0]);
-		return (-1);
+		if (!(*cwd = getcwd(NULL, 0)))
+			return (SH_ERR_IO);
 	}
-	if (av[1] && ft_strcmp(av[1], "-") == 0)
-		ft_fprintf(FT_STDOUT, "%s\n", newpwd);
 	return (0);
 }
 
-static char			*get_curr_pwd(char *const av[])
+static int			get_newwd(t_sh_env *env, const char *arg,
+						const char *cwd, char **pwd)
 {
-	char	*pwd;
+	const char	*dir;
+	int			err;
 
-	if (!(pwd = getcwd(NULL, 0)))
+	*pwd = NULL;
+	if (!arg)
 	{
-		ft_error(0, SH_ERR_IO, "%s", av[0]);
-		return (NULL);
+		if (!(dir = sh_env_getvar(env, "HOME")))
+			return (SH_ERR_NOHOME);
 	}
-	return (pwd);
+	else if (ft_strcmp(arg, "-") == 0)
+	{
+		if (!(dir = sh_env_getvar(env, "OLDPWD")))
+			return (SH_ERR_NOOLDPWD);
+	}
+	else
+		dir = arg;
+	if (dir[0] != '/')
+	{
+		if ((err = sh_path_join(cwd, dir, pwd)))
+			return (err);
+	}
+	else if (!(*pwd = ft_strdup(dir)))
+		return (SH_ERR_NOMEM);
+	return (0);
 }
 
-static int			change_pwd(const char *dir, char *const av[])
+static int			change_wd(t_sh_env *env, const char *old, const char *new)
 {
-	if (chdir(dir))
+	int		err;
+	char	*canon;
+
+	if (access(new, F_OK))
+		return (SH_ERR_NOTDIR);
+	if (access(new, X_OK))
+		return (SH_ERR_NOPERM);
+	if ((err = sh_path_canonical(new, &canon)))
+		return (err);
+	if (chdir(canon))
 	{
-		ft_error(0, SH_ERR_NOTDIR, "%s", av[0]);
-		return (-1);
+		free(canon);
+		return (SH_ERR_IO);
 	}
+	if ((err = sh_env_setvar(env, "PWD", canon))
+		|| (err = sh_env_setvar(env, "OLDPWD", old)))
+	{
+		free(canon);
+		return (err);
+	}
+	free(canon);
 	return (0);
 }
 
 int					sh_builtin_cd(int ac, char *const av[], t_sh_env *env)
 {
-	char		*oldpwd;
-	char		*newpwd;
-	const char	*dir;
-	int			status;
+	char	*oldpwd;
+	char	*newpwd;
+	int		err;
+	int		status;
 
 	(void)ac;
-	status = FT_EXIT_SUCCESS;
 	oldpwd = NULL;
 	newpwd = NULL;
-	dir = NULL;
-	if (!(oldpwd = get_curr_pwd(av)) || !(dir = get_new_pwd(av, env))
-		|| change_pwd(dir, av) || !(newpwd = get_curr_pwd(av))
-		|| set_env_vars(env, av, oldpwd, newpwd))
+	if ((err = get_cwd(env, &oldpwd))
+		|| (err = get_newwd(env, av[1], oldpwd, &newpwd))
+		|| (err = change_wd(env, oldpwd, newpwd)))
+	{
+		ft_error(0, err, "%s", av[0]);
 		status = FT_EXIT_FAILURE;
-	free(newpwd);
+	}
+	else
+	{
+		status = FT_EXIT_SUCCESS;
+		if (av[1] && ft_strcmp(av[1], "-") == 0)
+			ft_fprintf(FT_STDOUT, "%s\n", newpwd);
+	}
 	free(oldpwd);
+	free(newpwd);
 	return (status);
 }
