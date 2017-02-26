@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/26 15:56:10 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/26 18:04:10 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -61,6 +61,7 @@ SOURCES = \
 	sh_strerror \
 	\
 	sh_path_join \
+	sh_path_canonical \
 	\
 	sh_builtin_echo \
 	sh_builtin_cd \
