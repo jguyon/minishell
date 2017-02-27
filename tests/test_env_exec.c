@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 23:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 23:10:33 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 16:30:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	test_miss_abspath_bin(t_tap *t)
 	if (sh_env_start(&env, ep) == 0)
 	{
 		FT_TAP_IEQ(t, sh_env_binpath(&env, "non/existing/sh", &binpath),
-			SH_ERR_NOTFOUND);
+			SH_ERR_NOENT);
 		FT_TAP_OK(t, binpath == NULL);
 		free(binpath);
 		sh_env_end(&env);
@@ -189,13 +189,14 @@ static void	test_exec_bin(t_tap *t)
 {
 	char			*ep[] = {NULL};
 	t_sh_env		env;
-	char			*av[] = {"prog", NULL};
+	char			*av[] = {"prog", "1", "-eq", "2", NULL};
 
 	ft_tap_plan(t, 2);
 	if (sh_env_start(&env, ep) == 0)
 	{
-		FT_TAP_IEQ(t, sh_env_exec_bin(&env, "/bin/false", av), 1);
-		FT_TAP_IEQ(t, sh_env_exec_bin(&env, "/bin/true", av), 0);
+		FT_TAP_IEQ(t, sh_env_exec_bin(&env, "/bin/test", av), 1);
+		av[3] = "1";
+		FT_TAP_IEQ(t, sh_env_exec_bin(&env, "/bin/test", av), 0);
 		sh_env_end(&env);
 	}
 }
@@ -233,7 +234,7 @@ static void	test_exec_builtin(t_tap *t)
 
 static void	test_exec_success(t_tap *t)
 {
-	char		*ep[] = {"PATH=/bin", NULL};
+	char		*ep[] = {"PATH=/bin:/usr/bin", NULL};
 	t_sh_env	env;
 	char		*av[] = {"false", NULL};
 
@@ -255,7 +256,7 @@ static void	test_exec_failure(t_tap *t)
 	ft_tap_plan(t, 2);
 	if (sh_env_start(&env, ep) == 0)
 	{
-		FT_TAP_IEQ(t, sh_env_exec(&env, av), SH_ERR_NOTFOUND);
+		FT_TAP_IEQ(t, sh_env_exec(&env, av), SH_ERR_NOENT);
 		FT_TAP_IEQ(t, sh_env_status(&env), SH_EXIT_NOTFOUND);
 		sh_env_end(&env);
 	}

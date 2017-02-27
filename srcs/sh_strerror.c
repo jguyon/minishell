@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 15:58:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 01:10:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 15:48:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static char	*g_errors[] = {
 	[SH_ERR_BADNUM] = "illegal number",
 	[SH_ERR_NOPWD] = "PWD not set",
 	[SH_ERR_NOENT] = "no such file or directory",
+	[SH_ERR_NOTREG] = "not a file",
 };
 
 char		*sh_strerror(int errnum)
