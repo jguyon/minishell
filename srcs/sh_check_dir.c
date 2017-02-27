@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_env_end.c                                       :+:      :+:    :+:   */
+/*   sh_check_dir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/23 16:33:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 02:03:26 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/27 00:58:51 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/27 01:18:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh_env.h"
-#include "ft_memory.h"
+#include "sh_files.h"
+#include "sh_errors.h"
+#include <unistd.h>
 
-void	sh_env_end(t_sh_env *env)
+int		sh_check_dir(const char *path)
 {
-	size_t	i;
-	char	**vars;
+	struct stat	st;
 
-	ft_memdel((void **)&(env->cwd));
-	vars = env->vars.array;
-	i = 0;
-	while (vars[i])
-	{
-		ft_memdel((void **)&vars[i]);
-		++i;
-	}
-	ft_darr_clear(&(env->vars));
+	if (!access(path, X_OK))
+		return (0);
+	if (!stat(path, &st) && !S_ISDIR(st.st_mode))
+		return (SH_ERR_NOTDIR);
+	if (access(path, F_OK))
+		return (SH_ERR_NOENT);
+	return (SH_ERR_NOPERM);
 }

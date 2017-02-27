@@ -6,92 +6,100 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:18:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 01:43:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 03:11:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_builtins.h"
 #include "sh_errors.h"
+#include "sh_files.h"
 #include "ft_program.h"
-#include "ft_strings.h"
 #include "ft_printf.h"
+#include "ft_strings.h"
 #include <unistd.h>
 #include <stdlib.h>
 
-static const char	*get_new_pwd(char *const av[], t_sh_env *env)
+static int			no_symlinks(int ac, char *const av[])
 {
-	const char	*pwd;
+	int		nosym;
+	int		opt;
 
-	if (!av[1])
+	nosym = 0;
+	g_ft_opterr = 0;
+	g_ft_optind = 0;
+	while ((opt = ft_getopt(ac, av, "LP")) != -1)
 	{
-		if (!(pwd = sh_env_getvar(env, "HOME")))
-			ft_error(0, SH_ERR_NOHOME, "%s", av[0]);
+		if (opt == 'L')
+			nosym = 0;
+		else if (opt == 'P')
+			nosym = 1;
+		else
+		{
+			ft_error(0, 0, "%s: illegal option -- %c", av[0], g_ft_optopt);
+			return (-1);
+		}
 	}
-	else if (ft_strcmp(av[1], "-") == 0)
-	{
-		if (!(pwd = sh_env_getvar(env, "OLDPWD")))
-			ft_error(0, SH_ERR_NOOLDPWD, "%s", av[0]);
-	}
-	else
-		pwd = av[1];
-	return (pwd);
+	return (nosym);
 }
 
-static int			set_env_vars(t_sh_env *env, char *const av[],
-						const char *oldpwd, const char *newpwd)
+static int			get_newwd(t_sh_env *env, const char *arg, const char **pwd)
 {
-	int		err;
-
-	if ((err = sh_env_setvar(env, "OLDPWD", oldpwd))
-		|| (err = sh_env_setvar(env, "PWD", newpwd)))
+	*pwd = NULL;
+	if (!arg)
 	{
-		ft_error(0, err, "%s", av[0]);
-		return (-1);
+		if (!(*pwd = sh_env_getvar(env, "HOME")))
+			return (SH_ERR_NOHOME);
 	}
-	if (av[1] && ft_strcmp(av[1], "-") == 0)
-		ft_fprintf(FT_STDOUT, "%s\n", newpwd);
+	else if (ft_strcmp(arg, "-") == 0)
+	{
+		if (!(*pwd = sh_env_getvar(env, "OLDPWD")))
+			return (SH_ERR_NOOLDPWD);
+	}
+	else
+		*pwd = arg;
 	return (0);
 }
 
-static char			*get_curr_pwd(char *const av[])
+static int			change_wd(t_sh_env *env, const char *path,
+						int nosym, int print_dir)
 {
-	char	*pwd;
+	int		err;
+	char	*oldpwd;
+	char	*newpwd;
 
-	if (!(pwd = getcwd(NULL, 0)))
+	oldpwd = NULL;
+	newpwd = NULL;
+	if ((err = sh_env_getcwd(env, 0, &oldpwd))
+		|| (err = sh_env_chdir(env, path, nosym))
+		|| (err = sh_env_getcwd(env, 0, &newpwd))
+		|| (err = sh_env_setvar(env, "PWD", newpwd))
+		|| (err = sh_env_setvar(env, "OLDPWD", oldpwd)))
 	{
-		ft_error(0, SH_ERR_IO, "%s", av[0]);
-		return (NULL);
+		free(oldpwd);
+		free(newpwd);
+		return (err);
 	}
-	return (pwd);
-}
-
-static int			change_pwd(const char *dir, char *const av[])
-{
-	if (chdir(dir))
-	{
-		ft_error(0, SH_ERR_NOTDIR, "%s", av[0]);
-		return (-1);
-	}
+	if (print_dir)
+		ft_fprintf(FT_STDOUT, "%s\n", newpwd);
+	free(oldpwd);
+	free(newpwd);
 	return (0);
 }
 
 int					sh_builtin_cd(int ac, char *const av[], t_sh_env *env)
 {
-	char		*oldpwd;
-	char		*newpwd;
 	const char	*dir;
-	int			status;
+	int			err;
+	int			nosym;
 
-	(void)ac;
-	status = FT_EXIT_SUCCESS;
-	oldpwd = NULL;
-	newpwd = NULL;
-	dir = NULL;
-	if (!(oldpwd = get_curr_pwd(av)) || !(dir = get_new_pwd(av, env))
-		|| change_pwd(dir, av) || !(newpwd = get_curr_pwd(av))
-		|| set_env_vars(env, av, oldpwd, newpwd))
-		status = FT_EXIT_FAILURE;
-	free(newpwd);
-	free(oldpwd);
-	return (status);
+	if ((nosym = no_symlinks(ac, av)) < 0)
+		return (FT_EXIT_FAILURE);
+	if ((err = get_newwd(env, av[g_ft_optind], &dir))
+		|| (err = change_wd(env, dir, nosym,
+			av[g_ft_optind] && ft_strcmp(av[g_ft_optind], "-") == 0)))
+	{
+		ft_error(0, err, "%s", av[0]);
+		return (FT_EXIT_FAILURE);
+	}
+	return (FT_EXIT_SUCCESS);
 }

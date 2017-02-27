@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:29:20 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 02:05:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 02:02:27 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
 #include "sh_errors.h"
 #include "ft_memory.h"
+#include <unistd.h>
 
 int		sh_env_start(t_sh_env *env, char *const envp[])
 {
@@ -21,6 +22,8 @@ int		sh_env_start(t_sh_env *env, char *const envp[])
 
 	env->exit_status = SH_EXIT_SUCCESS;
 	env->should_exit = 0;
+	if (!(env->cwd = getcwd(NULL, 0)))
+		return (SH_ERR_IO);
 	size = 0;
 	while (envp[size])
 		++size;

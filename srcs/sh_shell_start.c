@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:12:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 15:43:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 03:39:20 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	set_pwd(t_sh_env *env)
 	char		*syspwd;
 	int			err;
 
-	if ((envpwd = sh_env_getvar(env, "PWD")) && !chdir(envpwd))
+	if ((envpwd = sh_env_getvar(env, "PWD")) && !sh_env_chdir(env, envpwd, 0))
 		return (0);
 	if (!(syspwd = getcwd(NULL, 0)))
 		return (SH_ERR_IO);

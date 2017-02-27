@@ -6,30 +6,53 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:18:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:19:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 03:31:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_builtins.h"
 #include "sh_errors.h"
 #include "ft_program.h"
-#include "ft_streams.h"
+#include "ft_printf.h"
 #include <unistd.h>
+
+static int	no_symlinks(int ac, char *const av[])
+{
+	int		nosym;
+	int		opt;
+
+	nosym = 0;
+	g_ft_opterr = 0;
+	g_ft_optind = 0;
+	while ((opt = ft_getopt(ac, av, "LP")) != -1)
+	{
+		if (opt == 'L')
+			nosym = 0;
+		else if (opt == 'P')
+			nosym = 1;
+		else
+		{
+			ft_error(0, 0, "%s: illegal option -- %c", av[0], g_ft_optopt);
+			return (-1);
+		}
+	}
+	return (nosym);
+}
 
 int		sh_builtin_pwd(int ac, char *const av[], t_sh_env *env)
 {
-	char	*pwd;
+	int			nosym;
+	char		*cwd;
+	int			err;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	if (!(pwd = getcwd(NULL, 0)))
+	if ((nosym = no_symlinks(ac, av)) < 0)
+		return (FT_EXIT_FAILURE);
+	if ((err = sh_env_getcwd(env, nosym, &cwd)))
 	{
-		ft_error(0, SH_ERR_IO, "%s", av[0]);
+		ft_error(0, err, "%s", av[0]);
 		return (FT_EXIT_FAILURE);
 	}
-	ft_fputs(pwd, FT_STDOUT);
-	ft_fputc('\n', FT_STDOUT);
-	free(pwd);
+	ft_fprintf(FT_STDOUT, "%s\n", cwd);
+	free(cwd);
 	return (FT_EXIT_SUCCESS);
 }

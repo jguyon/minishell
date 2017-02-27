@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/25 18:14:58 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/27 02:48:37 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -60,6 +60,10 @@ NAME = minishell
 SOURCES = \
 	sh_strerror \
 	\
+	sh_path_join \
+	sh_path_canonical \
+	sh_check_dir \
+	\
 	sh_builtin_echo \
 	sh_builtin_cd \
 	sh_builtin_pwd \
@@ -74,6 +78,8 @@ SOURCES = \
 	sh_env_getvar \
 	sh_env_setvar \
 	sh_env_unsetvar \
+	sh_env_getcwd \
+	sh_env_chdir \
 	sh_env_binpath \
 	sh_env_builtin \
 	sh_env_exec_bin \
