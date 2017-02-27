@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 15:12:56 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/08 03:28:44 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/27 21:09:35 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -33,11 +33,7 @@ TST_DEP := $(TST_EXE:%.t=%.d)
 PATHS := $(sort $(dir $(OBJ) $(TST_EXE)))
 
 # Default target
-all: $(DEFAULT_BUILD)
-
-# Compile library with release flags
-release: CPPFLAGS := $(strip $(CPPFLAGS) $(RLSFLAGS))
-release: $(NAME)
+all: $(NAME)
 
 # Compile library with debug flags
 debug: CPPFLAGS := $(strip $(CPPFLAGS) $(DBGFLAGS))

@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 14:04:23 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/27 15:30:44 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/27 21:18:14 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -109,7 +109,7 @@ SOURCES = \
 	sh_shell_end \
 
 # Wildcard for test files, it makes experimentation easier
-TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
+TEST_FILES :=
 
 # Source names to execute as tests
 TESTS = $(filter test_%,$(TEST_FILES))

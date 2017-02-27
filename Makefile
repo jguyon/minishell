@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/02/14 13:42:02 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/14 17:04:29 by jguyon           ###   ########.fr        #
+#    Updated: 2017/02/27 21:19:22 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -37,12 +37,7 @@ TST_DEP := $(TST_EXE:%.t=%.d)
 PATHS := $(sort $(dir $(OBJ) $(TST_EXE)))
 
 # Default target
-all: $(DEFAULT_BUILD)
-
-# Compile program with release flags
-release: CPPFLAGS := $(strip $(CPPFLAGS) $(RLSFLAGS))
-release: LDFLAGS := $(strip $(LDFLAGS) $(RLSFLAGS))
-release: $(NAME)
+all: $(NAME)
 
 # Compile program with debug flags
 debug: CPPFLAGS := $(strip $(CPPFLAGS) $(DBGFLAGS))
@@ -72,7 +67,7 @@ endif
 
 # Remove intermediate files
 clean:
-	@$(MAKE) -C $(LIBFT_PATH) -s -w clean
+	-$(MAKE) -C $(LIBFT_PATH) clean
 	-rm -f $(OBJ) $(DEP) $(TST_DEP) $(LIBFT) $(LIBTAP)
 
 # Remove executable, tests and intermediate files
@@ -102,13 +97,13 @@ $(BUILD_PATH)/%.d: ;
 $(OBJ) $(TST_EXE): | $(PATHS)
 
 $(LIBFT): force
-	@$(MAKE) -C $(LIBFT_PATH) -j -s -w \
+	@$(MAKE) -C $(LIBFT_PATH) -j \
 		NAME='$(patsubst $(LIBFT_PATH)/%.a,%.a,$@)' \
 		MODULES='$(LIBFT_MODULES)' \
-		release
+		all
 
 $(LIBTAP): force
-	@$(MAKE) -C $(LIBFT_PATH) -j -s -w \
+	@$(MAKE) -C $(LIBFT_PATH) -j \
 		NAME='$(patsubst $(LIBFT_PATH)/%.a,%.a,$@)' \
 		MODULES=tap \
 		debug
