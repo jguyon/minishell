@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 15:33:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 01:09:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 15:17:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,12 @@ int		sh_path_canonical(const char *path, char **canon);
 ** Returns 0 if successful, the error number otherwise.
 */
 int		sh_check_dir(const char *path);
+
+/*
+** Check if a file is executable
+**
+** Returns 0 if successful, the error number otherwise.
+*/
+int		sh_check_bin(const char *path);
 
 #endif

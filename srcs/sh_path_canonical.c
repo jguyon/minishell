@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 16:16:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/26 21:00:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 13:05:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,33 @@
 #include "ft_strings.h"
 #include "ft_memory.h"
 
-static char	*process_element(char *root, char *curr,
+static int	process_element(char *root, char **curr,
 				const char *start, const char *end)
 {
+	int		err;
+
 	if (start[0] == '.' && start[1] == '.' && end == start + 2)
 	{
-		if (curr != root + 1)
+		if (*curr != root)
 		{
-			--curr;
-			while (*(curr - 1) != '/')
-				--curr;
+			--(*curr);
+			while (**curr != '/')
+				--(*curr);
+			if (*curr == root)
+				*(*curr + 1) = '\0';
+			else
+				**curr = '\0';
 		}
 	}
 	else if (start != end && (start[0] != '.' || end != start + 1))
 	{
-		ft_memcpy(curr, start, end - start + 1);
-		curr += *end ? end - start + 1 : end - start;
+		ft_memcpy(*curr, start - 1, end - start + 1);
+		*curr += end - start + 1;
+		**curr = '\0';
+		if (*end == '/' && (err = sh_check_dir(root)))
+			return (err);
 	}
-	return (curr);
-}
-
-static void	finish_dir(char *root, char *end)
-{
-	if (end > root + 1 && *(end - 1) == '/')
-		*(end - 1) = '\0';
-	else
-		*end = '\0';
+	return (0);
 }
 
 int			sh_path_canonical(const char *path, char **canon)
@@ -48,20 +49,24 @@ int			sh_path_canonical(const char *path, char **canon)
 	const char	*start;
 	const char	*end;
 	char		*curr;
+	int			err;
 
 	*canon = NULL;
 	if (path[0] != '/')
 		return (-1);
 	if (!(*canon = ft_strnew(ft_strlen(path))))
 		return (SH_ERR_NOMEM);
-	**canon = '/';
-	curr = *canon + 1;
+	ft_strcpy(*canon, "/");
+	curr = *canon;
 	start = path + 1;
 	while (*start && (end = ft_strchrnul(start, '/')))
 	{
-		curr = process_element(*canon, curr, start, end);
+		if ((err = process_element(*canon, &curr, start, end)))
+		{
+			ft_memdel((void **)canon);
+			return (err);
+		}
 		start = end[0] == '/' ? end + 1 : end;
 	}
-	finish_dir(*canon, curr);
 	return (0);
 }
