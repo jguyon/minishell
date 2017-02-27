@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 16:16:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 12:06:05 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 13:05:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,33 +22,26 @@ static int	process_element(char *root, char **curr,
 
 	if (start[0] == '.' && start[1] == '.' && end == start + 2)
 	{
-		if (*curr != root + 1)
+		if (*curr != root)
 		{
 			--(*curr);
-			while (*(*curr - 1) != '/')
+			while (**curr != '/')
 				--(*curr);
+			if (*curr == root)
+				*(*curr + 1) = '\0';
+			else
+				**curr = '\0';
 		}
 	}
 	else if (start != end && (start[0] != '.' || end != start + 1))
 	{
-		ft_memcpy(*curr, start, end - start + 1);
-		*curr += *end ? end - start + 1 : end - start;
-		if (*end)
-		{
-			**curr = '\0';
-			if ((err = sh_check_dir(root)))
-				return (err);
-		}
+		ft_memcpy(*curr, start - 1, end - start + 1);
+		*curr += end - start + 1;
+		**curr = '\0';
+		if (*end == '/' && (err = sh_check_dir(root)))
+			return (err);
 	}
 	return (0);
-}
-
-static void	finish_dir(char *root, char *end)
-{
-	if (end > root + 1 && *(end - 1) == '/')
-		*(end - 1) = '\0';
-	else
-		*end = '\0';
 }
 
 int			sh_path_canonical(const char *path, char **canon)
@@ -64,7 +57,7 @@ int			sh_path_canonical(const char *path, char **canon)
 	if (!(*canon = ft_strnew(ft_strlen(path))))
 		return (SH_ERR_NOMEM);
 	ft_strcpy(*canon, "/");
-	curr = *canon + 1;
+	curr = *canon;
 	start = path + 1;
 	while (*start && (end = ft_strchrnul(start, '/')))
 	{
@@ -75,6 +68,5 @@ int			sh_path_canonical(const char *path, char **canon)
 		}
 		start = end[0] == '/' ? end + 1 : end;
 	}
-	finish_dir(*canon, curr);
 	return (0);
 }
