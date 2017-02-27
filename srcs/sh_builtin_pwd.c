@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:18:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 03:31:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 17:20:12 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	no_symlinks(int ac, char *const av[])
 	return (nosym);
 }
 
-int		sh_builtin_pwd(int ac, char *const av[], t_sh_env *env)
+int			sh_builtin_pwd(int ac, char *const av[], t_sh_env *env)
 {
 	int			nosym;
 	char		*cwd;

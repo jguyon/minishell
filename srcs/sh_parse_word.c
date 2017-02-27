@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 18:37:19 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 22:18:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 17:21:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	read_word(t_sh_input *in, t_darray *dstr)
 
 	i = 0;
 	while (in->next_c != FT_EOF && in->next_c != SH_NEWLINE
-		   && !ft_strchr(SH_WHITESPACE, in->next_c))
+		&& !ft_strchr(SH_WHITESPACE, in->next_c))
 	{
 		if ((err = ft_darr_set(dstr, i, &(in->next_c))) != 0)
 			return (err);

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 01:31:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 01:57:25 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 17:20:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int		sh_env_exec(t_sh_env *env, char *const argv[])
 	builtin = NULL;
 	binpath = NULL;
 	if ((err = sh_env_builtin(env, argv[0], &builtin)) == 0)
-		env->exit_status
-			= SH_EXIT_STATUS(sh_env_exec_builtin(env, builtin, argv));
+		env->exit_status =
+			SH_EXIT_STATUS(sh_env_exec_builtin(env, builtin, argv));
 	else if ((err = sh_env_binpath(env, argv[0], &binpath)) == 0)
 		env->exit_status = SH_EXIT_STATUS(sh_env_exec_bin(env, binpath, argv));
 	else if (err == SH_ERR_NOPERM)

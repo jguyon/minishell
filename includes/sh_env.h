@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:23:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 02:16:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 17:19:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,9 @@ void			sh_env_unsetvar(t_sh_env *env, const char *name);
 int				sh_env_getcwd(t_sh_env *env, int nosym, char **cwd);
 
 /*
+** Change the current working directory
 **
+** Returns 0 if successful, the error number otherwise.
 */
 int				sh_env_chdir(t_sh_env *env, const char *path, int nosym);
 
