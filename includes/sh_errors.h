@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 15:19:37 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 15:46:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 16:58:13 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define SH_ERR_NOPWD		11
 # define SH_ERR_NOENT		12
 # define SH_ERR_NOTREG		13
+# define SH_ERR_BADENV		14
 
 /*
 ** Get the error message corresponding to an error number

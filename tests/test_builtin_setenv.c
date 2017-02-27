@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/22 19:16:03 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:28:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 17:11:12 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,26 @@ static void	test_value(t_tap *t)
 	}
 }
 
+static void	test_invalid(t_tap *t)
+{
+	char		*ep[] = {NULL};
+	char		*av[] = {"setenv", "42", "john", NULL};
+	t_sh_env	env;
+
+	ft_tap_plan(t, 3);
+	if (sh_env_start(&env, ep) == 0)
+	{
+		FT_TAP_IEQ(t, sh_builtin_setenv(3, av, &env), 1);
+		FT_TAP_OK(t, sh_env_getvar(&env, "42") == NULL);
+		STDERR_EQ(t, "minishell: setenv: 42: not a valid identifier\n");
+		sh_env_end(&env);
+	}
+}
+
 void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_print);
 	FT_TAP_TEST(t, test_empty);
 	FT_TAP_TEST(t, test_value);
+	FT_TAP_TEST(t, test_invalid);
 }

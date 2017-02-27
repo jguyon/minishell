@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:23:01 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:26:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 17:10:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,27 @@ static void	print_env(t_sh_env *env)
 	}
 }
 
+static int	check_varname(const char *name)
+{
+	if (!name)
+		return (0);
+	if (*name < 'A' || *name > 'Z')
+		return (SH_ERR_BADENV);
+	while (*name)
+	{
+		if (!((*name >= 'A' && *name <= 'Z')
+				|| (*name >= '0' && *name <= '9')
+				|| *name == '_'))
+			return (SH_ERR_BADENV);
+		++name;
+	}
+	return (0);
+}
+
 int			sh_builtin_setenv(int ac, char *const av[], t_sh_env *env)
 {
+	int		err;
+
 	if (ac > 3)
 	{
 		ft_error(0, SH_ERR_ARGS2BIG, "%s", av[0]);
@@ -44,9 +63,10 @@ int			sh_builtin_setenv(int ac, char *const av[], t_sh_env *env)
 		print_env(env);
 		return (FT_EXIT_SUCCESS);
 	}
-	if (sh_env_setvar(env, av[1], av[2] ? av[2] : NULL))
+	if ((err = check_varname(av[1]))
+		|| (err = sh_env_setvar(env, av[1], av[2] ? av[2] : NULL)))
 	{
-		ft_error(0, SH_ERR_NOMEM, "%s", av[0]);
+		ft_error(0, err, "%s: %s", av[0], av[1]);
 		return (FT_EXIT_FAILURE);
 	}
 	return (FT_EXIT_SUCCESS);
