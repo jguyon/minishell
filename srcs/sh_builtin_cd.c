@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:18:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 03:11:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 18:58:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,17 @@ int					sh_builtin_cd(int ac, char *const av[], t_sh_env *env)
 	int			err;
 	int			nosym;
 
+	dir = NULL;
 	if ((nosym = no_symlinks(ac, av)) < 0)
 		return (FT_EXIT_FAILURE);
 	if ((err = get_newwd(env, av[g_ft_optind], &dir))
 		|| (err = change_wd(env, dir, nosym,
 			av[g_ft_optind] && ft_strcmp(av[g_ft_optind], "-") == 0)))
 	{
-		ft_error(0, err, "%s", av[0]);
+		if (av[g_ft_optind])
+			ft_error(0, err, "%s: %s", av[0], av[g_ft_optind]);
+		else
+			ft_error(0, err, "%s", av[0]);
 		return (FT_EXIT_FAILURE);
 	}
 	return (FT_EXIT_SUCCESS);
