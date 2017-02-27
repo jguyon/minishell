@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 16:23:57 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 22:20:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 17:39:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 static void	test_prompt_flow(t_tap *t)
 {
-	char		*ep[] = {"PATH=/bin:/usr/bin"};
+	char		*ep[] = {"PATH=/bin:/usr/bin", NULL};
 	t_sh_env	env;
 
 	ft_tap_plan(t, 11);
@@ -40,7 +40,7 @@ static void	test_prompt_flow(t_tap *t)
 
 static void	test_prompt_eof(t_tap *t)
 {
-	char		*ep[] = {"PATH=/bin:/usr/bin"};
+	char		*ep[] = {"PATH=/bin:/usr/bin", NULL};
 	t_sh_env	env;
 
 	ft_tap_plan(t, 6);

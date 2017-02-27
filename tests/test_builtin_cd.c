@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 20:53:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 03:17:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 17:26:37 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ static void	test_relative(t_tap *t)
 
 	cwd = getcwd(NULL, 0);
 	mkdir("/tmp/minishell_parent", S_IRWXU);
-	chdir("/tmp/minishell_parent");
 	ft_tap_plan(t, 4);
-	if (sh_env_start(&env, ep) == 0)
+	if (sh_env_start(&env, ep) == 0
+		&& sh_env_chdir(&env, "/tmp/minishell_parent", 0) == 0)
 	{
 		FT_TAP_IEQ(t, sh_builtin_cd(2, av, &env), 0);
 		real = realpath("/tmp/", NULL);

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 23:00:22 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 03:36:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 17:38:44 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "ft_strings.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 static void	test_dir(t_tap *t)
 {
@@ -25,8 +27,8 @@ static void	test_dir(t_tap *t)
 
 	ft_tap_plan(t, 2);
 	pwd = getcwd(NULL, 0);
-	chdir("/tmp");
-	if (sh_env_start(&env, ep) == 0)
+	if (sh_env_start(&env, ep) == 0
+		&& sh_env_chdir(&env, "/tmp", 0) == 0)
 	{
 		FT_TAP_IEQ(t, sh_builtin_pwd(1, av, &env), 0);
 		STDOUT_EQ(t, "/tmp\n");
@@ -42,18 +44,22 @@ static void	test_nosym(t_tap *t)
 	char		*av[] = {"pwd", "-P", NULL};
 	t_sh_env	env;
 	char		*pwd;
+	char		real[256] = {0};
 
 	ft_tap_plan(t, 2);
 	pwd = getcwd(NULL, 0);
 	symlink("/tmp", "/tmp/sh_symlink");
-	chdir("/tmp/sh_symlink/");
-	if (sh_env_start(&env, ep) == 0)
+	realpath("/tmp", real);
+	if (sh_env_start(&env, ep) == 0
+		&& sh_env_chdir(&env, "/tmp/sh_symlink/", 0) == 0)
 	{
 		FT_TAP_IEQ(t, sh_builtin_pwd(2, av, &env), 0);
-		STDOUT_EQ(t, "/tmp\n");
+		real[strlen(real)] = '\n';
+		STDOUT_EQ(t, real);
 		sh_env_end(&env);
 	}
 	chdir(pwd);
+	remove("/tmp/sh_symlink");
 	free(pwd);
 }
 
