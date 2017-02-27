@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 22:20:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 16:24:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 19:11:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	check_absolute(const char *name, char **path)
 	if (!(err = sh_check_bin(*path)))
 		return (0);
 	ft_memdel((void **)path);
-	return (err);
+	return (err == SH_ERR_NOENT ? SH_ERR_NOCMD : err);
 }
 
 static int	check_paths(const char *envpaths, const char *name, char **path)
@@ -66,7 +66,7 @@ static int	check_paths(const char *envpaths, const char *name, char **path)
 		ft_memdel((void **)path);
 		start = *end == '\0' ? end : end + 1;
 	}
-	return (!err || err == SH_ERR_NOENT ? SH_ERR_NOTFOUND : err);
+	return (!err || err == SH_ERR_NOENT ? SH_ERR_NOCMD : err);
 }
 
 int			sh_env_binpath(t_sh_env *env, const char *name, char **path)
