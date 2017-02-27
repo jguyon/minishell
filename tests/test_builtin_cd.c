@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 20:53:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 01:22:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 03:17:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ static void	test_error(t_tap *t)
 	{
 		FT_TAP_IEQ(t, sh_builtin_cd(2, av, &env), 1);
 		FT_TAP_SEQ(t, (newpwd = getcwd(NULL, 0)), oldpwd);
-		STDERR_EQ(t, "minishell: cd: not a directory\n");
+		STDERR_EQ(t, "minishell: cd: no such file or directory\n");
 		sh_env_end(&env);
 	}
 	chdir(oldpwd);

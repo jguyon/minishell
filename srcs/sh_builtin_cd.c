@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:18:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/26 23:07:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 03:11:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,135 +19,87 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static int			keep_links(int ac, char *const av[])
+static int			no_symlinks(int ac, char *const av[])
 {
-	int		keep;
+	int		nosym;
 	int		opt;
 
-	keep = 1;
+	nosym = 0;
 	g_ft_opterr = 0;
 	g_ft_optind = 0;
 	while ((opt = ft_getopt(ac, av, "LP")) != -1)
 	{
 		if (opt == 'L')
-			keep = 1;
+			nosym = 0;
 		else if (opt == 'P')
-			keep = 0;
+			nosym = 1;
 		else
 		{
 			ft_error(0, 0, "%s: illegal option -- %c", av[0], g_ft_optopt);
 			return (-1);
 		}
 	}
-	return (keep);
+	return (nosym);
 }
 
-static int			get_cwd(t_sh_env *env, char **cwd)
+static int			get_newwd(t_sh_env *env, const char *arg, const char **pwd)
 {
-	const char	*pwd;
-
-	if ((pwd = sh_env_getvar(env, "PWD")) && pwd[0] == '/')
-	{
-		if (!(*cwd = ft_strdup(pwd)))
-			return (SH_ERR_NOMEM);
-	}
-	else
-	{
-		if (!(*cwd = getcwd(NULL, 0)))
-			return (SH_ERR_IO);
-	}
-	return (0);
-}
-
-static int			get_newwd(t_sh_env *env, const char *arg,
-						const char *cwd, char **pwd)
-{
-	const char	*dir;
-	int			err;
-
 	*pwd = NULL;
 	if (!arg)
 	{
-		if (!(dir = sh_env_getvar(env, "HOME")))
+		if (!(*pwd = sh_env_getvar(env, "HOME")))
 			return (SH_ERR_NOHOME);
 	}
 	else if (ft_strcmp(arg, "-") == 0)
 	{
-		if (!(dir = sh_env_getvar(env, "OLDPWD")))
+		if (!(*pwd = sh_env_getvar(env, "OLDPWD")))
 			return (SH_ERR_NOOLDPWD);
 	}
 	else
-		dir = arg;
-	if (dir[0] != '/')
-	{
-		if ((err = sh_path_join(cwd, dir, pwd)))
-			return (err);
-	}
-	else if (!(*pwd = ft_strdup(dir)))
-		return (SH_ERR_NOMEM);
+		*pwd = arg;
 	return (0);
 }
 
-static int			change_wd(t_sh_env *env, const char *old, const char *new,
-						int keep_links)
+static int			change_wd(t_sh_env *env, const char *path,
+						int nosym, int print_dir)
 {
 	int		err;
-	char	*canon;
+	char	*oldpwd;
+	char	*newpwd;
 
-	canon = NULL;
-	if (access(new, F_OK))
-		return (SH_ERR_NOTDIR);
-	if (access(new, X_OK))
-		return (SH_ERR_NOPERM);
-	if ((err = sh_path_canonical(new, &canon)))
-		return (err);
-	if (chdir(canon))
+	oldpwd = NULL;
+	newpwd = NULL;
+	if ((err = sh_env_getcwd(env, 0, &oldpwd))
+		|| (err = sh_env_chdir(env, path, nosym))
+		|| (err = sh_env_getcwd(env, 0, &newpwd))
+		|| (err = sh_env_setvar(env, "PWD", newpwd))
+		|| (err = sh_env_setvar(env, "OLDPWD", oldpwd)))
 	{
-		free(canon);
-		return (SH_ERR_IO);
-	}
-	if (!keep_links)
-	{
-		free(canon);
-		if (!(canon = getcwd(NULL, 0)))
-			return (SH_ERR_IO);
-	}
-	if ((err = sh_env_setvar(env, "PWD", canon))
-		|| (err = sh_env_setvar(env, "OLDPWD", old)))
-	{
-		free(canon);
+		free(oldpwd);
+		free(newpwd);
 		return (err);
 	}
-	free(canon);
+	if (print_dir)
+		ft_fprintf(FT_STDOUT, "%s\n", newpwd);
+	free(oldpwd);
+	free(newpwd);
 	return (0);
 }
 
 int					sh_builtin_cd(int ac, char *const av[], t_sh_env *env)
 {
-	char	*oldpwd;
-	char	*newpwd;
-	int		err;
-	int		status;
-	int		keep;
+	const char	*dir;
+	int			err;
+	int			nosym;
 
-	if ((keep = keep_links(ac, av)) < 0)
+	if ((nosym = no_symlinks(ac, av)) < 0)
 		return (FT_EXIT_FAILURE);
-	oldpwd = NULL;
-	newpwd = NULL;
-	if ((err = get_cwd(env, &oldpwd))
-		|| (err = get_newwd(env, av[g_ft_optind], oldpwd, &newpwd))
-		|| (err = change_wd(env, oldpwd, newpwd, keep)))
+	if ((err = get_newwd(env, av[g_ft_optind], &dir))
+		|| (err = change_wd(env, dir, nosym,
+			av[g_ft_optind] && ft_strcmp(av[g_ft_optind], "-") == 0)))
 	{
 		ft_error(0, err, "%s", av[0]);
-		status = FT_EXIT_FAILURE;
+		return (FT_EXIT_FAILURE);
 	}
-	else
-	{
-		status = FT_EXIT_SUCCESS;
-		if (av[g_ft_optind] && ft_strcmp(av[g_ft_optind], "-") == 0)
-			ft_fprintf(FT_STDOUT, "%s\n", newpwd);
-	}
-	free(oldpwd);
-	free(newpwd);
-	return (status);
+	return (FT_EXIT_SUCCESS);
 }

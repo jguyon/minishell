@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_env_end.c                                       :+:      :+:    :+:   */
+/*   sh_env_getcwd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/23 16:33:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 02:03:26 by jguyon           ###   ########.fr       */
+/*   Created: 2017/02/27 01:27:27 by jguyon            #+#    #+#             */
+/*   Updated: 2017/02/27 02:16:47 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
-#include "ft_memory.h"
+#include "sh_errors.h"
+#include <unistd.h>
 
-void	sh_env_end(t_sh_env *env)
+int		sh_env_getcwd(t_sh_env *env, int nosym, char **cwd)
 {
-	size_t	i;
-	char	**vars;
-
-	ft_memdel((void **)&(env->cwd));
-	vars = env->vars.array;
-	i = 0;
-	while (vars[i])
-	{
-		ft_memdel((void **)&vars[i]);
-		++i;
-	}
-	ft_darr_clear(&(env->vars));
+	*cwd = NULL;
+	if (nosym && !(*cwd = getcwd(NULL, 0)))
+		return (SH_ERR_IO);
+	else if (!nosym && !(*cwd = ft_strdup(env->cwd)))
+		return (SH_ERR_NOMEM);
+	return (0);
 }
