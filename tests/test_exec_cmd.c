@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 00:34:52 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 18:36:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 19:44:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	test_failure(t_tap *t)
 		sh_cmd_push(cmd, sh_word_new(ft_strdup("2")));
 		sh_cmd_push(cmd, sh_word_new(ft_strdup("-eq")));
 		sh_cmd_push(cmd, sh_word_new(ft_strdup("1")));
-		FT_TAP_IEQ(t, sh_exec_cmd(&env, cmd, &name), SH_ERR_NOTFOUND);
+		FT_TAP_IEQ(t, sh_exec_cmd(&env, cmd, &name), SH_ERR_NOCMD);
 		FT_TAP_SEQ(t, name, "test");
 		free(name);
 		FT_TAP_IEQ(t, sh_env_status(&env), SH_EXIT_NOTFOUND);

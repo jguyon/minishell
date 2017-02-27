@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 00:01:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 03:24:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 19:43:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ int					sh_env_builtin(t_sh_env *env, const char *name,
 		}
 		++i;
 	}
-	return (SH_ERR_NOTFOUND);
+	return (SH_ERR_NOCMD);
 }
