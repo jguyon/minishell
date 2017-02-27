@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 15:33:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/26 18:57:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/02/27 01:09:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 /*
 ** Functions to manipulate files and paths
 */
+
+# include <sys/stat.h>
 
 /*
 ** Append path @child to @parent into @joined
@@ -32,5 +34,12 @@ int		sh_path_join(const char *parent, const char *child, char **joined);
 ** the error number otherwise.
 */
 int		sh_path_canonical(const char *path, char **canon);
+
+/*
+** Check if a directory is searchable
+**
+** Returns 0 if successful, the error number otherwise.
+*/
+int		sh_check_dir(const char *path);
 
 #endif
