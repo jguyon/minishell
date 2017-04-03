@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 19:39:08 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:26:20 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 19:05:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int			sh_parse_cmd(t_sh_input *in, t_sh_cmd **cmd)
 
 	FT_ASSERT(in != NULL);
 	FT_ASSERT(cmd != NULL);
+	FT_DEBUG("parse: parsing next command");
 	*cmd = NULL;
 	if ((err = sh_parse_word(in, &name)) != 0)
 		return (err);
@@ -36,5 +37,6 @@ int			sh_parse_cmd(t_sh_input *in, t_sh_cmd **cmd)
 		sh_cmd_del(cmd);
 		return (err);
 	}
+	FT_DEBUG("parse: parsed command '%s'", (*cmd)->name->str);
 	return (0);
 }

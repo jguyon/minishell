@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 00:30:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:15:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 19:12:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+#define EXIT_CODE(st) (WIFEXITED(st) ? WEXITSTATUS(st) : SH_EXIT_SIGNAL)
+
 int		sh_env_exec_bin(t_sh_env *env, const char *path, char *const argv[])
 {
 	pid_t	pid;
@@ -26,16 +28,15 @@ int		sh_env_exec_bin(t_sh_env *env, const char *path, char *const argv[])
 	FT_ASSERT(path != NULL);
 	FT_ASSERT(argv != NULL);
 	FT_ASSERT(argv[0] != NULL);
+	FT_DEBUG("env: exec binary '%s'", path);
 	pid = fork();
 	if (pid < 0)
 		return (SH_EXIT_NOFORK);
 	else if (pid > 0)
 	{
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
-		else
-			return (SH_EXIT_SIGNAL);
+		FT_DEBUG("env: binary '%s' exited with '%i'", path, EXIT_CODE(status));
+		return (EXIT_CODE(status));
 	}
 	else
 	{

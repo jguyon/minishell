@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:29:20 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:29:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 18:26:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ int			sh_env_start(t_sh_env *env, char *const envp[])
 		sh_env_end(env);
 		return (err);
 	}
+	FT_DEBUG("env: initialized env '%p'", env);
 	return (0);
 }

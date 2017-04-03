@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 01:48:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:16:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 18:31:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	change_dir(t_sh_env *env, char *path, int nosym)
 	}
 	ft_memdel((void **)&(env->cwd));
 	env->cwd = path;
+	FT_DEBUG("env: changed cwd to '%s'", env->cwd);
 	return (0);
 }
 

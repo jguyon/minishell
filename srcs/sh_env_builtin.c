@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 00:01:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:15:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 18:44:33 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int					sh_env_builtin(t_sh_env *env, const char *name,
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(name != NULL);
 	FT_ASSERT(builtin != NULL);
+	FT_DEBUG("env: searching for built-in '%s'", name);
 	(void)env;
 	i = 0;
 	*builtin = NULL;
@@ -42,6 +43,7 @@ int					sh_env_builtin(t_sh_env *env, const char *name,
 		if (ft_strcmp(name, g_builtins[i].name) == 0)
 		{
 			*builtin = &(g_builtins[i]);
+			FT_DEBUG("env: found built-in '%s'", name);
 			return (0);
 		}
 		++i;

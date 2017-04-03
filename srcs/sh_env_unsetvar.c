@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 19:22:33 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:17:25 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 18:28:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ void			sh_env_unsetvar(t_sh_env *env, const char *name)
 	FT_ASSERT(name != NULL);
 	i = find_var(env->vars.array, name);
 	unset_var(env->vars.array, i);
+	FT_DEBUG("env: unset var '%s'", name);
 }

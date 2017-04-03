@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 18:37:19 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:25:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 19:03:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int			sh_parse_word(t_sh_input *in, t_sh_word **word)
 
 	FT_ASSERT(in != NULL);
 	FT_ASSERT(word != NULL);
+	FT_DEBUG("parse: parsing next word");
 	*word = NULL;
 	if (skip_whitespace(in))
 		return (-1);
@@ -66,5 +67,6 @@ int			sh_parse_word(t_sh_input *in, t_sh_word **word)
 		ft_darr_clear(&dstr);
 		return (SH_ERR_NOMEM);
 	}
+	FT_DEBUG("parse: parsed word '%s'", (*word)->str);
 	return (0);
 }
