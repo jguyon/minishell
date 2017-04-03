@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 22:27:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 23:42:58 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 13:10:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char		**sh_cmd_toargv(t_sh_cmd **cmd)
 
 	if (!(*cmd))
 		return (NULL);
-	if (!(err = ft_darr_init(&dargv, NULL, sizeof(char *), 8))
+	if (!(err = ft_darr_init(&dargv, sizeof(char *), 8))
 		&& !(err = set_arg(&dargv, 0, sh_word_tostr(&((*cmd)->name)))))
 	{
 		i = 1;

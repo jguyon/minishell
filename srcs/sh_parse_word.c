@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 18:37:19 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 17:21:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 13:10:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int			sh_parse_word(t_sh_input *in, t_sh_word **word)
 	*word = NULL;
 	if (skip_whitespace(in))
 		return (-1);
-	if ((err = ft_darr_init(&dstr, NULL, sizeof(char), 8)) != 0)
+	if ((err = ft_darr_init(&dstr, sizeof(char), 8)) != 0)
 		return (err);
 	if ((err = read_word(in, &dstr)))
 	{
