@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:12:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:27:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 18:02:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int			sh_shell_start(t_sh_env *env, char *const envp[])
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(envp != NULL);
+	FT_DEBUG("shell: init shell with env '%p'", env);
 	if ((err = sh_env_start(env, envp)))
 	{
 		ft_error(0, err, NULL);

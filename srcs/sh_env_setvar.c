@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:49:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:17:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 18:34:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static int		set_var(t_darray *arr, const char *name, const char *val,
 		ft_memdel((void **)&new);
 		return (SH_ERR_NOMEM);
 	}
+	FT_DEBUG("env: set var '%s' to '%s'", name, new);
 	ft_memdel((void **)&old);
 	return (0);
 }

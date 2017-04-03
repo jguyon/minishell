@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:33:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:17:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 18:26:47 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void	sh_env_end(t_sh_env *env)
 		++i;
 	}
 	ft_darr_clear(&(env->vars));
+	FT_DEBUG("env: cleared env '%p'", env);
 }
