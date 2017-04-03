@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/07 13:24:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 13:47:33 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 18:42:50 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
 #include "ft_dlists.h"
+#include "ft_debug.h"
 
 /*
 ** Merge two sorted null-terminated linked lists together
@@ -103,6 +104,9 @@ void				ft_dlst_sort(t_dlist *list, t_dlist_compare cmp)
 	t_dlist_node	*result;
 	t_dlist_node	*next;
 
+	FT_ASSERT(list != NULL);
+	FT_ASSERT(list->head.prev && list->head.next);
+	FT_ASSERT(cmp != NULL);
 	if (list->head.next == &(list->head) || list->head.next == list->head.prev)
 		return ;
 	ft_bzero(parts, sizeof(parts));

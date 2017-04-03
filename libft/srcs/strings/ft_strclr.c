@@ -6,19 +6,19 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 15:22:59 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 17:00:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 17:22:11 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
 #include "ft_strings.h"
+#include "ft_debug.h"
 
 #ifndef FT_MEM_OPT
 
 void	ft_strclr(char *str)
 {
-	if (!str)
-		return ;
+	FT_ASSERT(str != NULL);
 	while (*str)
 		*(str++) = 0;
 }
@@ -27,8 +27,7 @@ void	ft_strclr(char *str)
 
 void	ft_strclr(char *str)
 {
-	if (!str)
-		return ;
+	FT_ASSERT(str != NULL);
 	while (FT_MEM_ALIGN(str))
 	{
 		if (!(*str))

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlst_popr.c                                     :+:      :+:    :+:   */
+/*   ft_assert.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/05 12:37:02 by jguyon            #+#    #+#             */
-/*   Updated: 2017/03/29 18:15:19 by jguyon           ###   ########.fr       */
+/*   Created: 2017/03/29 11:48:19 by jguyon            #+#    #+#             */
+/*   Updated: 2017/03/29 14:11:53 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_dlists.h"
 #include "ft_debug.h"
+#include <stdlib.h>
 
-t_dlist_node	*ft_dlst_popr(t_dlist *list)
+void	ft_assert(const char *file, int line, const char *expr)
 {
-	t_dlist_node	*node;
-
-	FT_ASSERT(list != NULL);
-	FT_ASSERT(list->head.prev && list->head.next);
-	if (list->head.prev == &(list->head))
-		return (NULL);
-	node = list->head.prev;
-	list->head.prev = node->prev;
-	list->head.prev->next = &(list->head);
-	return (node);
+	if (expr)
+	{
+		ft_debug(file, line, "`%s` assertion failed", expr);
+		exit(FT_ASSERT_EXIT);
+	}
 }

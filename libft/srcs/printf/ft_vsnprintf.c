@@ -6,11 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 16:02:31 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/14 12:27:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 18:49:37 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "ft_debug.h"
 
 static t_stream_funs	g_noop_funs;
 
@@ -21,6 +22,7 @@ int						ft_vsnprintf(char *str, size_t size,
 	int			count;
 	va_list		cpy;
 
+	FT_ASSERT(format != NULL);
 	if (!str && size > 0)
 		return (-1);
 	if (!(stm = ft_fopencookie(NULL, "w", g_noop_funs)))

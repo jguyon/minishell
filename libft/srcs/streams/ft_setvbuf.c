@@ -6,15 +6,17 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/08 17:55:28 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/13 13:16:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 19:06:20 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_streams.h"
+#include "ft_debug.h"
 
 int		ft_setvbuf(t_stream *stm, char *buff, int mode, size_t size)
 {
-	if (!stm || !(stm->flags) || stm->curr
+	FT_ASSERT(stm != NULL);
+	if (!(stm->flags) || stm->curr
 		|| (mode != FT_IONBF && mode != FT_IOFBF)
 		|| (mode != FT_IONBF && size == 0))
 		return (FT_EOF);

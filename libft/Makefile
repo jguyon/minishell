@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 15:12:56 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/08 03:28:44 by jguyon           ###   ########.fr        #
+#*   Updated: 2017/03/28 18:55:11 by jguyon           ###   ########.fr       *#
 #                                                                              #
 #******************************************************************************#
 
@@ -77,6 +77,7 @@ re: fclean all
 .PHONY: all release debug test check clean fclean re
 
 $(NAME): $(OBJ)
+	@rm -f $@
 	$(AR) $(ARFLAGS) $@ $^
 
 $(BUILD_PATH)/%.o: %.c $(BUILD_PATH)/%.d

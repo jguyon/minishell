@@ -6,17 +6,19 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 20:13:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 16:12:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 17:02:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
 #include "ft_strings.h"
+#include "ft_debug.h"
 
 #ifndef FT_MEM_OPT
 
 char	*ft_strchr(const char *str, int c)
 {
+	FT_ASSERT(str != NULL);
 	c = (char)c;
 	while (*str != c)
 	{
@@ -33,6 +35,7 @@ char	*ft_strchr(const char *str, int c)
 {
 	t_mem_word	word;
 
+	FT_ASSERT(str != NULL);
 	c = (char)c;
 	while (FT_MEM_ALIGN(str))
 	{

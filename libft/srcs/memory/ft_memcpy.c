@@ -6,11 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:39:23 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 15:41:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 16:10:13 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 #ifndef FT_MEM_OPT
 
@@ -18,6 +19,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	void	*ret;
 
+	FT_ASSERT(dst != NULL || n == 0);
+	FT_ASSERT(src != NULL || n == 0);
 	ret = dst;
 	while (n--)
 		*((unsigned char *)dst++) = *((unsigned char *)src++);
@@ -30,6 +33,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	void	*ret;
 
+	FT_ASSERT(dst != NULL || n == 0);
+	FT_ASSERT(src != NULL || n == 0);
 	ret = dst;
 	if (FT_MEM_ALIGN(dst) == FT_MEM_ALIGN(src))
 	{

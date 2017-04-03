@@ -6,16 +6,19 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 15:12:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 16:05:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 #ifndef FT_MEM_OPT
 
 int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
+	FT_ASSERT(s1 != NULL || n == 0);
+	FT_ASSERT(s2 != NULL || n == 0);
 	while (n && *((unsigned char *)s1) == *((unsigned char *)s2))
 	{
 		++s1;
@@ -29,6 +32,8 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n)
 
 int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
+	FT_ASSERT(s1 != NULL || n == 0);
+	FT_ASSERT(s2 != NULL || n == 0);
 	if (FT_MEM_ALIGN(s1) == FT_MEM_ALIGN(s2))
 	{
 		while (FT_MEM_ALIGN(s1)

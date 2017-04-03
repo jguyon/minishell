@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/12 16:35:22 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/12 17:55:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 19:04:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_streams.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 static ssize_t			write_ptr(void *cookie, const char *buff, size_t size)
 {
@@ -49,6 +50,8 @@ t_stream				*ft_open_memstream(char **ptr, size_t *sizeloc)
 {
 	t_ptr_cookie	*p;
 
+	FT_ASSERT(ptr != NULL);
+	FT_ASSERT(sizeloc != NULL);
 	if (!(p = ft_memalloc(sizeof(*p))))
 		return (NULL);
 	p->ptr = ptr;

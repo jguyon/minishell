@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 10:34:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 13:23:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 18:32:37 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ typedef struct	s_dlist {
 	size_t			offset;
 	t_dlist_node	head;
 }				t_dlist;
+
+/*
+** FT_DLST_NULLIFY - nullify node in debug mode
+** @node: dlist node pointer
+*/
+# ifdef FT_FEATURE_DEBUG
+#  define FT_DLST_NULLIFY(node) ((node)->prev = NULL) || ((node)->next = NULL)
+# else
+#  define FT_DLST_NULLIFY(node)
+# endif
 
 /*
 ** t_dlist_iterator - function pointer type used to iterate over entries

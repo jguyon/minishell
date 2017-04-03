@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/19 16:57:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/21 15:15:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/18 23:07:53 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #define OPTERR(c) "illegal option -- %c", c
 #define ARGERR(c) "option requires an argument -- %c", c
 #define IS_OPT_START(str) (str && str[0] == '-' && str[1] && str[1] != '-')
-#define IS_OPT_END(str) (str && str[0] == '-' && str[1] == '-' && str[2])
+#define IS_OPT_END(str) (str && str[0] == '-' && str[1] == '-' && !str[2])
 #define MISSING_OPT '?'
 #define ARG_INDICATOR ':'
 #define IS_VALID_OPT(c) ft_isalnum(c)
@@ -94,7 +94,10 @@ int			ft_getopt(int argc, char *const argv[], const char *optstring)
 			g_ft_optarg = argvopt + 1;
 		++g_ft_optind;
 		if (g_ft_optind > argc)
+		{
+			g_ft_optind = argc;
 			return (missing(ERR_ARG, g_ft_optopt, optstring));
+		}
 	}
 	return (g_ft_optopt);
 }

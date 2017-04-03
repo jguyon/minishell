@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 17:06:07 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 14:04:10 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 16:59:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "ft_memory.h"
 #include "ft_strings.h"
+#include "ft_debug.h"
 
 static char	const	*next_word(char const *str, char c, size_t *word_len)
 {
@@ -67,6 +68,7 @@ char				**ft_strsplit(char const *str, char c)
 	char	**words;
 	size_t	i;
 
+	FT_ASSERT(str != NULL);
 	len = count_words(str, c);
 	if (!(words = (char **)ft_memalloc(sizeof(*words) * (len + 1))))
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:29:20 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 02:02:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 13:09:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		sh_env_start(t_sh_env *env, char *const envp[])
 	size = 0;
 	while (envp[size])
 		++size;
-	if (ft_darr_init(&(env->vars), NULL, sizeof(envp[0]), size + 1))
+	if (ft_darr_init(&(env->vars), sizeof(envp[0]), size + 1))
 		return (SH_ERR_NOMEM);
 	vars = env->vars.array;
 	while (size)

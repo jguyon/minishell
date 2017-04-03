@@ -6,16 +6,18 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 17:53:37 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 15:22:09 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 16:31:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 #ifndef FT_MEM_OPT
 
 void	*ft_memchr(const void *str, int c, size_t n)
 {
+	FT_ASSERT(str != NULL || n == 0);
 	c = (unsigned char)c;
 	while (n)
 	{
@@ -33,6 +35,7 @@ void	*ft_memchr(const void *str, int c, size_t n)
 {
 	t_mem_word	word;
 
+	FT_ASSERT(str != NULL || n == 0);
 	c = (unsigned char)c;
 	while (FT_MEM_ALIGN(str) && n && *((unsigned char *)str) != c)
 	{

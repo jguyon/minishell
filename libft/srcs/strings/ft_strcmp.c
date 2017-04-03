@@ -6,17 +6,20 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 22:22:38 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 21:26:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 17:07:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
 #include "ft_strings.h"
+#include "ft_debug.h"
 
 #ifndef FT_MEM_OPT
 
 int		ft_strcmp(const char *s1, const char *s2)
 {
+	FT_ASSERT(s1 != NULL);
+	FT_ASSERT(s2 != NULL);
 	while (*s1 && *s1 == *s2)
 	{
 		++s1;
@@ -29,6 +32,8 @@ int		ft_strcmp(const char *s1, const char *s2)
 
 int		ft_strcmp(const char *s1, const char *s2)
 {
+	FT_ASSERT(s1 != NULL);
+	FT_ASSERT(s2 != NULL);
 	if (FT_MEM_ALIGN(s1) == FT_MEM_ALIGN(s2))
 	{
 		while (FT_MEM_ALIGN(s1))

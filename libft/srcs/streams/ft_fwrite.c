@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 20:02:35 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/13 13:27:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 19:08:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_streams.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 static size_t	write_nbf(const void *mem, size_t size, size_t n, t_stream *stm)
 {
@@ -54,7 +55,10 @@ static size_t	write_fbf(const void *mem, size_t size, size_t n, t_stream *stm)
 
 size_t			ft_fwrite(const void *mem, size_t size, size_t n, t_stream *stm)
 {
-	if (!stm || size * n == 0 || ft_ferror(stm) || (stm->flags & FT_IOWR) == 0)
+	FT_ASSERT(mem != NULL || n == 0);
+	FT_ASSERT(size > 0);
+	FT_ASSERT(stm != NULL);
+	if (size * n == 0 || ft_ferror(stm) || (stm->flags & FT_IOWR) == 0)
 		return (0);
 	if (stm->flags & FT_IONBF)
 		return (write_nbf(mem, size, n, stm));

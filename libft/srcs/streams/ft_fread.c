@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 17:02:50 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/13 20:22:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 19:09:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_streams.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 static size_t	read_nbf(void *mem, size_t size, size_t n, t_stream *stm)
 {
@@ -100,7 +101,9 @@ static size_t	read_fbf(void *mem, size_t size, size_t n, t_stream *stm)
 
 size_t			ft_fread(void *mem, size_t size, size_t n, t_stream *stm)
 {
-	if (!stm || size * n == 0 || ft_ferror(stm) || (stm->flags & FT_IORD) == 0)
+	FT_ASSERT(mem != NULL || n == 0);
+	FT_ASSERT(stm != NULL);
+	if (size * n == 0 || ft_ferror(stm) || (stm->flags & FT_IORD) == 0)
 		return (0);
 	if (!(stm->read))
 	{

@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/08 15:50:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/08 20:20:13 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 18:50:20 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "priv/pf_parse.h"
 #include "ft_strings.h"
+#include "ft_debug.h"
 
 int				ft_vfprintf(t_stream *stream, const char *format, va_list args)
 {
@@ -21,6 +22,8 @@ int				ft_vfprintf(t_stream *stream, const char *format, va_list args)
 	char		*next;
 	t_pf_info	info;
 
+	FT_ASSERT(stream != NULL);
+	FT_ASSERT(format != NULL);
 	if (!format || ft_ferror(stream))
 		return (-1);
 	count = 0;

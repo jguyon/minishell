@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 19:56:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/13 22:09:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 19:02:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_streams.h"
 #include "ft_strings.h"
+#include "ft_debug.h"
 #include <unistd.h>
 
 static ssize_t	stdwrite(void *fd, const char *buff, size_t size)
@@ -67,6 +68,7 @@ t_stream		*ft_fopencookie(void *cookie, const char *mode,
 {
 	t_stream	*stream;
 
+	FT_ASSERT(mode != NULL);
 	if ((mode[0] != 'w' && mode[0] != 'r') || mode[1] != '\0'
 		|| !(stream = next_stream()))
 		return (NULL);

@@ -6,11 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 17:24:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 16:02:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 16:24:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 #ifndef FT_MEM_OPT
 
@@ -88,6 +89,8 @@ static void	*cpy_right(void *dst, const void *src, size_t n)
 
 void		*ft_memmove(void *dst, const void *src, size_t len)
 {
+	FT_ASSERT(dst != NULL || len == 0);
+	FT_ASSERT(src != NULL || len == 0);
 	if (dst > src)
 		return (cpy_right(dst, src, len));
 	else

@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 14:32:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 16:07:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/03/29 17:00:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
 #include "ft_strings.h"
+#include "ft_debug.h"
 
 #ifndef FT_MEM_OPT
 
@@ -19,6 +20,7 @@ size_t	ft_strlen(const char *str)
 {
 	const char	*end;
 
+	FT_ASSERT(str != NULL);
 	end = str;
 	while (*end)
 		++end;
@@ -31,6 +33,7 @@ size_t	ft_strlen(const char *str)
 {
 	const char	*end;
 
+	FT_ASSERT(str != NULL);
 	end = str;
 	while (FT_MEM_ALIGN(end))
 	{
