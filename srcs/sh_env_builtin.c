@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 00:01:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 19:43:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:15:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "sh_errors.h"
 #include "sh_builtins.h"
 #include "ft_strings.h"
+#include "ft_debug.h"
 
 static t_sh_builtin	g_builtins[] = {
 	{ "echo", &sh_builtin_echo },
@@ -30,6 +31,9 @@ int					sh_env_builtin(t_sh_env *env, const char *name,
 {
 	size_t	i;
 
+	FT_ASSERT(env != NULL);
+	FT_ASSERT(name != NULL);
+	FT_ASSERT(builtin != NULL);
 	(void)env;
 	i = 0;
 	*builtin = NULL;

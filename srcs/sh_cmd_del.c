@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 20:58:58 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 22:20:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 15:04:50 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_ast.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 static int	del_arg(void *arg, void *acc)
 {
@@ -23,6 +24,7 @@ static int	del_arg(void *arg, void *acc)
 
 void		sh_cmd_del(t_sh_cmd **cmd)
 {
+	FT_ASSERT(cmd != NULL);
 	if (*cmd)
 	{
 		sh_word_del(&((*cmd)->name));

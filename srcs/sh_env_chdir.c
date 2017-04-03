@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 01:48:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 03:17:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:16:57 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "sh_files.h"
 #include "sh_errors.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 #include <unistd.h>
 
 static int	get_newwd(const char *cwd, const char *path, char **newwd)
@@ -40,7 +41,7 @@ static int	get_newwd(const char *cwd, const char *path, char **newwd)
 	return (err);
 }
 
-int			change_dir(t_sh_env *env, char *path, int nosym)
+static int	change_dir(t_sh_env *env, char *path, int nosym)
 {
 	if (chdir(path))
 	{
@@ -64,6 +65,8 @@ int			sh_env_chdir(t_sh_env *env, const char *path, int nosym)
 	char	*newwd;
 	int		err;
 
+	FT_ASSERT(env != NULL);
+	FT_ASSERT(path != NULL);
 	oldwd = NULL;
 	newwd = NULL;
 	if ((err = sh_env_getcwd(env, nosym, &oldwd))

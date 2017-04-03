@@ -1,14 +1,14 @@
-#******************************************************************************#
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/02/14 13:42:02 by jguyon            #+#    #+#              #
-#    Updated: 2017/02/14 17:04:29 by jguyon           ###   ########.fr        #
-#                                                                              #
-#******************************************************************************#
+#* ************************************************************************** *#
+#*                                                                            *#
+#*                                                        :::      ::::::::   *#
+#*   Makefile                                           :+:      :+:    :+:   *#
+#*                                                    +:+ +:+         +:+     *#
+#*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
+#*                                                +#+#+#+#+#+   +#+           *#
+#*   Created: 2017/04/03 17:32:04 by jguyon            #+#    #+#             *#
+#*   Updated: 2017/04/03 17:32:08 by jguyon           ###   ########.fr       *#
+#*                                                                            *#
+#* ************************************************************************** *#
 
 # Configuration variables
 include config.mk
@@ -16,6 +16,7 @@ include config.mk
 -include local.mk
 
 LIBFT = $(LIBFT_PATH)/libft.a
+LIBDBG = $(LIBFT_PATH)/libdbg.a
 LIBTAP = $(LIBFT_PATH)/libtap.a
 
 override CPPFLAGS := $(strip $(CPPFLAGS) \
@@ -42,19 +43,24 @@ all: $(DEFAULT_BUILD)
 # Compile program with release flags
 release: CPPFLAGS := $(strip $(CPPFLAGS) $(RLSFLAGS))
 release: LDFLAGS := $(strip $(LDFLAGS) $(RLSFLAGS))
+release: LIBFT_BUILD := release
 release: $(NAME)
 
 # Compile program with debug flags
-debug: CPPFLAGS := $(strip $(CPPFLAGS) $(DBGFLAGS))
+debug: CPPFLAGS := $(strip $(CPPFLAGS) $(DBGFLAGS) -DFT_FEATURE_DEBUG)
 debug: LDFLAGS := $(strip $(LDFLAGS) $(DBGFLAGS))
-debug: $(NAME)
+debug: LDLIBS := $(strip $(LDLIBS) -ldbg)
+debug: LIBFT_BUILD := debug
+debug: $(LIBDBG) $(NAME)
 
 # Compile tests
 # If the program needs to be updated, test flags will be used.
 # Use the check target to avoid that.
-test: CPPFLAGS := $(strip $(CPPFLAGS) $(TSTFLAGS))
-test: LDLIBS := $(strip $(LDLIBS) -ltap)
-test: $(TST_EXE)
+test: CPPFLAGS := $(strip $(CPPFLAGS) $(TSTFLAGS) -DFT_FEATURE_DEBUG)
+test: LDFLAGS := $(strip $(LDFLAGS) $(TSTFLAGS))
+test: LDLIBS := $(strip $(LDLIBS) -ldbg -ltap)
+test: LIBFT_BUILD := debug
+test: $(LIBDBG) $(TST_EXE)
 
 # Compile the program and execute its tests
 # If a version of the program is already compiled and does not need updating,
@@ -105,13 +111,20 @@ $(LIBFT): force
 	@$(MAKE) -C $(LIBFT_PATH) -j -s -w \
 		NAME='$(patsubst $(LIBFT_PATH)/%.a,%.a,$@)' \
 		MODULES='$(LIBFT_MODULES)' \
-		release
+		$(LIBFT_BUILD)
+
+$(LIBDBG): force
+	@$(MAKE) -C $(LIBFT_PATH) -j -s -w \
+		NAME='$(patsubst $(LIBFT_PATH)/%.a,%.a,$@)' \
+		MODULES=debug \
+		CPPFLAGS='-DFT_DEBUG_FILE="\"$(NAME).log\""' \
+		$(LIBFT_BUILD)
 
 $(LIBTAP): force
 	@$(MAKE) -C $(LIBFT_PATH) -j -s -w \
 		NAME='$(patsubst $(LIBFT_PATH)/%.a,%.a,$@)' \
 		MODULES=tap \
-		debug
+		$(LIBFT_BUILD)
 
 $(PATHS):
 	@mkdir -p $@

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:12:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 03:39:20 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:27:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "sh_errors.h"
 #include "ft_program.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 #include <unistd.h>
 
 static int	set_path(t_sh_env *env)
@@ -62,6 +63,8 @@ int			sh_shell_start(t_sh_env *env, char *const envp[])
 {
 	int		err;
 
+	FT_ASSERT(env != NULL);
+	FT_ASSERT(envp != NULL);
 	if ((err = sh_env_start(env, envp)))
 	{
 		ft_error(0, err, NULL);
