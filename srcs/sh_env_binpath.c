@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 22:20:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 19:11:10 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:16:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "sh_errors.h"
 #include "ft_strings.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 #include <unistd.h>
 
 static char	*join_paths(const char *dir, size_t dirlen,
@@ -72,11 +73,16 @@ static int	check_paths(const char *envpaths, const char *name, char **path)
 int			sh_env_binpath(t_sh_env *env, const char *name, char **path)
 {
 	const char	*envpaths;
+	int			err;
 
+	FT_ASSERT(env != NULL);
+	FT_ASSERT(name != NULL);
+	FT_ASSERT(path != NULL);
 	*path = NULL;
 	if (ft_strchr(name, '/'))
 		return (check_absolute(name, path));
 	if (!(envpaths = sh_env_getvar(env, "PATH")) || envpaths[0] == '\0')
 		return (check_paths(".", name, path));
-	return (check_paths(envpaths, name, path));
+	err = check_paths(envpaths, name, path);
+	return (err);
 }

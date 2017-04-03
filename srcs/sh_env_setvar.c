@@ -6,15 +6,33 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:49:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:50:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:17:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
 #include "sh_errors.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
-static char	*new_var(const char *name, size_t namlen, const char *val)
+static size_t	find_var(char *const envp[], const char *name)
+{
+	size_t	i;
+	size_t	namlen;
+
+	i = 0;
+	while (envp[i])
+	{
+		namlen = SH_ENV_NAMLEN(envp[i]);
+		if (ft_strncmp(name, envp[i], namlen) == 0
+			&& (name[namlen] == '\0' || name[namlen] == '='))
+			break ;
+		++i;
+	}
+	return (i);
+}
+
+static char		*new_var(const char *name, size_t namlen, const char *val)
 {
 	char	*var;
 	size_t	vallen;
@@ -31,30 +49,38 @@ static char	*new_var(const char *name, size_t namlen, const char *val)
 	return (var);
 }
 
-int			sh_env_setvar(t_sh_env *env, const char *name, const char *val)
+static int		set_var(t_darray *arr, const char *name, const char *val,
+						size_t i)
 {
-	size_t	i;
-	char	**vars;
 	size_t	namlen;
+	char	**vars;
 	char	*old;
 	char	*new;
 
-	vars = env->vars.array;
-	i = 0;
-	while (vars[i])
-	{
-		namlen = SH_ENV_NAMLEN(vars[i]);
-		if (ft_strncmp(name, vars[i], namlen) == 0
-			&& (name[namlen] == '\0' || name[namlen] == '='))
-			break ;
-		++i;
-	}
-	if (!(old = vars[i]))
-		namlen = SH_ENV_NAMLEN(name);
+	vars = arr->array;
+	old = vars[i];
+	namlen = SH_ENV_NAMLEN(name);
+	new = NULL;
 	if (!(new = new_var(name, namlen, val))
-		|| (!old && ft_darr_set(&(env->vars), i + 1, NULL))
-		|| ft_darr_set(&(env->vars), i, &new))
+		|| (!old && ft_darr_set(arr, i + 1, NULL))
+		|| ft_darr_set(arr, i, &new))
+	{
+		ft_memdel((void **)&new);
 		return (SH_ERR_NOMEM);
+	}
 	ft_memdel((void **)&old);
+	return (0);
+}
+
+int				sh_env_setvar(t_sh_env *env, const char *name, const char *val)
+{
+	size_t	i;
+	int		err;
+
+	FT_ASSERT(env != NULL);
+	FT_ASSERT(name != NULL);
+	i = find_var(env->vars.array, name);
+	if ((err = set_var(&(env->vars), name, val, i)))
+		return (err);
 	return (0);
 }

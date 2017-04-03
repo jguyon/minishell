@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 00:21:28 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 18:42:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:20:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_exec.h"
 #include "sh_errors.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 static void	del_argv(char **argv)
 {
@@ -33,6 +34,9 @@ int			sh_exec_cmd(t_sh_env *env, t_sh_cmd *cmd, char **cmdname)
 	char	**argv;
 	int		err;
 
+	FT_ASSERT(env != NULL);
+	FT_ASSERT(cmd != NULL);
+	FT_ASSERT(cmdname != NULL);
 	*cmdname = NULL;
 	if (!(argv = sh_cmd_toargv(&cmd)))
 		return (SH_ERR_NOMEM);

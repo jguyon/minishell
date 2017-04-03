@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 22:27:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 13:10:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 15:02:47 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_ast.h"
 #include "ft_darrays.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 static int	set_arg(t_darray *argv, size_t i, char *str)
 {
@@ -48,8 +49,8 @@ char		**sh_cmd_toargv(t_sh_cmd **cmd)
 	t_sh_word		*arg;
 	int				err;
 
-	if (!(*cmd))
-		return (NULL);
+	FT_ASSERT(cmd != NULL);
+	FT_ASSERT(*cmd != NULL);
 	if (!(err = ft_darr_init(&dargv, sizeof(char *), 8))
 		&& !(err = set_arg(&dargv, 0, sh_word_tostr(&((*cmd)->name)))))
 	{

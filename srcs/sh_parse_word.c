@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 18:37:19 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 13:10:21 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:25:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "sh_errors.h"
 #include "ft_strings.h"
 #include "ft_darrays.h"
+#include "ft_debug.h"
 
 static int	skip_whitespace(t_sh_input *in)
 {
@@ -48,6 +49,8 @@ int			sh_parse_word(t_sh_input *in, t_sh_word **word)
 	t_darray	dstr;
 	int			err;
 
+	FT_ASSERT(in != NULL);
+	FT_ASSERT(word != NULL);
 	*word = NULL;
 	if (skip_whitespace(in))
 		return (-1);

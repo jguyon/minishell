@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 01:31:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 17:20:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:16:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
 #include "sh_errors.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 int		sh_env_exec(t_sh_env *env, char *const argv[])
 {
@@ -20,6 +21,9 @@ int		sh_env_exec(t_sh_env *env, char *const argv[])
 	char			*binpath;
 	int				err;
 
+	FT_ASSERT(env != NULL);
+	FT_ASSERT(argv != NULL);
+	FT_ASSERT(argv[0]);
 	err = 0;
 	builtin = NULL;
 	binpath = NULL;

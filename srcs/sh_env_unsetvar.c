@@ -6,37 +6,51 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 19:22:33 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/23 19:30:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:17:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
-void	sh_env_unsetvar(t_sh_env *env, const char *name)
+static size_t	find_var(char *const envp[], const char *name)
 {
-	size_t		i;
-	char		**vars;
-	size_t		namlen;
+	size_t	i;
+	size_t	namlen;
 
-	vars = env->vars.array;
 	i = 0;
-	while (vars[i])
+	while (envp[i])
 	{
-		namlen = SH_ENV_NAMLEN(vars[i]);
-		if (ft_strncmp(name, vars[i], namlen) == 0 && name[namlen] == '\0')
+		namlen = SH_ENV_NAMLEN(envp[i]);
+		if (ft_strncmp(name, envp[i], namlen) == 0 && name[namlen] == '\0')
 			break ;
 		++i;
 	}
-	if (vars[i])
+	return (i);
+}
+
+static void		unset_var(char **envp[], size_t i)
+{
+	if (envp[i])
 	{
-		ft_memdel((void **)&(vars[i]));
-		vars[i] = vars[i + 1];
+		ft_memdel((void **)&(envp[i]));
+		envp[i] = envp[i + 1];
 		++i;
-		while (vars[i])
+		while (envp[i])
 		{
-			vars[i] = vars[i + 1];
+			envp[i] = envp[i + 1];
 			++i;
 		}
 	}
+}
+
+void			sh_env_unsetvar(t_sh_env *env, const char *name)
+{
+	size_t		i;
+
+	FT_ASSERT(env != NULL);
+	FT_ASSERT(name != NULL);
+	i = find_var(env->vars.array, name);
+	unset_var(env->vars.array, i);
 }

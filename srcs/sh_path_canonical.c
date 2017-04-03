@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 16:16:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 13:05:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/03 17:22:49 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "sh_errors.h"
 #include "ft_strings.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
 static int	process_element(char *root, char **curr,
 				const char *start, const char *end)
@@ -51,6 +52,8 @@ int			sh_path_canonical(const char *path, char **canon)
 	char		*curr;
 	int			err;
 
+	FT_ASSERT(path != NULL);
+	FT_ASSERT(canon != NULL);
 	*canon = NULL;
 	if (path[0] != '/')
 		return (-1);
