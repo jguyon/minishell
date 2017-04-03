@@ -53,7 +53,7 @@ LIBFT_MODULES = \
 	program \
 
 # Executable name
-NAME = minishell
+NAME = 21sh
 
 # Source names to compile the program
 # main does not need to be specified here, it will be added in the Makefile
