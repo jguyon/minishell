@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:23:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 17:19:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:58:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 ** Functions for managing the whole shell environment
 */
 
+# include "sh_errors.h"
 # include "ft_darrays.h"
 # include "ft_strings.h"
 
@@ -61,10 +62,8 @@ typedef struct	s_sh_builtin {
 
 /*
 ** Init @env with the system environment @envp
-**
-** Returns 0 if successful, the error number otherwise.
 */
-int				sh_env_start(t_sh_env *env, char *const envp[]);
+t_err			sh_env_start(t_sh_env *env, char *const envp[]);
 
 /*
 ** Clear @env when it is not needed anymore
@@ -86,12 +85,11 @@ const char		*sh_env_getvar(t_sh_env *env, const char *name);
 /*
 ** Set the value of the environment variable @name to @val
 **
-** Returns 0 if successful, the error number otherwise.
 ** If @name contains '=', the variable name will stop before it.
 ** If @val is NULL and @name is formatted like "NAME=value",
 ** the variable "NAME" will be assigned "value".
 */
-int				sh_env_setvar(t_sh_env *env, const char *name, const char *val);
+t_err			sh_env_setvar(t_sh_env *env, const char *name, const char *val);
 
 /*
 ** Unset the environment variable @name
@@ -102,26 +100,21 @@ void			sh_env_unsetvar(t_sh_env *env, const char *name);
 
 /*
 ** Get the current working directory
-**
-** Returns 0 if successful, the error number otherwise.
 */
-int				sh_env_getcwd(t_sh_env *env, int nosym, char **cwd);
+t_err			sh_env_getcwd(t_sh_env *env, int nosym, char **cwd);
 
 /*
 ** Change the current working directory
-**
-** Returns 0 if successful, the error number otherwise.
 */
-int				sh_env_chdir(t_sh_env *env, const char *path, int nosym);
+t_err			sh_env_chdir(t_sh_env *env, const char *path, int nosym);
 
 /*
 ** Execute the command provided by @argv
 **
-** Returns 0 if successful, the error number otherwise.
 ** Will search for a built-in or an executable in the PATH.
 ** Will store its exit status in @env.
 */
-int				sh_env_exec(t_sh_env *env, char *const argv[]);
+t_err			sh_env_exec(t_sh_env *env, char *const argv[]);
 
 /*
 ** Mark the env for exit with @status
@@ -143,18 +136,16 @@ int				sh_env_status(t_sh_env *env);
 /*
 ** Search for an executable in the PATH and store it in @path
 **
-** Returns 0 if successful, the error number otherwise.
 ** You should free @path once you are finished with it.
 */
-int				sh_env_binpath(t_sh_env *env, const char *name, char **path);
+t_err			sh_env_binpath(t_sh_env *env, const char *name, char **path);
 
 /*
 ** Search for a built-in and store it in @builtin
 **
-** Returns 0 if successful, the error number otherwise.
 ** @builtin should not be freed.
 */
-int				sh_env_builtin(t_sh_env *env, const char *name,
+t_err			sh_env_builtin(t_sh_env *env, const char *name,
 					t_sh_builtin **builtin);
 
 /*

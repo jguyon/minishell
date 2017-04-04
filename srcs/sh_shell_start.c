@@ -6,32 +6,31 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:12:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 18:02:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 13:19:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_shell.h"
-#include "sh_errors.h"
 #include "ft_program.h"
 #include "ft_memory.h"
 #include "ft_debug.h"
 #include <unistd.h>
 
-static int	set_path(t_sh_env *env)
+static t_err	set_path(t_sh_env *env)
 {
 	if (sh_env_getvar(env, "PATH"))
-		return (0);
+		return (SH_ERR_OK);
 	return (sh_env_setvar(env, "PATH", SH_DEFAULT_PATH));
 }
 
-static int	set_pwd(t_sh_env *env)
+static t_err	set_pwd(t_sh_env *env)
 {
 	const char	*envpwd;
 	char		*syspwd;
-	int			err;
+	t_err		err;
 
 	if ((envpwd = sh_env_getvar(env, "PWD")) && !sh_env_chdir(env, envpwd, 0))
-		return (0);
+		return (SH_ERR_OK);
 	if (!(syspwd = getcwd(NULL, 0)))
 		return (SH_ERR_IO);
 	err = sh_env_setvar(env, "PWD", syspwd);
@@ -39,29 +38,29 @@ static int	set_pwd(t_sh_env *env)
 	return (err);
 }
 
-static int	set_home(t_sh_env *env)
+static t_err	set_home(t_sh_env *env)
 {
 	const char	*pwd;
-	int			err;
+	t_err		err;
 
 	if (sh_env_getvar(env, "HOME"))
-		return (0);
+		return (SH_ERR_OK);
 	if ((pwd = sh_env_getvar(env, "PWD"))
 		&& (err = sh_env_setvar(env, "HOME", pwd)))
 		return (err);
-	return (0);
+	return (SH_ERR_OK);
 }
 
-static int	set_prompt(t_sh_env *env)
+static t_err	set_prompt(t_sh_env *env)
 {
 	if (sh_env_getvar(env, "PS1"))
-		return (0);
+		return (SH_ERR_OK);
 	return (sh_env_setvar(env, "PS1", SH_DEFAULT_PS1));
 }
 
-int			sh_shell_start(t_sh_env *env, char *const envp[])
+int				sh_shell_start(t_sh_env *env, char *const envp[])
 {
-	int		err;
+	t_err	err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(envp != NULL);

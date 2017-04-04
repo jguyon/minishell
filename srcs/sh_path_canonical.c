@@ -6,20 +6,19 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 16:16:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:22:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:16:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_files.h"
-#include "sh_errors.h"
 #include "ft_strings.h"
 #include "ft_memory.h"
 #include "ft_debug.h"
 
-static int	process_element(char *root, char **curr,
-				const char *start, const char *end)
+static t_err	process_element(char *root, char **curr,
+					const char *start, const char *end)
 {
-	int		err;
+	t_err	err;
 
 	if (start[0] == '.' && start[1] == '.' && end == start + 2)
 	{
@@ -39,24 +38,23 @@ static int	process_element(char *root, char **curr,
 		ft_memcpy(*curr, start - 1, end - start + 1);
 		*curr += end - start + 1;
 		**curr = '\0';
-		if (*end == '/' && (err = sh_check_dir(root)))
+		if (*end == '/' && (err = sh_check_dir(root)) != SH_ERR_OK)
 			return (err);
 	}
-	return (0);
+	return (SH_ERR_OK);
 }
 
-int			sh_path_canonical(const char *path, char **canon)
+t_err			sh_path_canonical(const char *path, char **canon)
 {
 	const char	*start;
 	const char	*end;
 	char		*curr;
-	int			err;
+	t_err		err;
 
 	FT_ASSERT(path != NULL);
 	FT_ASSERT(canon != NULL);
+	FT_ASSERT(path[0] == '/');
 	*canon = NULL;
-	if (path[0] != '/')
-		return (-1);
 	if (!(*canon = ft_strnew(ft_strlen(path))))
 		return (SH_ERR_NOMEM);
 	ft_strcpy(*canon, "/");
@@ -64,12 +62,12 @@ int			sh_path_canonical(const char *path, char **canon)
 	start = path + 1;
 	while (*start && (end = ft_strchrnul(start, '/')))
 	{
-		if ((err = process_element(*canon, &curr, start, end)))
+		if ((err = process_element(*canon, &curr, start, end)) != SH_ERR_OK)
 		{
 			ft_memdel((void **)canon);
 			return (err);
 		}
 		start = end[0] == '/' ? end + 1 : end;
 	}
-	return (0);
+	return (SH_ERR_OK);
 }

@@ -6,12 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 03:04:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 23:49:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:48:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_builtins.h"
-#include "sh_errors.h"
 #include "ft_program.h"
 #include "ft_chars.h"
 

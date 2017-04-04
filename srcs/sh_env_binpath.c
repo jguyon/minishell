@@ -6,19 +6,18 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 22:20:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 18:42:37 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:57:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
 #include "sh_files.h"
-#include "sh_errors.h"
 #include "ft_strings.h"
 #include "ft_memory.h"
 #include "ft_debug.h"
 #include <unistd.h>
 
-static char	*join_paths(const char *dir, size_t dirlen,
+static char		*join_paths(const char *dir, size_t dirlen,
 				const char *name, size_t namlen)
 {
 	char	*filepath;
@@ -38,37 +37,37 @@ static char	*join_paths(const char *dir, size_t dirlen,
 	return (filepath);
 }
 
-static int	check_absolute(const char *name, char **path)
+static t_err	check_absolute(const char *name, char **path)
 {
-	int		err;
+	t_err	err;
 
 	if (!(*path = ft_strdup(name)))
 		return (SH_ERR_NOMEM);
-	if (!(err = sh_check_bin(*path)))
+	if ((err = sh_check_bin(*path)) == SH_ERR_OK)
 	{
 		FT_DEBUG("env: found binary '%s'", *path);
-		return (0);
+		return (SH_ERR_OK);
 	}
 	ft_memdel((void **)path);
 	return (err == SH_ERR_NOENT ? SH_ERR_NOCMD : err);
 }
 
-static int	check_paths(const char *envpaths, const char *name, char **path)
+static t_err	check_paths(const char *envpaths, const char *name, char **path)
 {
 	const char	*start;
 	const char	*end;
-	int			err;
+	t_err		err;
 
 	start = envpaths;
-	err = 0;
+	err = SH_ERR_OK;
 	while (*start && (end = ft_strchrnul(start, ':')))
 	{
 		if (!(*path = join_paths(start, end - start, name, ft_strlen(name))))
 			return (SH_ERR_NOMEM);
-		if (!(err = sh_check_bin(*path)))
+		if ((err = sh_check_bin(*path)) == SH_ERR_OK)
 		{
 			FT_DEBUG("env: found binary '%s'", *path);
-			return (0);
+			return (SH_ERR_OK);
 		}
 		ft_memdel((void **)path);
 		start = *end == '\0' ? end : end + 1;
@@ -76,10 +75,9 @@ static int	check_paths(const char *envpaths, const char *name, char **path)
 	return (!err || err == SH_ERR_NOENT ? SH_ERR_NOCMD : err);
 }
 
-int			sh_env_binpath(t_sh_env *env, const char *name, char **path)
+t_err			sh_env_binpath(t_sh_env *env, const char *name, char **path)
 {
 	const char	*envpaths;
-	int			err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(name != NULL);
@@ -90,6 +88,5 @@ int			sh_env_binpath(t_sh_env *env, const char *name, char **path)
 		return (check_absolute(name, path));
 	if (!(envpaths = sh_env_getvar(env, "PATH")) || envpaths[0] == '\0')
 		return (check_paths(".", name, path));
-	err = check_paths(envpaths, name, path);
-	return (err);
+	return (check_paths(envpaths, name, path));
 }

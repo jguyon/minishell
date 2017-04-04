@@ -6,24 +6,23 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:29:20 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 18:26:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:20:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
-#include "sh_errors.h"
 #include "ft_memory.h"
 #include "ft_debug.h"
 #include <unistd.h>
 
-static int	get_wd(char **wd)
+static t_err	get_wd(char **wd)
 {
 	if (!(*wd = getcwd(NULL, 0)))
 		return (SH_ERR_IO);
-	return (0);
+	return (SH_ERR_OK);
 }
 
-static int	copy_env(t_darray *arr, char *const envp[])
+static t_err	copy_env(t_darray *arr, char *const envp[])
 {
 	size_t	size;
 	char	*var;
@@ -44,12 +43,12 @@ static int	copy_env(t_darray *arr, char *const envp[])
 			return (SH_ERR_NOMEM);
 		}
 	}
-	return (0);
+	return (SH_ERR_OK);
 }
 
-int			sh_env_start(t_sh_env *env, char *const envp[])
+t_err			sh_env_start(t_sh_env *env, char *const envp[])
 {
-	int		err;
+	t_err	err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(envp != NULL);
@@ -65,5 +64,5 @@ int			sh_env_start(t_sh_env *env, char *const envp[])
 		return (err);
 	}
 	FT_DEBUG("env: initialized env '%p'", env);
-	return (0);
+	return (SH_ERR_OK);
 }

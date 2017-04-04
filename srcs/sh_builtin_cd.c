@@ -6,12 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:18:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 18:58:24 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:41:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_builtins.h"
-#include "sh_errors.h"
 #include "sh_files.h"
 #include "ft_program.h"
 #include "ft_printf.h"
@@ -42,7 +41,7 @@ static int			no_symlinks(int ac, char *const av[])
 	return (nosym);
 }
 
-static int			get_newwd(t_sh_env *env, const char *arg, const char **pwd)
+static t_err		get_newwd(t_sh_env *env, const char *arg, const char **pwd)
 {
 	*pwd = NULL;
 	if (!arg)
@@ -57,13 +56,13 @@ static int			get_newwd(t_sh_env *env, const char *arg, const char **pwd)
 	}
 	else
 		*pwd = arg;
-	return (0);
+	return (SH_ERR_OK);
 }
 
-static int			change_wd(t_sh_env *env, const char *path,
+static t_err		change_wd(t_sh_env *env, const char *path,
 						int nosym, int print_dir)
 {
-	int		err;
+	t_err	err;
 	char	*oldpwd;
 	char	*newpwd;
 
@@ -83,13 +82,13 @@ static int			change_wd(t_sh_env *env, const char *path,
 		ft_fprintf(FT_STDOUT, "%s\n", newpwd);
 	free(oldpwd);
 	free(newpwd);
-	return (0);
+	return (SH_ERR_OK);
 }
 
 int					sh_builtin_cd(int ac, char *const av[], t_sh_env *env)
 {
 	const char	*dir;
-	int			err;
+	t_err		err;
 	int			nosym;
 
 	dir = NULL;

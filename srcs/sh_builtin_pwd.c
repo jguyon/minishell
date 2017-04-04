@@ -6,12 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:18:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 17:20:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:42:11 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_builtins.h"
-#include "sh_errors.h"
 #include "ft_program.h"
 #include "ft_printf.h"
 #include <unistd.h>
@@ -43,7 +42,7 @@ int			sh_builtin_pwd(int ac, char *const av[], t_sh_env *env)
 {
 	int			nosym;
 	char		*cwd;
-	int			err;
+	t_err		err;
 
 	if ((nosym = no_symlinks(ac, av)) < 0)
 		return (FT_EXIT_FAILURE);
