@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:44:17 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 03:00:53 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 10:41:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,23 @@ static void	print_env(t_sh_env *env)
 
 static int	exec_util(t_sh_env *env, char *const av[])
 {
+	char	*binpath;
 	int		err;
+	int		status;
 
-	if ((err = sh_env_exec(env, av + g_ft_optind)))
+	binpath = NULL;
+	if ((err = sh_env_binpath(env, av[g_ft_optind], &binpath)) == 0)
+		status = SH_EXIT_STATUS(
+					sh_env_exec_bin(env, binpath, &(av[g_ft_optind])));
+	else if (err == SH_ERR_NOPERM)
+		status = SH_EXIT_NOEXEC;
+	else
 	{
 		ft_error(0, err, "%s: %s", av[0], av[g_ft_optind]);
-		return (FT_EXIT_FAILURE);
+		status = SH_EXIT_NOTFOUND;
 	}
-	return (0);
+	ft_memdel((void **)&binpath);
+	return (status);
 }
 
 int			sh_builtin_env(int ac, char *const av[], t_sh_env *env)
