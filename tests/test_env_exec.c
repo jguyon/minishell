@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 23:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 19:15:20 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 19:54:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,12 @@ static void	test_miss_builtin(t_tap *t)
 	}
 }
 
+#ifdef linux
+# define TEST_BIN "/usr/bin/test"
+#else
+# define TEST_BIN "/bin/test"
+#endif
+
 static void	test_exec_bin(t_tap *t)
 {
 	char			*ep[] = {NULL};
@@ -194,9 +200,9 @@ static void	test_exec_bin(t_tap *t)
 	ft_tap_plan(t, 2);
 	if (sh_env_start(&env, ep) == 0)
 	{
-		FT_TAP_IEQ(t, sh_env_exec_bin(&env, "/bin/test", av), 1);
+		FT_TAP_IEQ(t, sh_env_exec_bin(&env, TEST_BIN, av), 1);
 		av[3] = "1";
-		FT_TAP_IEQ(t, sh_env_exec_bin(&env, "/bin/test", av), 0);
+		FT_TAP_IEQ(t, sh_env_exec_bin(&env, TEST_BIN, av), 0);
 		sh_env_end(&env);
 	}
 }
