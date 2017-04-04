@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/22 14:04:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 02:55:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 10:46:02 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ static void	test_print(t_tap *t)
 
 static void	test_exec(t_tap *t)
 {
-	char		*ep[] = {"USER=john", NULL};
-	char		*av[] = {"env", "echo", "hello", NULL};
+	char		*ep[] = {"PATH=", NULL};
+	char		*av[] = {"env", "PATH=/bin:/usr/bin",
+							"test", "4", "-le", "2", NULL};
 	t_sh_env	env;
 
-	ft_tap_plan(t, 2);
+	ft_tap_plan(t, 1);
 	if (sh_env_start(&env, ep) == 0)
 	{
-		FT_TAP_IEQ(t, sh_builtin_env(3, av, &env), 0);
-		STDOUT_EQ(t, "hello\n");
+		FT_TAP_IEQ(t, sh_builtin_env(6, av, &env), 1);
 		sh_env_end(&env);
 	}
 }
