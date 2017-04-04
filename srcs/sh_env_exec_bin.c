@@ -6,12 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 00:30:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 19:12:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 13:00:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
-#include "sh_errors.h"
 #include "ft_program.h"
 #include "ft_debug.h"
 #include <unistd.h>

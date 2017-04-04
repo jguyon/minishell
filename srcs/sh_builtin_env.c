@@ -6,12 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:44:17 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 10:41:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 13:18:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_builtins.h"
-#include "sh_errors.h"
 #include "ft_streams.h"
 #include "ft_program.h"
 #include "ft_strings.h"
@@ -22,6 +21,7 @@ static int	start_env(int ac, char *const av[], t_sh_env *old, t_sh_env *new)
 	int		clear;
 	char	*empty[1];
 	int		opt;
+	t_err	err;
 
 	g_ft_opterr = 0;
 	g_ft_optind = 0;
@@ -33,14 +33,13 @@ static int	start_env(int ac, char *const av[], t_sh_env *old, t_sh_env *new)
 			clear = 1;
 		else
 		{
-			ft_error(0, 0, "%s: illegal option -- %c",
-				av[0], (char)g_ft_optopt);
+			ft_error(0, 0, "%s: illegal option -- %c", av[0], g_ft_optopt);
 			return (FT_EXIT_FAILURE);
 		}
 	}
-	if (sh_env_start(new, clear ? empty : sh_env_vars(old)))
+	if ((err = sh_env_start(new, clear ? empty : sh_env_vars(old))))
 	{
-		ft_error(0, SH_ERR_NOMEM, "%s", av[0]);
+		ft_error(0, err, "%s", av[0]);
 		return (FT_EXIT_FAILURE);
 	}
 	return (0);
@@ -48,13 +47,15 @@ static int	start_env(int ac, char *const av[], t_sh_env *old, t_sh_env *new)
 
 static int	edit_env(t_sh_env *env, int ac, char *const av[])
 {
+	t_err	err;
+
 	while (g_ft_optind < ac)
 	{
 		if (!ft_strchr(av[g_ft_optind], '='))
 			break ;
-		if (sh_env_setvar(env, av[g_ft_optind], NULL))
+		if ((err = sh_env_setvar(env, av[g_ft_optind], NULL)))
 		{
-			ft_error(0, SH_ERR_NOMEM, "%s", av[0], av[g_ft_optind]);
+			ft_error(0, err, "%s", av[0], av[g_ft_optind]);
 			return (FT_EXIT_FAILURE);
 		}
 		++g_ft_optind;
@@ -86,7 +87,7 @@ static int	exec_util(t_sh_env *env, char *const av[])
 	int		status;
 
 	binpath = NULL;
-	if ((err = sh_env_binpath(env, av[g_ft_optind], &binpath)) == 0)
+	if ((err = sh_env_binpath(env, av[g_ft_optind], &binpath)) == SH_ERR_OK)
 		status = SH_EXIT_STATUS(
 					sh_env_exec_bin(env, binpath, &(av[g_ft_optind])));
 	else if (err == SH_ERR_NOPERM)

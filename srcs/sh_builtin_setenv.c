@@ -6,16 +6,15 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:23:01 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 17:10:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:43:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_builtins.h"
-#include "sh_errors.h"
 #include "ft_program.h"
 #include "ft_streams.h"
 
-static void	print_env(t_sh_env *env)
+static void		print_env(t_sh_env *env)
 {
 	size_t		i;
 	char *const	*envp;
@@ -32,7 +31,7 @@ static void	print_env(t_sh_env *env)
 	}
 }
 
-static int	check_varname(const char *name)
+static t_err	check_varname(const char *name)
 {
 	if (!name)
 		return (0);
@@ -46,12 +45,12 @@ static int	check_varname(const char *name)
 			return (SH_ERR_BADENV);
 		++name;
 	}
-	return (0);
+	return (SH_ERR_OK);
 }
 
-int			sh_builtin_setenv(int ac, char *const av[], t_sh_env *env)
+int				sh_builtin_setenv(int ac, char *const av[], t_sh_env *env)
 {
-	int		err;
+	t_err	err;
 
 	if (ac > 3)
 	{

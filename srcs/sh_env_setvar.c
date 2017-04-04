@@ -6,12 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:49:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 18:34:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:52:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
-#include "sh_errors.h"
 #include "ft_memory.h"
 #include "ft_debug.h"
 
@@ -49,7 +48,7 @@ static char		*new_var(const char *name, size_t namlen, const char *val)
 	return (var);
 }
 
-static int		set_var(t_darray *arr, const char *name, const char *val,
+static t_err	set_var(t_darray *arr, const char *name, const char *val,
 						size_t i)
 {
 	size_t	namlen;
@@ -70,18 +69,15 @@ static int		set_var(t_darray *arr, const char *name, const char *val,
 	}
 	FT_DEBUG("env: set var '%s' to '%s'", name, new);
 	ft_memdel((void **)&old);
-	return (0);
+	return (SH_ERR_OK);
 }
 
 int				sh_env_setvar(t_sh_env *env, const char *name, const char *val)
 {
 	size_t	i;
-	int		err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(name != NULL);
 	i = find_var(env->vars.array, name);
-	if ((err = set_var(&(env->vars), name, val, i)))
-		return (err);
-	return (0);
+	return (set_var(&(env->vars), name, val, i));
 }

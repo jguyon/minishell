@@ -6,12 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 00:01:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 18:44:33 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:34:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_env.h"
-#include "sh_errors.h"
 #include "sh_builtins.h"
 #include "ft_strings.h"
 #include "ft_debug.h"
@@ -26,7 +25,7 @@ static t_sh_builtin	g_builtins[] = {
 	{ "exit", &sh_builtin_exit },
 };
 
-int					sh_env_builtin(t_sh_env *env, const char *name,
+t_err				sh_env_builtin(t_sh_env *env, const char *name,
 						t_sh_builtin **builtin)
 {
 	size_t	i;
@@ -44,7 +43,7 @@ int					sh_env_builtin(t_sh_env *env, const char *name,
 		{
 			*builtin = &(g_builtins[i]);
 			FT_DEBUG("env: found built-in '%s'", name);
-			return (0);
+			return (SH_ERR_OK);
 		}
 		++i;
 	}

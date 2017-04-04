@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 15:19:37 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 19:08:05 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 11:45:37 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@
 ** Meant to be used with ft_error.
 */
 
+typedef int	t_err;
+
 /*
 ** Error numbers
 */
+# define SH_ERR_OK			0
 # define SH_ERR_NOMEM		1
 # define SH_ERR_IO			2
 # define SH_ERR_NOTFOUND	3
@@ -44,6 +47,6 @@
 ** Returns NULL if the error is unknown, or the error string.
 ** The returned string should not be freed.
 */
-char	*sh_strerror(int errnum);
+char		*sh_strerror(int errnum);
 
 #endif

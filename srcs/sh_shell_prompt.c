@@ -6,14 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:48:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 18:20:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 13:14:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_shell.h"
 #include "sh_parse.h"
 #include "sh_exec.h"
-#include "sh_errors.h"
 #include "ft_program.h"
 #include "ft_streams.h"
 #include "ft_memory.h"
@@ -33,7 +32,7 @@ static void	exec_input(t_sh_env *env)
 {
 	t_sh_input	input;
 	t_sh_cmd	*cmd;
-	int			err;
+	t_err		err;
 	char		*name;
 
 	name = NULL;
@@ -41,9 +40,9 @@ static void	exec_input(t_sh_env *env)
 		|| (err = sh_parse_cmd(&input, &cmd))
 		|| (err = sh_exec_cmd(env, cmd, &name)))
 	{
-		if (err > 0 && name)
+		if (name)
 			ft_error(0, err, "%s", name);
-		else if (err > 0)
+		else
 			ft_error(0, err, NULL);
 	}
 	ft_memdel((void **)&name);

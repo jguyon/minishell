@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 22:11:33 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 23:41:03 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:36:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	test_empty(t_tap *t)
 	if ((stm = ft_fmemopen(str, sizeof(str) - 1, "r"))
 		&& sh_init_input(&in, stm) == 0)
 	{
-		FT_TAP_IEQ(t, sh_parse_cmd(&in, &cmd), -1);
+		FT_TAP_IEQ(t, sh_parse_cmd(&in, &cmd), 0);
 		FT_TAP_OK(t, cmd == NULL);
 		FT_TAP_IEQ(t, in.next_c, '\n');
 		sh_cmd_del(&cmd);

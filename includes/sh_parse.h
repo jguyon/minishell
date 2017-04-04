@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 15:59:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/24 23:53:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 13:08:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 */
 
 # include "sh_ast.h"
+# include "sh_errors.h"
 # include "ft_streams.h"
 
 # define SH_NEWLINE		'\n'
@@ -33,25 +34,23 @@ typedef struct	s_sh_input {
 
 /*
 ** Init the input from a stream
-**
-** Returns 0 if successful, or an error number.
 */
-int				sh_init_input(t_sh_input *in, t_stream *stm);
+t_err			sh_init_input(t_sh_input *in, t_stream *stm);
 
 /*
 ** Parse a word from the input
 **
-** Returns 0 if successful, -1 if the input has ended before a word
-** could be read, an error number if an error occured.
+** @word will be assigned NULL if the input has ended before a
+** word could be read.
 */
-int				sh_parse_word(t_sh_input *in, t_sh_word **word);
+t_err			sh_parse_word(t_sh_input *in, t_sh_word **word);
 
 /*
 ** Parse a command with arguments from the input
 **
-** Returns 0 if successful, -1 if the input has ended before a word
-** could be read, an error number if an error occured.
+** @cmd will be assigned NULL if the input has ended before a word
+** could be read.
 */
-int				sh_parse_cmd(t_sh_input *in, t_sh_cmd **cmd);
+t_err			sh_parse_cmd(t_sh_input *in, t_sh_cmd **cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 15:58:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 19:08:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 11:17:07 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stddef.h>
 
 static char	*g_errors[] = {
-	[0] = "unkown error",
+	[SH_ERR_OK] = "unkown error",
 	[SH_ERR_NOMEM] = "out of memory",
 	[SH_ERR_IO] = "input/output error",
 	[SH_ERR_NOTFOUND] = "not found",

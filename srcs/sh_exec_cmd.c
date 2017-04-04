@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 00:21:28 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:20:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 11:57:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ static void	del_argv(char **argv)
 	ft_memdel((void **)&argv);
 }
 
-int			sh_exec_cmd(t_sh_env *env, t_sh_cmd *cmd, char **cmdname)
+t_err		sh_exec_cmd(t_sh_env *env, t_sh_cmd *cmd, char **cmdname)
 {
 	char	**argv;
-	int		err;
+	t_err	err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(cmd != NULL);

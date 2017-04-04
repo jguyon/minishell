@@ -6,16 +6,15 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 00:58:51 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 17:23:13 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 12:15:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_files.h"
-#include "sh_errors.h"
 #include "ft_debug.h"
 #include <unistd.h>
 
-int		sh_check_dir(const char *path)
+t_err	sh_check_dir(const char *path)
 {
 	struct stat	st;
 
@@ -28,5 +27,5 @@ int		sh_check_dir(const char *path)
 		return (SH_ERR_NOTDIR);
 	if (access(path, X_OK))
 		return (SH_ERR_NOPERM);
-	return (0);
+	return (SH_ERR_OK);
 }
