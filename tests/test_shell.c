@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 16:23:57 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 17:39:15 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 14:12:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,25 @@ static void	test_prompt_eof(t_tap *t)
 	{
 		FT_TAP_IEQ(t, sh_shell_prompt(&env), 0);
 		STDOUT_EQ(t, "$ hello world\n");
+		FT_TAP_IEQ(t, sh_shell_prompt(&env), -1);
+		STDOUT_EQ(t, "");
+		FT_TAP_IEQ(t, sh_shell_end(&env), 0);
+	}
+}
+
+static void	test_prompt_empty(t_tap *t)
+{
+	char		*ep[] = {"PATH=/bin:/usr/bin", NULL};
+	t_sh_env	env;
+
+	ft_tap_plan(t, 8);
+	stdin_reopen("  \nexit\n");
+	if (FT_TAP_IEQ(t, sh_shell_start(&env, ep), 0))
+	{
+		FT_TAP_IEQ(t, sh_shell_prompt(&env), 0);
+		STDOUT_EQ(t, "$ ");
+		FT_TAP_IEQ(t, sh_shell_prompt(&env), 0);
+		STDOUT_EQ(t, "$ ");
 		FT_TAP_IEQ(t, sh_shell_prompt(&env), -1);
 		STDOUT_EQ(t, "");
 		FT_TAP_IEQ(t, sh_shell_end(&env), 0);
@@ -143,6 +162,7 @@ void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_prompt_flow);
 	FT_TAP_TEST(t, test_prompt_eof);
+	FT_TAP_TEST(t, test_prompt_empty);
 	FT_TAP_TEST(t, test_prompt_config);
 	FT_TAP_TEST(t, test_home_default);
 	FT_TAP_TEST(t, test_pwd_init);
