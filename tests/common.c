@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/14 15:42:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/25 16:36:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/04 19:35:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "ft_streams.h"
 #include "ft_program.h"
 #include "ft_strings.h"
+#include <stdlib.h>
 
 char	g_inbuff[];
 char	g_outbuff[];
@@ -44,16 +45,22 @@ void	stderr_reopen(void)
 	ft_setvbuf(FT_STDERR, NULL, FT_IONBF, 0);
 }
 
+void	cleanup(void)
+{
+	ft_cleanup(0);
+}
+
 int		main(void)
 {
 	t_tap	t;
 
 	ft_setprogname("minishell");
+	atexit(&cleanup);
 	g_ft_strerror = &sh_strerror;
 	stdout_reopen();
 	stderr_reopen();
 	ft_tap_start(&t);
 	run_tests(&t);
 	ft_tap_end(&t);
-	return (ft_cleanup(0));
+	return (0);
 }
