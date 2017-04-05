@@ -6,11 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:48:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 14:08:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/05 15:48:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_shell.h"
+#include "sh_lexer.h"
 #include "sh_parse.h"
 #include "sh_exec.h"
 #include "ft_program.h"
@@ -30,14 +31,14 @@ static void	print_prompt(t_sh_env *env)
 
 static void	exec_input(t_sh_env *env)
 {
-	t_sh_input	input;
+	t_sh_lexer	lex;
 	t_sh_cmd	*cmd;
 	t_err		err;
 	char		*name;
 
 	name = NULL;
-	if ((err = sh_init_input(&input, FT_STDIN))
-		|| (err = sh_parse_cmd(&input, &cmd))
+	if ((err = sh_lexer_init(&lex, FT_STDIN))
+		|| (err = sh_parse_cmd(&lex, &cmd))
 		|| (cmd && (err = sh_exec_cmd(env, cmd, &name))))
 	{
 		if (name)
