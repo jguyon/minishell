@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 10:47:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 18:37:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/05 19:13:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 ** @SH_CHAR_END: end of input chars
 ** @SH_CHAR_WHITESPACE: whitespace chars
 ** @SH_CHAR_TOKEN: character inside token
+** @SH_CHAR_BACKSLASH_TOKEN: character inside token, preceded by backslash
 */
 enum			e_sh_char_type {
 	SH_CHAR_START,
@@ -32,10 +33,17 @@ enum			e_sh_char_type {
 	SH_CHAR_BACKSLASH_TOKEN,
 };
 
+/*
+** Context in with the given char is contained
+**
+** @SH_CTX_SQUOTE: within single quotes
+** @SH_CTX_DQUOTE: within double quotes
+** @SH_CTX_NORMAL: everywhere else
+*/
 enum			e_sh_char_context {
-	SH_CTX_NORMAL,
 	SH_CTX_SQUOTE,
 	SH_CTX_DQUOTE,
+	SH_CTX_NORMAL,
 };
 
 /*
