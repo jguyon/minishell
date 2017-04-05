@@ -6,34 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 11:23:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 16:26:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/05 17:56:44 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_lexer.h"
 #include "ft_darrays.h"
 #include "ft_debug.h"
-
-static void		next_char(t_sh_lexer *lex)
-{
-	lex->curr_char = ft_fgetc(lex->stm);
-	if (lex->curr_char == FT_EOF || lex->curr_char == '\n')
-		lex->curr_type = SH_CHAR_END;
-	else if (lex->curr_char == ' ' || lex->curr_char == '\t')
-		lex->curr_type = SH_CHAR_WHITESPACE;
-	else if (lex->curr_char == '\\')
-	{
-		lex->curr_char = ft_fgetc(lex->stm);
-		if (lex->curr_char == FT_EOF)
-			lex->curr_type = SH_CHAR_END;
-		else if (lex->curr_char == '\n')
-			next_char(lex);
-		else
-			lex->curr_type = SH_CHAR_TOKEN;
-	}
-	else
-		lex->curr_type = SH_CHAR_TOKEN;
-}
 
 static t_err	make_word(t_sh_lexer *lex, t_sh_token *token)
 {
@@ -52,7 +31,7 @@ static t_err	make_word(t_sh_lexer *lex, t_sh_token *token)
 			ft_darr_clear(&dstr);
 			return (SH_ERR_NOMEM);
 		}
-		next_char(lex);
+		sh_lexer_nextc(lex);
 		++i;
 	}
 	token->type = SH_TOKEN_WORD;
@@ -67,9 +46,9 @@ t_err			sh_lexer_token(t_sh_lexer *lex, t_sh_token *token)
 	FT_ASSERT(token != NULL);
 	FT_DEBUG("lexer: lexing next token");
 	if (lex->curr_type == SH_CHAR_START)
-		next_char(lex);
+		sh_lexer_nextc(lex);
 	while (lex->curr_type == SH_CHAR_WHITESPACE)
-		next_char(lex);
+		sh_lexer_nextc(lex);
 	if (lex->curr_type == SH_CHAR_END)
 	{
 		token->type = SH_TOKEN_EOI;
