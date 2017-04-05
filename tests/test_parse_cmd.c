@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 22:11:33 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:36:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/05 15:59:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,17 @@ static void	del_argv(char **argv)
 
 static void	test_empty(t_tap *t)
 {
-	t_sh_input	in;
+	t_sh_lexer	lex;
 	t_sh_cmd	*cmd;
 	t_stream	*stm;
 	char		str[] = " \t\n";
 
-	ft_tap_plan(t, 3);
+	ft_tap_plan(t, 2);
 	if ((stm = ft_fmemopen(str, sizeof(str) - 1, "r"))
-		&& sh_init_input(&in, stm) == 0)
+		&& sh_lexer_init(&lex, stm) == 0)
 	{
-		FT_TAP_IEQ(t, sh_parse_cmd(&in, &cmd), 0);
+		FT_TAP_IEQ(t, sh_parse_cmd(&lex, &cmd), 0);
 		FT_TAP_OK(t, cmd == NULL);
-		FT_TAP_IEQ(t, in.next_c, '\n');
 		sh_cmd_del(&cmd);
 	}
 	ft_fclose(stm);
@@ -48,41 +47,40 @@ static void	test_empty(t_tap *t)
 
 static void	test_noargs(t_tap *t)
 {
-	t_sh_input	in;
+	t_sh_lexer	lex;
 	t_sh_cmd	*cmd;
 	t_stream	*stm;
 	char		str[] = "echo";
 	char		**argv;
 
-	ft_tap_plan(t, 5);
+	ft_tap_plan(t, 4);
 	if ((stm = ft_fmemopen(str, sizeof(str) - 1, "r"))
-		&& sh_init_input(&in, stm) == 0)
+		&& sh_lexer_init(&lex, stm) == 0)
 	{
-		FT_TAP_IEQ(t, sh_parse_cmd(&in, &cmd), 0);
+		FT_TAP_IEQ(t, sh_parse_cmd(&lex, &cmd), 0);
 		if (FT_TAP_OK(t, (argv = sh_cmd_toargv(&cmd)) != NULL))
 		{
 			FT_TAP_SEQ(t, argv[0], "echo");
 			FT_TAP_OK(t, argv[1] == NULL);
 			del_argv(argv);
 		}
-		FT_TAP_IEQ(t, in.next_c, FT_EOF);
 	}
 	ft_fclose(stm);
 }
 
 static void	test_args(t_tap *t)
 {
-	t_sh_input	in;
+	t_sh_lexer	lex;
 	t_sh_cmd	*cmd;
 	t_stream	*stm;
 	char		str[] = "echo hello world\n";
 	char		**argv;
 
-	ft_tap_plan(t, 7);
+	ft_tap_plan(t, 6);
 	if ((stm = ft_fmemopen(str, sizeof(str) - 1, "r"))
-		&& sh_init_input(&in, stm) == 0)
+		&& sh_lexer_init(&lex, stm) == 0)
 	{
-		FT_TAP_IEQ(t, sh_parse_cmd(&in, &cmd), 0);
+		FT_TAP_IEQ(t, sh_parse_cmd(&lex, &cmd), 0);
 		if (FT_TAP_OK(t, (argv = sh_cmd_toargv(&cmd)) != NULL))
 		{
 			FT_TAP_SEQ(t, argv[0], "echo");
@@ -91,7 +89,6 @@ static void	test_args(t_tap *t)
 			FT_TAP_OK(t, argv[3] == NULL);
 			del_argv(argv);
 		}
-		FT_TAP_IEQ(t, in.next_c, '\n');
 	}
 	ft_fclose(stm);
 }

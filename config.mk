@@ -6,7 +6,7 @@
 #*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2017/04/03 14:40:41 by jguyon            #+#    #+#             *#
-#*   Updated: 2017/04/05 13:22:49 by jguyon           ###   ########.fr       *#
+#*   Updated: 2017/04/05 15:47:35 by jguyon           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -96,7 +96,6 @@ SOURCES = \
 	sh_lexer_init \
 	sh_lexer_token \
 	\
-	sh_init_input \
 	sh_parse_word \
 	sh_parse_cmd \
 	\
