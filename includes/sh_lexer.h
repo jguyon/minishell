@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 10:47:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 18:20:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/05 18:37:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ enum			e_sh_char_type {
 	SH_CHAR_END,
 	SH_CHAR_WHITESPACE,
 	SH_CHAR_TOKEN,
+	SH_CHAR_BACKSLASH_TOKEN,
 };
 
 enum			e_sh_char_context {
 	SH_CTX_NORMAL,
 	SH_CTX_SQUOTE,
+	SH_CTX_DQUOTE,
 };
 
 /*

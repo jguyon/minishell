@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 11:23:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 17:56:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/05 19:02:49 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,32 @@
 #include "ft_darrays.h"
 #include "ft_debug.h"
 
+static int		set_char(t_darray *dstr, size_t i, char c)
+{
+	if (ft_darr_set(dstr, i + 1, NULL) || ft_darr_set(dstr, i, &c))
+		return (-1);
+	return (0);
+}
+
 static t_err	make_word(t_sh_lexer *lex, t_sh_token *token)
 {
 	t_darray	dstr;
 	size_t		i;
-	char		c;
 
 	if (ft_darr_init(&dstr, sizeof(char), 16))
 		return (SH_ERR_NOMEM);
 	i = 0;
-	while (lex->curr_type == SH_CHAR_TOKEN)
+	while (lex->curr_type == SH_CHAR_TOKEN
+			|| lex->curr_type == SH_CHAR_BACKSLASH_TOKEN)
 	{
-		c = lex->curr_char;
-		if (ft_darr_set(&dstr, i + 1, NULL) || ft_darr_set(&dstr, i, &c))
+		if ((lex->curr_type == SH_CHAR_BACKSLASH_TOKEN
+					&& set_char(&dstr, i++, '\\'))
+				|| set_char(&dstr, i++, lex->curr_char))
 		{
 			ft_darr_clear(&dstr);
 			return (SH_ERR_NOMEM);
 		}
 		sh_lexer_nextc(lex);
-		++i;
 	}
 	token->type = SH_TOKEN_WORD;
 	token->data.word = (char *)dstr.array;
