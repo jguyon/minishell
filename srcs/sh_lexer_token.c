@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 11:23:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 13:52:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/05 16:26:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@ static void		next_char(t_sh_lexer *lex)
 		lex->curr_type = SH_CHAR_END;
 	else if (lex->curr_char == ' ' || lex->curr_char == '\t')
 		lex->curr_type = SH_CHAR_WHITESPACE;
+	else if (lex->curr_char == '\\')
+	{
+		lex->curr_char = ft_fgetc(lex->stm);
+		if (lex->curr_char == FT_EOF)
+			lex->curr_type = SH_CHAR_END;
+		else if (lex->curr_char == '\n')
+			next_char(lex);
+		else
+			lex->curr_type = SH_CHAR_TOKEN;
+	}
 	else
 		lex->curr_type = SH_CHAR_TOKEN;
 }
