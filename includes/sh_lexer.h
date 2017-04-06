@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 10:47:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 12:55:19 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/06 17:48:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 **
 ** @SH_TYPE_NONE: placeholder value at initialization
 ** @SH_TYPE_LITERAL: literal value of the character
+** @SH_TYPE_ESCLITERAL: literal character that has been escaped
 ** @SH_TYPE_SLASHED: literal character preceded by a literal backslash
 ** @SH_TYPE_WHITESPACE: blank character separating tokens
 ** @SH_TYPE_QUOTE: start or end character of a quoted string
@@ -42,6 +43,7 @@
 enum			e_sh_char_type {
 	SH_TYPE_NONE,
 	SH_TYPE_LITERAL,
+	SH_TYPE_ESCLITERAL,
 	SH_TYPE_SLASHED,
 	SH_TYPE_WHITESPACE,
 	SH_TYPE_QUOTE,
@@ -82,21 +84,36 @@ typedef struct	s_sh_lexer {
 /*
 ** Type of token
 **
+** SH_TOKEN_NONE: no token found
 ** SH_TOKEN_WORD: word (command name, argument, ...)
+** SH_TOKEN_OPERATOR: operator
 ** SH_TOKEN_EOI: end of input
 */
 enum			e_sh_token_type {
+	SH_TOKEN_NONE,
 	SH_TOKEN_WORD,
+	SH_TOKEN_OPERATOR,
 	SH_TOKEN_EOI,
+};
+
+/*
+** Operator type
+**
+** @SH_OP_SEMI: semicolon seperator
+*/
+enum			e_sh_operator {
+	SH_OP_SEMI,
 };
 
 /*
 ** Data associated with a token type
 **
 ** @word: allocated string constituting the word
+** @operator: operator type
 */
 union			u_sh_token_data {
-	char		*word;
+	char				*word;
+	enum e_sh_operator	operator;
 };
 
 /*
@@ -108,6 +125,29 @@ typedef struct	s_sh_token {
 }				t_sh_token;
 
 /*
+** Maximum length of operators
+*/
+# define SH_OP_MAXLEN 1
+
+/*
+** Number of operators
+*/
+# define SH_OP_COUNT 1
+
+/*
+** Operator type and its corresponding symbol
+*/
+typedef struct	s_sh_operator {
+	char				symbol[SH_OP_MAXLEN + 1];
+	enum e_sh_operator	type;
+}				t_sh_operator;
+
+/*
+** Supported operators
+*/
+t_sh_operator	g_sh_operators[SH_OP_COUNT];
+
+/*
 ** Init @lex with @stm
 */
 t_err			sh_lexer_init(t_sh_lexer *lex, t_stream *stm);
@@ -116,6 +156,13 @@ t_err			sh_lexer_init(t_sh_lexer *lex, t_stream *stm);
 ** Parse a token from @lex into @tok
 */
 t_err			sh_lexer_token(t_sh_lexer *lex, t_sh_token *tok);
+
+/*
+** Parsing of token types
+*/
+t_err			sh_lexer_word(t_sh_lexer *lex, t_sh_token *tok);
+t_err			sh_lexer_operator(t_sh_lexer *lex, t_sh_token *tok);
+t_err			sh_lexer_eoi(t_sh_lexer *lex, t_sh_token *tok);
 
 /*
 ** Advance the lexer position to the next character

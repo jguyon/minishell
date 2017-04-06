@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 10:41:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 12:59:05 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/06 17:35:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int		do_normal(t_sh_lexer *lex)
 	{
 		lex->escape = SH_ESCAPING_FALSE;
 		lex->type = SH_CHAR_ISLINESEP(lex->chr)
-			? SH_TYPE_LINECONT : SH_TYPE_LITERAL;
+			? SH_TYPE_LINECONT : SH_TYPE_ESCLITERAL;
 	}
 	else if (SH_CHAR_ISESCAPE(lex->chr))
 	{
@@ -60,7 +60,7 @@ static int		do_dquote(t_sh_lexer *lex)
 		if (SH_CHAR_ISLINESEP(lex->chr))
 			lex->type = SH_TYPE_LINECONT;
 		else if (SH_CHAR_ISDQUOTE(lex->chr) || SH_CHAR_ISESCAPE(lex->chr))
-			lex->type = SH_TYPE_LITERAL;
+			lex->type = SH_TYPE_ESCLITERAL;
 		else
 			lex->type = SH_TYPE_SLASHED;
 	}
