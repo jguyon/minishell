@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 11:22:35 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 17:17:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/06 13:01:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ t_err	sh_lexer_init(t_sh_lexer *lex, t_stream *stm)
 	if (ft_ferror(stm))
 		return (SH_ERR_IO);
 	lex->stm = stm;
-	lex->curr_char = -1;
-	lex->curr_type = SH_CHAR_START;
-	lex->curr_ctx = SH_CTX_NORMAL;
+	lex->chr = 0;
+	lex->type = SH_TYPE_NONE;
+	lex->escape = SH_ESCAPING_FALSE;
+	lex->quoting = SH_QUOTING_NONE;
 	return (SH_ERR_OK);
 }

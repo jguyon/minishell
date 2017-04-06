@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 10:47:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 19:13:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/06 12:55:19 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,42 +17,65 @@
 # include "ft_streams.h"
 
 /*
+** Check the type of a character
+*/
+# define SH_CHAR_ISBLANK(c) (c == ' ' || c == '\t')
+# define SH_CHAR_ISSQUOTE(c) (c == '\'')
+# define SH_CHAR_ISDQUOTE(c) (c == '"')
+# define SH_CHAR_ISESCAPE(c) (c == '\\')
+# define SH_CHAR_ISLINESEP(c) (c == '\n')
+# define SH_CHAR_ISEOF(c) (c == FT_EOF)
+
+/*
 ** Type of parsed character
 **
-** @SH_CHAR_START: start of input (nothing read yet)
-** @SH_CHAR_END: end of input chars
-** @SH_CHAR_WHITESPACE: whitespace chars
-** @SH_CHAR_TOKEN: character inside token
-** @SH_CHAR_BACKSLASH_TOKEN: character inside token, preceded by backslash
+** @SH_TYPE_NONE: placeholder value at initialization
+** @SH_TYPE_LITERAL: literal value of the character
+** @SH_TYPE_SLASHED: literal character preceded by a literal backslash
+** @SH_TYPE_WHITESPACE: blank character separating tokens
+** @SH_TYPE_QUOTE: start or end character of a quoted string
+** @SH_TYPE_ESCAPE: escape character
+** @SH_TYPE_LINESEP: line separator
+** @SH_TYPE_LINECONT: line continuation
+** @SH_TYPE_EOI: end of input
 */
 enum			e_sh_char_type {
-	SH_CHAR_START,
-	SH_CHAR_END,
-	SH_CHAR_WHITESPACE,
-	SH_CHAR_TOKEN,
-	SH_CHAR_BACKSLASH_TOKEN,
+	SH_TYPE_NONE,
+	SH_TYPE_LITERAL,
+	SH_TYPE_SLASHED,
+	SH_TYPE_WHITESPACE,
+	SH_TYPE_QUOTE,
+	SH_TYPE_ESCAPE,
+	SH_TYPE_LINESEP,
+	SH_TYPE_LINECONT,
+	SH_TYPE_EOI,
 };
 
 /*
-** Context in with the given char is contained
-**
-** @SH_CTX_SQUOTE: within single quotes
-** @SH_CTX_DQUOTE: within double quotes
-** @SH_CTX_NORMAL: everywhere else
+** Quoting context
 */
-enum			e_sh_char_context {
-	SH_CTX_SQUOTE,
-	SH_CTX_DQUOTE,
-	SH_CTX_NORMAL,
+enum			e_sh_quoting {
+	SH_QUOTING_NONE,
+	SH_QUOTING_SINGLE,
+	SH_QUOTING_DOUBLE,
+};
+
+/*
+** Escaping context
+*/
+enum			e_sh_escaping {
+	SH_ESCAPING_FALSE = 0,
+	SH_ESCAPING_TRUE = 1,
 };
 
 /*
 ** Hold the current state of the lexer and its input stream
 */
 typedef struct	s_sh_lexer {
-	enum e_sh_char_type		curr_type;
-	enum e_sh_char_context	curr_ctx;
-	int						curr_char;
+	enum e_sh_quoting		quoting;
+	enum e_sh_escaping		escape;
+	enum e_sh_char_type		type;
+	int						chr;
 	t_stream				*stm;
 }				t_sh_lexer;
 
@@ -98,7 +121,8 @@ t_err			sh_lexer_token(t_sh_lexer *lex, t_sh_token *tok);
 ** Advance the lexer position to the next character
 **
 ** Used by `sh_lexer_token`.
+** Returns -1 if a syntax error occurred, 0 otherwise.
 */
-void			sh_lexer_nextc(t_sh_lexer *lex);
+int				sh_lexer_translate(t_sh_lexer *lex);
 
 #endif
