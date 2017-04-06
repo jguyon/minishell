@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 13:27:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 19:10:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/06 17:43:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,6 +271,92 @@ static void	test_dquotes_escape(t_tap *t)
 	ft_fclose(stm);
 }
 
+static void	test_operator_padded(t_tap *t)
+{
+	char		in[] = "hello ; world";
+	t_stream	*stm;
+	t_sh_lexer	lex;
+	t_sh_token	tok;
+
+	stm = ft_fmemopen(in, sizeof(in) - 1, "r");
+	FT_TAP_IEQ(t, sh_lexer_init(&lex, stm), 0);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_WORD);
+	FT_TAP_SEQ(t, tok.data.word, "hello");
+	free(tok.data.word);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_OPERATOR);
+	FT_TAP_IEQ(t, tok.data.operator, SH_OP_SEMI);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_WORD);
+	FT_TAP_SEQ(t, tok.data.word, "world");
+	free(tok.data.word);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_EOI);
+	ft_fclose(stm);
+}
+
+static void	test_operator_adjacent(t_tap *t)
+{
+	char		in[] = "hello;world";
+	t_stream	*stm;
+	t_sh_lexer	lex;
+	t_sh_token	tok;
+
+	stm = ft_fmemopen(in, sizeof(in) - 1, "r");
+	FT_TAP_IEQ(t, sh_lexer_init(&lex, stm), 0);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_WORD);
+	FT_TAP_SEQ(t, tok.data.word, "hello");
+	free(tok.data.word);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_OPERATOR);
+	FT_TAP_IEQ(t, tok.data.operator, SH_OP_SEMI);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_WORD);
+	FT_TAP_SEQ(t, tok.data.word, "world");
+	free(tok.data.word);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_EOI);
+	ft_fclose(stm);
+}
+
+static void	test_operator_escaped(t_tap *t)
+{
+	char		in[] = "hello\\;world";
+	t_stream	*stm;
+	t_sh_lexer	lex;
+	t_sh_token	tok;
+
+	stm = ft_fmemopen(in, sizeof(in) - 1, "r");
+	FT_TAP_IEQ(t, sh_lexer_init(&lex, stm), 0);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_WORD);
+	FT_TAP_SEQ(t, tok.data.word, "hello;world");
+	free(tok.data.word);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_EOI);
+	ft_fclose(stm);
+}
+
+static void	test_operator_quoted(t_tap *t)
+{
+	char		in[] = "\"hello;world\"";
+	t_stream	*stm;
+	t_sh_lexer	lex;
+	t_sh_token	tok;
+
+	stm = ft_fmemopen(in, sizeof(in) - 1, "r");
+	FT_TAP_IEQ(t, sh_lexer_init(&lex, stm), 0);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_WORD);
+	FT_TAP_SEQ(t, tok.data.word, "hello;world");
+	free(tok.data.word);
+	FT_TAP_IEQ(t, sh_lexer_token(&lex, &tok), 0);
+	FT_TAP_IEQ(t, tok.type, SH_TOKEN_EOI);
+	ft_fclose(stm);
+}
+
 void		run_tests(t_tap *t)
 {
 	FT_TAP_TEST(t, test_empty);
@@ -287,4 +373,8 @@ void		run_tests(t_tap *t)
 	FT_TAP_TEST(t, test_dquotes_extremes);
 	FT_TAP_TEST(t, test_dquotes_middle);
 	FT_TAP_TEST(t, test_dquotes_escape);
+	FT_TAP_TEST(t, test_operator_padded);
+	FT_TAP_TEST(t, test_operator_adjacent);
+	FT_TAP_TEST(t, test_operator_escaped);
+	FT_TAP_TEST(t, test_operator_quoted);
 }

@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_init_input.c                                    :+:      :+:    :+:   */
+/*   sh_seqlist_push.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/24 21:45:20 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 13:08:50 by jguyon           ###   ########.fr       */
+/*   Created: 2017/04/06 18:10:19 by jguyon            #+#    #+#             */
+/*   Updated: 2017/04/06 18:11:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh_parse.h"
+#include "sh_ast.h"
 #include "ft_debug.h"
 
-t_err	sh_init_input(t_sh_input *in, t_stream *stm)
+void	sh_seqlist_push(t_sh_seqlist *lst, t_sh_cmd *cmd)
 {
-	FT_ASSERT(in != NULL);
-	FT_ASSERT(stm != NULL);
-	if (ft_ferror(stm))
-		return (SH_ERR_IO);
-	in->stm = stm;
-	in->next_c = ft_fgetc(stm);
-	return (SH_ERR_OK);
+	FT_ASSERT(lst != NULL);
+	FT_ASSERT(cmd != NULL);
+	ft_dlst_pushr(&(lst->cmds), &(cmd->node));
 }

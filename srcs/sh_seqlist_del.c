@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_lexer_init.c                                    :+:      :+:    :+:   */
+/*   sh_seqlist_del.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/05 11:22:35 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 13:01:35 by jguyon           ###   ########.fr       */
+/*   Created: 2017/04/06 18:15:16 by jguyon            #+#    #+#             */
+/*   Updated: 2017/04/06 18:19:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh_lexer.h"
+#include "sh_ast.h"
+#include "ft_memory.h"
 #include "ft_debug.h"
 
-t_err	sh_lexer_init(t_sh_lexer *lex, t_stream *stm)
+void	sh_seqlist_del(t_sh_seqlist **lst)
 {
-	FT_ASSERT(lex != NULL);
-	FT_ASSERT(stm != NULL);
-	if (ft_ferror(stm))
-		return (SH_ERR_IO);
-	lex->stm = stm;
-	lex->chr = 0;
-	lex->type = SH_TYPE_NONE;
-	lex->escape = SH_ESCAPING_FALSE;
-	lex->quoting = SH_QUOTING_NONE;
-	return (SH_ERR_OK);
+	t_dlist_node	*node;
+	t_sh_cmd		*cmd;
+
+	FT_ASSERT(lst != NULL);
+	if (*lst)
+	{
+		while ((node = ft_dlst_popl(&((*lst)->cmds))))
+		{
+			cmd = FT_DLST_ENTRY(&((*lst)->cmds), node);
+			sh_cmd_del(&cmd);
+		}
+		ft_memdel((void **)lst);
+	}
 }

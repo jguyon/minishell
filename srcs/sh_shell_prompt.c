@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:48:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 15:48:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/06 22:20:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,15 @@ static void	print_prompt(t_sh_env *env)
 
 static void	exec_input(t_sh_env *env)
 {
-	t_sh_lexer	lex;
-	t_sh_cmd	*cmd;
-	t_err		err;
-	char		*name;
+	t_sh_lexer		lex;
+	t_sh_seqlist	*lst;
+	t_err			err;
+	t_sh_token		delim;
 
-	name = NULL;
 	if ((err = sh_lexer_init(&lex, FT_STDIN))
-		|| (err = sh_parse_cmd(&lex, &cmd))
-		|| (cmd && (err = sh_exec_cmd(env, cmd, &name))))
-	{
-		if (name)
-			ft_error(0, err, "%s", name);
-		else
-			ft_error(0, err, NULL);
-	}
-	ft_memdel((void **)&name);
+		|| (err = sh_parse_seqlist(&lex, &lst, &delim))
+		|| (lst && (err = sh_exec_seqlist(env, &lst))))
+		ft_error(0, err, NULL);
 }
 
 int			sh_shell_prompt(t_sh_env *env)
