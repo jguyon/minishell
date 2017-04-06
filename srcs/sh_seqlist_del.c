@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_cmd_del.c                                       :+:      :+:    :+:   */
+/*   sh_seqlist_del.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/24 20:58:58 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 20:56:49 by jguyon           ###   ########.fr       */
+/*   Created: 2017/04/06 18:15:16 by jguyon            #+#    #+#             */
+/*   Updated: 2017/04/06 18:19:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 #include "ft_memory.h"
 #include "ft_debug.h"
 
-static int	del_arg(void *arg, void *acc)
+void	sh_seqlist_del(t_sh_seqlist **lst)
 {
-	(void)acc;
-	ft_dlst_remove(&((t_sh_word *)arg)->node);
-	sh_word_del((t_sh_word **)&arg);
-	return (1);
-}
+	t_dlist_node	*node;
+	t_sh_cmd		*cmd;
 
-void		sh_cmd_del(t_sh_cmd **cmd)
-{
-	FT_ASSERT(cmd != NULL);
-	if (*cmd)
+	FT_ASSERT(lst != NULL);
+	if (*lst)
 	{
-		sh_word_del(&((*cmd)->name));
-		ft_dlst_foreachl(&((*cmd)->args), NULL, &del_arg);
-		ft_memdel((void **)cmd);
+		while ((node = ft_dlst_popl(&((*lst)->cmds))))
+		{
+			cmd = FT_DLST_ENTRY(&((*lst)->cmds), node);
+			sh_cmd_del(&cmd);
+		}
+		ft_memdel((void **)lst);
 	}
 }

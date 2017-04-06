@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:48:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/05 15:48:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/06 19:47:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ static void	exec_input(t_sh_env *env)
 	t_sh_cmd	*cmd;
 	t_err		err;
 	char		*name;
+	t_sh_token	delim;
 
 	name = NULL;
 	if ((err = sh_lexer_init(&lex, FT_STDIN))
-		|| (err = sh_parse_cmd(&lex, &cmd))
+		|| (err = sh_parse_cmd(&lex, &cmd, &delim))
 		|| (cmd && (err = sh_exec_cmd(env, cmd, &name))))
 	{
 		if (name)

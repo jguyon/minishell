@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_cmd_del.c                                       :+:      :+:    :+:   */
+/*   sh_seqlist_push.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/24 20:58:58 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 20:56:49 by jguyon           ###   ########.fr       */
+/*   Created: 2017/04/06 18:10:19 by jguyon            #+#    #+#             */
+/*   Updated: 2017/04/06 18:11:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_ast.h"
-#include "ft_memory.h"
 #include "ft_debug.h"
 
-static int	del_arg(void *arg, void *acc)
+void	sh_seqlist_push(t_sh_seqlist *lst, t_sh_cmd *cmd)
 {
-	(void)acc;
-	ft_dlst_remove(&((t_sh_word *)arg)->node);
-	sh_word_del((t_sh_word **)&arg);
-	return (1);
-}
-
-void		sh_cmd_del(t_sh_cmd **cmd)
-{
+	FT_ASSERT(lst != NULL);
 	FT_ASSERT(cmd != NULL);
-	if (*cmd)
-	{
-		sh_word_del(&((*cmd)->name));
-		ft_dlst_foreachl(&((*cmd)->args), NULL, &del_arg);
-		ft_memdel((void **)cmd);
-	}
+	ft_dlst_pushr(&(lst->cmds), &(cmd->node));
 }
