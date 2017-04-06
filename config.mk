@@ -6,7 +6,7 @@
 #*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2017/04/03 14:40:41 by jguyon            #+#    #+#             *#
-#*   Updated: 2017/04/06 20:18:10 by jguyon           ###   ########.fr       *#
+#*   Updated: 2017/04/06 21:15:58 by jguyon           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -116,6 +116,7 @@ SOURCES = \
 	sh_seqlist_del \
 	\
 	sh_exec_cmd \
+	sh_exec_seqlist \
 	\
 	sh_shell_start \
 	sh_shell_prompt \

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 16:23:57 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 14:12:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/06 22:04:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	test_prompt_flow(t_tap *t)
 	t_sh_env	env;
 
 	ft_tap_plan(t, 11);
-	stdin_reopen("echo hello world\nfalse\nexit\n");
+	stdin_reopen("false ; echo hello world\nfalse\nexit\n");
 	if (FT_TAP_IEQ(t, sh_shell_start(&env, ep), 0))
 	{
 		STDOUT_EQ(t, "");
