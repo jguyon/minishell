@@ -1,5 +1,6 @@
 -Iincludes
 -Ilibft/includes
+-DFT_FEATURE_DEBUG
 -Wall
 -Werror
 -Wextra
