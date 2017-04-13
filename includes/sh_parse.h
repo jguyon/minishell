@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 15:59:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 20:08:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/13 17:34:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,17 @@
 t_err	sh_parse_cmd(t_sh_lexer *lex, t_sh_cmd **cmd, t_sh_token *delim);
 
 /*
+** Parse a list of piped commands to execute together
+**
+** @pipe will be NULL if no commands were parsed.
+*/
+t_err	sh_parse_pipelist(t_sh_lexer *lex, t_sh_pipelist **pipe,
+			t_sh_token *delim);
+
+/*
 ** Parse a list of commands to execute sequentially
 **
-** @lst will be empty if no commands were parsed.
+** @lst will be empty if no pipelists were parsed.
 */
 t_err	sh_parse_seqlist(t_sh_lexer *lex, t_sh_seqlist **lst,
 			t_sh_token *delim);

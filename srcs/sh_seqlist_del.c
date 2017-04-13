@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 18:15:16 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 18:19:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/13 16:49:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 void	sh_seqlist_del(t_sh_seqlist **lst)
 {
 	t_dlist_node	*node;
-	t_sh_cmd		*cmd;
+	t_sh_pipelist	*pipe;
 
 	FT_ASSERT(lst != NULL);
 	if (*lst)
 	{
-		while ((node = ft_dlst_popl(&((*lst)->cmds))))
+		while ((node = ft_dlst_popl(&((*lst)->pipes))))
 		{
-			cmd = FT_DLST_ENTRY(&((*lst)->cmds), node);
-			sh_cmd_del(&cmd);
+			pipe = FT_DLST_ENTRY(&((*lst)->pipes), node);
+			sh_pipelist_del(&pipe);
 		}
 		ft_memdel((void **)lst);
 	}

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 20:19:18 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 20:58:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/13 17:21:49 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,19 @@ static void	test_delim_newline(t_tap *t)
 	t_sh_lexer		lex;
 	t_sh_seqlist	*lst;
 	t_sh_token		delim;
+	t_sh_pipelist	*pipe;
 	t_sh_cmd		*cmd;
 
 	stm = ft_fmemopen(in, sizeof(in) - 1, "r");
 	sh_lexer_init(&lex, stm);
 	FT_TAP_IEQ(t, sh_parse_seqlist(&lex, &lst, &delim), 0);
 	FT_TAP_IEQ(t, delim.type, SH_TOKEN_EOI);
-	FT_TAP_OK(t, (cmd = sh_seqlist_pop(lst)) != NULL);
+	FT_TAP_OK(t, (pipe = sh_seqlist_pop(lst)) != NULL);
+	FT_TAP_OK(t, (cmd = sh_pipelist_pop(pipe)) != NULL);
 	FT_TAP_SEQ(t, cmd->name->str, "echo");
 	sh_cmd_del(&cmd);
+	FT_TAP_OK(t, sh_pipelist_pop(pipe) == NULL);
+	sh_pipelist_del(&pipe);
 	FT_TAP_OK(t, sh_seqlist_pop(lst) == NULL);
 	sh_seqlist_del(&lst);
 	ft_fclose(stm);
@@ -75,15 +79,19 @@ static void	test_delim_semi(t_tap *t)
 	t_sh_lexer		lex;
 	t_sh_seqlist	*lst;
 	t_sh_token		delim;
+	t_sh_pipelist	*pipe;
 	t_sh_cmd		*cmd;
 
 	stm = ft_fmemopen(in, sizeof(in) - 1, "r");
 	sh_lexer_init(&lex, stm);
 	FT_TAP_IEQ(t, sh_parse_seqlist(&lex, &lst, &delim), 0);
 	FT_TAP_IEQ(t, delim.type, SH_TOKEN_EOI);
-	FT_TAP_OK(t, (cmd = sh_seqlist_pop(lst)) != NULL);
+	FT_TAP_OK(t, (pipe = sh_seqlist_pop(lst)) != NULL);
+	FT_TAP_OK(t, (cmd = sh_pipelist_pop(pipe)) != NULL);
 	FT_TAP_SEQ(t, cmd->name->str, "echo");
 	sh_cmd_del(&cmd);
+	FT_TAP_OK(t, sh_pipelist_pop(pipe) == NULL);
+	sh_pipelist_del(&pipe);
 	FT_TAP_OK(t, sh_seqlist_pop(lst) == NULL);
 	sh_seqlist_del(&lst);
 	ft_fclose(stm);
@@ -96,18 +104,25 @@ static void	test_multiple_commands(t_tap *t)
 	t_sh_lexer		lex;
 	t_sh_seqlist	*lst;
 	t_sh_token		delim;
+	t_sh_pipelist	*pipe;
 	t_sh_cmd		*cmd;
 
 	stm = ft_fmemopen(in, sizeof(in) - 1, "r");
 	sh_lexer_init(&lex, stm);
 	FT_TAP_IEQ(t, sh_parse_seqlist(&lex, &lst, &delim), 0);
 	FT_TAP_IEQ(t, delim.type, SH_TOKEN_EOI);
-	FT_TAP_OK(t, (cmd = sh_seqlist_pop(lst)) != NULL);
+	FT_TAP_OK(t, (pipe = sh_seqlist_pop(lst)) != NULL);
+	FT_TAP_OK(t, (cmd = sh_pipelist_pop(pipe)) != NULL);
 	FT_TAP_SEQ(t, cmd->name->str, "echo");
 	sh_cmd_del(&cmd);
-	FT_TAP_OK(t, (cmd = sh_seqlist_pop(lst)) != NULL);
+	FT_TAP_OK(t, sh_pipelist_pop(pipe) == NULL);
+	sh_pipelist_del(&pipe);
+	FT_TAP_OK(t, (pipe = sh_seqlist_pop(lst)) != NULL);
+	FT_TAP_OK(t, (cmd = sh_pipelist_pop(pipe)) != NULL);
 	FT_TAP_SEQ(t, cmd->name->str, "cat");
 	sh_cmd_del(&cmd);
+	FT_TAP_OK(t, sh_pipelist_pop(pipe) == NULL);
+	sh_pipelist_del(&pipe);
 	FT_TAP_OK(t, sh_seqlist_pop(lst) == NULL);
 	sh_seqlist_del(&lst);
 	ft_fclose(stm);

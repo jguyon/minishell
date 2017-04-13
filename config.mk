@@ -1,14 +1,14 @@
-#* ************************************************************************** *#
-#*                                                                            *#
-#*                                                        :::      ::::::::   *#
-#*   config.mk                                          :+:      :+:    :+:   *#
-#*                                                    +:+ +:+         +:+     *#
-#*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
-#*                                                +#+#+#+#+#+   +#+           *#
-#*   Created: 2017/04/03 14:40:41 by jguyon            #+#    #+#             *#
-#*   Updated: 2017/04/06 21:15:58 by jguyon           ###   ########.fr       *#
-#*                                                                            *#
-#* ************************************************************************** *#
+#******************************************************************************#
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    config.mk                                          :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/04/13 18:27:34 by jguyon            #+#    #+#              #
+#    Updated: 2017/04/13 18:27:36 by jguyon           ###   ########.fr        #
+#                                                                              #
+#******************************************************************************#
 
 # Programs and their flags
 SHELL = /bin/sh
@@ -101,6 +101,7 @@ SOURCES = \
 	sh_lexer_translate \
 	\
 	sh_parse_cmd \
+	sh_parse_pipelist \
 	sh_parse_seqlist \
 	\
 	sh_word_new \
@@ -110,12 +111,17 @@ SOURCES = \
 	sh_cmd_push \
 	sh_cmd_toargv \
 	sh_cmd_del \
+	sh_pipelist_new \
+	sh_pipelist_push \
+	sh_pipelist_pop \
+	sh_pipelist_del \
 	sh_seqlist_new \
 	sh_seqlist_push \
 	sh_seqlist_pop \
 	sh_seqlist_del \
 	\
 	sh_exec_cmd \
+	sh_exec_pipelist \
 	sh_exec_seqlist \
 	\
 	sh_shell_start \

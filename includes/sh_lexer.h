@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 10:47:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 17:48:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/13 18:26:11 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,11 @@ enum			e_sh_token_type {
 ** Operator type
 **
 ** @SH_OP_SEMI: semicolon seperator
+** @SH_OP_PIPE: pipe operator
 */
 enum			e_sh_operator {
 	SH_OP_SEMI,
+	SH_OP_PIPE,
 };
 
 /*
@@ -132,7 +134,7 @@ typedef struct	s_sh_token {
 /*
 ** Number of operators
 */
-# define SH_OP_COUNT 1
+# define SH_OP_COUNT 2
 
 /*
 ** Operator type and its corresponding symbol
