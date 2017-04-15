@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/13 18:27:34 by jguyon            #+#    #+#              #
-#    Updated: 2017/04/13 18:27:36 by jguyon           ###   ########.fr        #
+#    Updated: 2017/04/15 17:48:25 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -89,6 +89,8 @@ SOURCES = \
 	sh_env_exec_bin \
 	sh_env_exec_builtin \
 	sh_env_exec \
+	sh_env_pipe \
+	sh_env_wait \
 	sh_env_exit \
 	sh_env_should_exit \
 	sh_env_status \
