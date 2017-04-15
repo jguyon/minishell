@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_seqlist_new.c                                   :+:      :+:    :+:   */
+/*   sh_pipelist_del.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/06 18:06:52 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/13 16:45:44 by jguyon           ###   ########.fr       */
+/*   Created: 2017/04/13 16:42:23 by jguyon            #+#    #+#             */
+/*   Updated: 2017/04/13 16:44:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_ast.h"
 #include "ft_memory.h"
+#include "ft_debug.h"
 
-t_sh_seqlist	*sh_seqlist_new(void)
+void	sh_pipelist_del(t_sh_pipelist **pipe)
 {
-	t_sh_seqlist	*lst;
+	t_dlist_node	*node;
+	t_sh_cmd		*cmd;
 
-	if (!(lst = (t_sh_seqlist *)ft_memalloc(sizeof(*lst))))
-		return (NULL);
-	FT_DLST_INIT(&(lst->pipes), t_sh_pipelist, node);
-	return (lst);
+	FT_ASSERT(pipe != NULL);
+	if (*pipe)
+	{
+		while ((node = ft_dlst_popl(&((*pipe)->cmds))))
+		{
+			cmd = FT_DLST_ENTRY(&((*pipe)->cmds), node);
+			sh_cmd_del(&cmd);
+		}
+		ft_memdel((void **)pipe);
+	}
 }

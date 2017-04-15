@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:23:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:58:08 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/04/15 18:38:47 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "sh_errors.h"
 # include "ft_darrays.h"
 # include "ft_strings.h"
+# include <unistd.h>
 
 /*
 ** Get the length of the variable name in a string of type "NAME=value"
@@ -115,6 +116,20 @@ t_err			sh_env_chdir(t_sh_env *env, const char *path, int nosym);
 ** Will store its exit status in @env.
 */
 t_err			sh_env_exec(t_sh_env *env, char *const argv[]);
+
+/*
+** Execute the command provided by @argv asynchronously
+**
+** @fds[0] will be piped into stdin and @fds[1] will be piped from stdout.
+** You should take care of closing these file descriptors.
+*/
+t_err			sh_env_pipe(t_sh_env *env, char *const argv[],
+					int fds[2], pid_t *child);
+
+/*
+** Wait for @child to exit and store its status code into @env
+*/
+t_err			sh_env_wait(t_sh_env *env, pid_t child);
 
 /*
 ** Mark the env for exit with @status

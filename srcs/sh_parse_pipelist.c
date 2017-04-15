@@ -1,43 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_parse_seqlist.c                                 :+:      :+:    :+:   */
+/*   sh_parse_pipelist.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/06 20:09:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/13 16:52:30 by jguyon           ###   ########.fr       */
+/*   Created: 2017/04/13 16:53:23 by jguyon            #+#    #+#             */
+/*   Updated: 2017/04/13 17:31:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_parse.h"
 #include "ft_debug.h"
 
-t_err	sh_parse_seqlist(t_sh_lexer *lex, t_sh_seqlist **lst,
+t_err	sh_parse_pipelist(t_sh_lexer *lex, t_sh_pipelist **pipe,
 			t_sh_token *delim)
 {
-	t_sh_pipelist	*pipe;
-	t_err			err;
+	t_sh_cmd	*cmd;
+	t_err		err;
 
 	FT_ASSERT(lex != NULL);
-	FT_ASSERT(lst != NULL);
+	FT_ASSERT(pipe != NULL);
 	FT_ASSERT(delim != NULL);
-	FT_DEBUG("parse: parsing next seqlist");
-	if (!(*lst = sh_seqlist_new()))
+	FT_DEBUG("parse: parsing next pipelist");
+	if (!(*pipe = sh_pipelist_new()))
 		return (SH_ERR_NOMEM);
-	while ((err = sh_parse_pipelist(lex, &pipe, delim)) == SH_ERR_OK)
+	while ((err = sh_parse_cmd(lex, &cmd, delim)) == SH_ERR_OK)
 	{
-		if (pipe)
-			sh_seqlist_push(*lst, pipe);
+		if (cmd)
+			sh_pipelist_push(*pipe, cmd);
 		if (delim->type != SH_TOKEN_OPERATOR
-				|| delim->data.operator != SH_OP_SEMI)
+				|| delim->data.operator != SH_OP_PIPE)
 			break ;
 	}
-	if (err != SH_ERR_OK)
+	if (err != SH_ERR_OK || ft_dlst_empty(&((*pipe)->cmds)))
 	{
-		sh_seqlist_del(lst);
+		sh_pipelist_del(pipe);
 		return (err);
 	}
-	FT_DEBUG("parse: parsed seqlist");
+	FT_DEBUG("parse: parsed pipelist");
 	return (SH_ERR_OK);
 }

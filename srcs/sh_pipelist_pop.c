@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_seqlist_new.c                                   :+:      :+:    :+:   */
+/*   sh_pipelist_pop.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/06 18:06:52 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/13 16:45:44 by jguyon           ###   ########.fr       */
+/*   Created: 2017/04/13 16:40:25 by jguyon            #+#    #+#             */
+/*   Updated: 2017/04/13 16:41:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_ast.h"
-#include "ft_memory.h"
+#include "ft_debug.h"
 
-t_sh_seqlist	*sh_seqlist_new(void)
+t_sh_cmd	*sh_pipelist_pop(t_sh_pipelist *pipe)
 {
-	t_sh_seqlist	*lst;
+	t_dlist_node	*node;
 
-	if (!(lst = (t_sh_seqlist *)ft_memalloc(sizeof(*lst))))
+	FT_ASSERT(pipe != NULL);
+	if (!(node = ft_dlst_popl(&(pipe->cmds))))
 		return (NULL);
-	FT_DLST_INIT(&(lst->pipes), t_sh_pipelist, node);
-	return (lst);
+	return (FT_DLST_ENTRY(&(pipe->cmds), node));
 }
