@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:33:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 18:26:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 14:08:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ void	sh_env_end(t_sh_env *env)
 
 	FT_ASSERT(env != NULL);
 	ft_memdel((void **)&(env->cwd));
-	vars = env->vars.array;
-	i = 0;
-	while (vars[i])
+	if ((vars = ft_darr_extract(&(env->vars))))
 	{
-		ft_memdel((void **)&vars[i]);
-		++i;
+		i = 0;
+		while (vars[i])
+		{
+			ft_memdel((void **)&vars[i]);
+			++i;
+		}
+		ft_memdel((void **)&vars);
 	}
-	ft_darr_clear(&(env->vars));
 	FT_DEBUG("env: cleared env '%p'", env);
 }

@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 14:26:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 17:46:13 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 14:03:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_lexer.h"
 #include "ft_darrays.h"
+#include "ft_memory.h"
 #include "ft_debug.h"
 
 static int	is_word_char(t_sh_lexer *lex)
@@ -62,6 +63,7 @@ t_err		sh_lexer_word(t_sh_lexer *lex, t_sh_token *tok)
 {
 	t_darray	word;
 	size_t		i;
+	char		*str;
 
 	FT_DEBUG("lexer: lexing word");
 	tok->type = SH_TOKEN_NONE;
@@ -72,13 +74,14 @@ t_err		sh_lexer_word(t_sh_lexer *lex, t_sh_token *tok)
 	{
 		if (push_char(&word, &i, lex->type, lex->chr))
 		{
-			ft_darr_clear(&word);
+			str = ft_darr_extract(&word);
+			ft_memdel((void **)&str);
 			return (SH_ERR_NOMEM);
 		}
 		sh_lexer_translate(lex);
 	}
 	tok->type = SH_TOKEN_WORD;
-	tok->data.word = (char *)word.array;
+	tok->data.word = ft_darr_extract(&word);
 	FT_DEBUG("lexer: lexed word '%s'", tok->data.word);
 	return (SH_ERR_OK);
 }
