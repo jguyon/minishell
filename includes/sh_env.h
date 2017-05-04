@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:23:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/15 18:38:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:38:57 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct	s_sh_builtin {
 /*
 ** Init @env with the system environment @envp
 */
-t_err			sh_env_start(t_sh_env *env, char *const envp[]);
+t_sh_err		sh_env_start(t_sh_env *env, char *const envp[]);
 
 /*
 ** Clear @env when it is not needed anymore
@@ -90,7 +90,7 @@ const char		*sh_env_getvar(t_sh_env *env, const char *name);
 ** If @val is NULL and @name is formatted like "NAME=value",
 ** the variable "NAME" will be assigned "value".
 */
-t_err			sh_env_setvar(t_sh_env *env, const char *name, const char *val);
+t_sh_err		sh_env_setvar(t_sh_env *env, const char *name, const char *val);
 
 /*
 ** Unset the environment variable @name
@@ -102,12 +102,12 @@ void			sh_env_unsetvar(t_sh_env *env, const char *name);
 /*
 ** Get the current working directory
 */
-t_err			sh_env_getcwd(t_sh_env *env, int nosym, char **cwd);
+t_sh_err		sh_env_getcwd(t_sh_env *env, int nosym, char **cwd);
 
 /*
 ** Change the current working directory
 */
-t_err			sh_env_chdir(t_sh_env *env, const char *path, int nosym);
+t_sh_err		sh_env_chdir(t_sh_env *env, const char *path, int nosym);
 
 /*
 ** Execute the command provided by @argv
@@ -115,7 +115,7 @@ t_err			sh_env_chdir(t_sh_env *env, const char *path, int nosym);
 ** Will search for a built-in or an executable in the PATH.
 ** Will store its exit status in @env.
 */
-t_err			sh_env_exec(t_sh_env *env, char *const argv[]);
+t_sh_err		sh_env_exec(t_sh_env *env, char *const argv[]);
 
 /*
 ** Execute the command provided by @argv asynchronously
@@ -123,13 +123,13 @@ t_err			sh_env_exec(t_sh_env *env, char *const argv[]);
 ** @fds[0] will be piped into stdin and @fds[1] will be piped from stdout.
 ** You should take care of closing these file descriptors.
 */
-t_err			sh_env_pipe(t_sh_env *env, char *const argv[],
+t_sh_err		sh_env_pipe(t_sh_env *env, char *const argv[],
 					int fds[2], pid_t *child);
 
 /*
 ** Wait for @child to exit and store its status code into @env
 */
-t_err			sh_env_wait(t_sh_env *env, pid_t child);
+t_sh_err		sh_env_wait(t_sh_env *env, pid_t child);
 
 /*
 ** Mark the env for exit with @status
@@ -153,14 +153,14 @@ int				sh_env_status(t_sh_env *env);
 **
 ** You should free @path once you are finished with it.
 */
-t_err			sh_env_binpath(t_sh_env *env, const char *name, char **path);
+t_sh_err		sh_env_binpath(t_sh_env *env, const char *name, char **path);
 
 /*
 ** Search for a built-in and store it in @builtin
 **
 ** @builtin should not be freed.
 */
-t_err			sh_env_builtin(t_sh_env *env, const char *name,
+t_sh_err		sh_env_builtin(t_sh_env *env, const char *name,
 					t_sh_builtin **builtin);
 
 /*

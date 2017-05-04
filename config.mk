@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/13 18:27:34 by jguyon            #+#    #+#              #
-#    Updated: 2017/05/04 16:04:47 by jguyon           ###   ########.fr        #
+#    Updated: 2017/05/04 17:18:42 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -51,79 +51,77 @@ NAME = 21sh
 # Source names to compile the program
 # main does not need to be specified here, it will be added in the Makefile
 SOURCES = \
-	sh_strerror \
+	errors/sh_strerror \
 	\
-	sh_path_join \
-	sh_path_canonical \
-	sh_check_dir \
-	sh_check_bin \
+	files/sh_path_join \
+	files/sh_path_canonical \
+	files/sh_check_dir \
+	files/sh_check_bin \
 	\
-	sh_builtin_echo \
-	sh_builtin_cd \
-	sh_builtin_pwd \
-	sh_builtin_env \
-	sh_builtin_setenv \
-	sh_builtin_unsetenv \
-	sh_builtin_exit \
+	builtins/sh_builtin_echo \
+	builtins/sh_builtin_cd \
+	builtins/sh_builtin_pwd \
+	builtins/sh_builtin_env \
+	builtins/sh_builtin_setenv \
+	builtins/sh_builtin_unsetenv \
+	builtins/sh_builtin_exit \
 	\
-	sh_env_start \
-	sh_env_end \
-	sh_env_vars \
-	sh_env_getvar \
-	sh_env_setvar \
-	sh_env_unsetvar \
-	sh_env_getcwd \
-	sh_env_chdir \
-	sh_env_binpath \
-	sh_env_builtin \
-	sh_env_exec_bin \
-	sh_env_exec_builtin \
-	sh_env_exec \
-	sh_env_pipe \
-	sh_env_wait \
-	sh_env_exit \
-	sh_env_should_exit \
-	sh_env_status \
+	env/sh_env_start \
+	env/sh_env_end \
+	env/sh_env_vars \
+	env/sh_env_getvar \
+	env/sh_env_setvar \
+	env/sh_env_unsetvar \
+	env/sh_env_getcwd \
+	env/sh_env_chdir \
+	env/sh_env_binpath \
+	env/sh_env_builtin \
+	env/sh_env_exec_bin \
+	env/sh_env_exec_builtin \
+	env/sh_env_exec \
+	env/sh_env_pipe \
+	env/sh_env_wait \
+	env/sh_env_exit \
+	env/sh_env_should_exit \
+	env/sh_env_status \
 	\
-	sh_lexer_init \
-	sh_lexer_token \
-	sh_lexer_word \
-	sh_lexer_operator \
-	sh_lexer_eoi \
-	sh_lexer_translate \
+	lexer/sh_lexer_init \
+	lexer/sh_lexer_token \
+	lexer/sh_lexer_word \
+	lexer/sh_lexer_operator \
+	lexer/sh_lexer_eoi \
+	lexer/sh_lexer_translate \
 	\
-	sh_parse_cmd \
-	sh_parse_pipelist \
-	sh_parse_seqlist \
+	parse/sh_parse_cmd \
+	parse/sh_parse_pipelist \
+	parse/sh_parse_seqlist \
 	\
-	sh_word_new \
-	sh_word_tostr \
-	sh_word_del \
-	sh_cmd_new \
-	sh_cmd_push \
-	sh_cmd_toargv \
-	sh_cmd_del \
-	sh_pipelist_new \
-	sh_pipelist_push \
-	sh_pipelist_pop \
-	sh_pipelist_del \
-	sh_seqlist_new \
-	sh_seqlist_push \
-	sh_seqlist_pop \
-	sh_seqlist_del \
+	ast/sh_word_new \
+	ast/sh_word_tostr \
+	ast/sh_word_del \
+	ast/sh_cmd_new \
+	ast/sh_cmd_push \
+	ast/sh_cmd_toargv \
+	ast/sh_cmd_del \
+	ast/sh_pipelist_new \
+	ast/sh_pipelist_push \
+	ast/sh_pipelist_pop \
+	ast/sh_pipelist_del \
+	ast/sh_seqlist_new \
+	ast/sh_seqlist_push \
+	ast/sh_seqlist_pop \
+	ast/sh_seqlist_del \
 	\
-	sh_exec_cmd \
-	sh_exec_pipelist \
-	sh_exec_seqlist \
+	exec/sh_exec_cmd \
+	exec/sh_exec_pipelist \
+	exec/sh_exec_seqlist \
 	\
-	sh_shell_start \
-	sh_shell_prompt \
-	sh_shell_end \
-
-TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
+	shell/sh_shell_start \
+	shell/sh_shell_prompt \
+	shell/sh_shell_end \
 
 # Source names to execute as tests
-TESTS = $(filter test_%,$(TEST_FILES))
+TESTS = $(patsubst $(TEST_PATH)/%.c,%,$(wildcard $(TEST_PATH)/*/*.c))
 
 # Source names to compile with every test executable
-TESTS_COMMON = $(filter-out test_%,$(TEST_FILES))
+TESTS_COMMON = $(patsubst $(TEST_PATH)/%.c,%,$(wildcard $(TEST_PATH)/*.c))

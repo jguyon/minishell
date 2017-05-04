@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 10:47:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/13 18:26:11 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:49:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,19 +152,19 @@ t_sh_operator	g_sh_operators[SH_OP_COUNT];
 /*
 ** Init @lex with @stm
 */
-t_err			sh_lexer_init(t_sh_lexer *lex, t_stream *stm);
+t_sh_err		sh_lexer_init(t_sh_lexer *lex, t_stream *stm);
 
 /*
 ** Parse a token from @lex into @tok
 */
-t_err			sh_lexer_token(t_sh_lexer *lex, t_sh_token *tok);
+t_sh_err		sh_lexer_token(t_sh_lexer *lex, t_sh_token *tok);
 
 /*
 ** Parsing of token types
 */
-t_err			sh_lexer_word(t_sh_lexer *lex, t_sh_token *tok);
-t_err			sh_lexer_operator(t_sh_lexer *lex, t_sh_token *tok);
-t_err			sh_lexer_eoi(t_sh_lexer *lex, t_sh_token *tok);
+t_sh_err		sh_lexer_word(t_sh_lexer *lex, t_sh_token *tok);
+t_sh_err		sh_lexer_operator(t_sh_lexer *lex, t_sh_token *tok);
+t_sh_err		sh_lexer_eoi(t_sh_lexer *lex, t_sh_token *tok);
 
 /*
 ** Advance the lexer position to the next character
