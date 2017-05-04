@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 20:53:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 18:59:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 16:08:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	test_home(t_tap *t)
 		sh_env_end(&env);
 	}
 	remove("/tmp/minishell_home");
-	chdir(oldpwd);
 	free(oldpwd);
 	free(newpwd);
 	free(real);
@@ -70,7 +69,6 @@ static void	test_oldpwd(t_tap *t)
 		sh_env_end(&env);
 	}
 	remove("/tmp/minishell_oldpwd");
-	chdir(oldpwd);
 	free(oldpwd);
 	free(newpwd);
 	free(real);
@@ -98,7 +96,6 @@ static void	test_dir(t_tap *t)
 		sh_env_end(&env);
 	}
 	remove("/tmp/minishell_dir");
-	chdir(oldpwd);
 	free(oldpwd);
 	free(newpwd);
 	free(real);
@@ -127,7 +124,6 @@ static void	test_relative(t_tap *t)
 		sh_env_end(&env);
 	}
 	remove("/tmp/minishell_parent");
-	chdir(cwd);
 	free(cwd);
 	free(newpwd);
 	free(real);
@@ -149,7 +145,6 @@ static void	test_error(t_tap *t)
 		STDERR_EQ(t, "minishell: cd: /non/existent: no such file or directory\n");
 		sh_env_end(&env);
 	}
-	chdir(oldpwd);
 	free(oldpwd);
 	free(newpwd);
 }
@@ -165,7 +160,7 @@ static void	test_real_path(t_tap *t)
 
 	ft_tap_plan(t, 4);
 	mkdir("/tmp/minishell_target", S_IRWXU);
-	symlink("/tmp/minishell_target", "/tmp/minishell_link");
+	(void)symlink("/tmp/minishell_target", "/tmp/minishell_link");
 	if ((oldpwd = getcwd(NULL, 0)) && sh_env_start(&env, ep) == 0)
 	{
 		FT_TAP_IEQ(t, sh_builtin_cd(3, av, &env), 0);
@@ -175,7 +170,6 @@ static void	test_real_path(t_tap *t)
 		FT_TAP_SEQ(t, sh_env_getvar(&env, "OLDPWD"), oldpwd);
 		sh_env_end(&env);
 	}
-	chdir(oldpwd);
 	remove("/tmp/minishell_link");
 	remove("/tmp/minishell_target");
 	free(oldpwd);

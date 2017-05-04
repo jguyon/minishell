@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 23:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 19:54:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 16:09:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,10 @@ static void	test_empty_envpath(t_tap *t)
 		&& sh_env_start(&env, ep) == 0)
 	{
 		cwd = getcwd(NULL, 0);
-		chdir("/tmp");
+		(void)chdir("/tmp");
 		FT_TAP_IEQ(t, sh_env_binpath(&env, "sh_bin", &binpath), 0);
 		FT_TAP_SEQ(t, binpath, "./sh_bin");
-		chdir(cwd);
+		(void)chdir(cwd);
 		free(cwd);
 		free(binpath);
 		sh_env_end(&env);

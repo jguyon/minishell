@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/21 23:00:22 by jguyon            #+#    #+#             */
-/*   Updated: 2017/02/27 17:38:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 16:10:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	test_dir(t_tap *t)
 		STDOUT_EQ(t, "/tmp\n");
 		sh_env_end(&env);
 	}
-	chdir(pwd);
 	free(pwd);
 }
 
@@ -48,8 +47,8 @@ static void	test_nosym(t_tap *t)
 
 	ft_tap_plan(t, 2);
 	pwd = getcwd(NULL, 0);
-	symlink("/tmp", "/tmp/sh_symlink");
-	realpath("/tmp", real);
+	(void)symlink("/tmp", "/tmp/sh_symlink");
+	(void)realpath("/tmp", real);
 	if (sh_env_start(&env, ep) == 0
 		&& sh_env_chdir(&env, "/tmp/sh_symlink/", 0) == 0)
 	{
@@ -58,7 +57,6 @@ static void	test_nosym(t_tap *t)
 		STDOUT_EQ(t, real);
 		sh_env_end(&env);
 	}
-	chdir(pwd);
 	remove("/tmp/sh_symlink");
 	free(pwd);
 }

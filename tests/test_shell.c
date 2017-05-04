@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 16:23:57 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 22:04:00 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 16:09:05 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static void	test_pwd_init(t_tap *t)
 
 	ft_tap_plan(t, 9);
 	stdin_reopen("pwd\nexit\n");
-	getcwd(pwd, sizeof(pwd));
+	(void)getcwd(pwd, sizeof(pwd));
 	if (FT_TAP_IEQ(t, sh_shell_start(&env, ep), 0))
 	{
 		FT_TAP_SEQ(t, sh_env_getvar(&env, "PWD"), pwd);
