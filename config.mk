@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/13 18:27:34 by jguyon            #+#    #+#              #
-#    Updated: 2017/05/04 17:09:34 by jguyon           ###   ########.fr        #
+#    Updated: 2017/05/04 17:18:42 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -120,10 +120,8 @@ SOURCES = \
 	shell/sh_shell_prompt \
 	shell/sh_shell_end \
 
-TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
-
 # Source names to execute as tests
-TESTS = $(filter test_%,$(TEST_FILES))
+TESTS = $(patsubst $(TEST_PATH)/%.c,%,$(wildcard $(TEST_PATH)/*/*.c))
 
 # Source names to compile with every test executable
-TESTS_COMMON = $(filter-out test_%,$(TEST_FILES))
+TESTS_COMMON = $(patsubst $(TEST_PATH)/%.c,%,$(wildcard $(TEST_PATH)/*.c))

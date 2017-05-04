@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/04 15:58:00 by jguyon            #+#    #+#              #
-#    Updated: 2017/05/04 16:39:36 by jguyon           ###   ########.fr        #
+#    Updated: 2017/05/04 17:19:37 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -50,7 +50,7 @@ debug: $(LIBDBG) $(NAME)
 # If the program needs to be updated, test flags will be used.
 # Use the check target to avoid that.
 test: LIBFT_MODULES := $(strip $(LIBFT_MODULES) debug tap)
-test: CPPFLAGS := $(strip $(CPPFLAGS) $(DBGFLAGS))
+test: CPPFLAGS := $(strip -I$(TEST_PATH) $(CPPFLAGS) $(DBGFLAGS))
 test: LDLIBS := $(strip $(LDLIBS) -ldbg -ltap)
 test: $(LIBDBG) $(LIBTAP) $(TST_EXE)
 
