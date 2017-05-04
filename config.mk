@@ -6,27 +6,21 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/04/13 18:27:34 by jguyon            #+#    #+#              #
-#    Updated: 2017/04/15 17:48:25 by jguyon           ###   ########.fr        #
+#    Updated: 2017/05/04 16:04:47 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 # Programs and their flags
 SHELL = /bin/sh
 CC = clang
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -std=gnu11
 CPPFLAGS =
 LDFLAGS =
 LDLIBS =
 PROVE = prove -f
 
-# Flags for release and debug versions, and test executables
-RLSFLAGS =
-DBGFLAGS = -g
-TSTFLAGS = $(DBGFLAGS)
-
-# Default targets for building or testing (debug or release)
-DEFAULT_BUILD = release
-CHECK_BUILD = debug
+# Flags to add for debugging
+DBGFLAGS = -g -DFT_FEATURE_DEBUG
 
 # Paths to find sources and headers in
 SOURCE_PATH = srcs
@@ -35,9 +29,6 @@ INCLUDE_PATH = includes
 
 # Path to put intermediate files in
 BUILD_PATH = build
-
-# Path to log file for debugging
-LOG_FILE = 21sh.log
 
 # Path to libft
 LIBFT_PATH = libft
@@ -48,7 +39,6 @@ LIBFT_MODULES = \
 	strings \
 	chars \
 	numbers \
-	unicode \
 	dlists \
 	darrays \
 	streams \
@@ -130,11 +120,10 @@ SOURCES = \
 	sh_shell_prompt \
 	sh_shell_end \
 
-# Wildcard for test files, it makes experimentation easier
 TEST_FILES := $(basename $(notdir $(wildcard $(TEST_PATH)/*.c)))
 
 # Source names to execute as tests
 TESTS = $(filter test_%,$(TEST_FILES))
 
 # Source names to compile with every test executable
-TESTS_COMMON = $(filter-out $(TESTS),$(TEST_FILES))
+TESTS_COMMON = $(filter-out test_%,$(TEST_FILES))

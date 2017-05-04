@@ -1,6 +1,7 @@
 -Iincludes
 -Ilibft/includes
+-Itests
 -DFT_FEATURE_DEBUG
 -Wall
--Werror
 -Wextra
+-std=gnu11

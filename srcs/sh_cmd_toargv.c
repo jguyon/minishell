@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 22:27:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/03 15:02:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 14:06:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,19 @@ static int	set_arg(t_darray *argv, size_t i, char *str)
 
 static void	del_argv(t_darray *argv)
 {
+	char	**av;
 	size_t	i;
-	char	*arg;
 
-	i = 0;
-	ft_darr_get(argv, i, &arg);
-	while (arg)
+	if ((av = ft_darr_extract(argv)))
 	{
-		ft_memdel((void **)(&arg));
-		++i;
-		ft_darr_get(argv, i, &arg);
+		i = 0;
+		while (av[i])
+		{
+			ft_memdel((void **)&(av[i]));
+			++i;
+		}
+		ft_memdel((void **)&av);
 	}
-	ft_darr_clear(argv);
 }
 
 char		**sh_cmd_toargv(t_sh_cmd **cmd)
