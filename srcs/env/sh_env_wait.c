@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 17:04:05 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/15 17:06:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:48:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #define EXIT_CODE(st) (WIFEXITED(st) ? WEXITSTATUS(st) : SH_EXIT_SIGNAL)
 
-t_err	sh_env_wait(t_sh_env *env, pid_t child)
+t_sh_err	sh_env_wait(t_sh_env *env, pid_t child)
 {
 	int		status;
 

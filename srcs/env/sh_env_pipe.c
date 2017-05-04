@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 16:39:01 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/15 18:31:50 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:48:20 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include "ft_program.h"
 #include "ft_debug.h"
 
-static t_err	dup_fds(int fds[2])
+static t_sh_err	dup_fds(int fds[2])
 {
-	t_err	err;
+	t_sh_err	err;
 
 	err = SH_ERR_OK;
 	if (dup2(fds[0], 0) == -1 || dup2(fds[1], 1) == -1)
@@ -29,10 +29,10 @@ static t_err	dup_fds(int fds[2])
 	return (err);
 }
 
-t_err			sh_env_pipe(t_sh_env *env, char *const argv[],
+t_sh_err		sh_env_pipe(t_sh_env *env, char *const argv[],
 					int fds[2], pid_t *child)
 {
-	t_err	err;
+	t_sh_err	err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(argv != NULL && argv[0] != NULL);

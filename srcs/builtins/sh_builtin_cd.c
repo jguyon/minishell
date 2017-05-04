@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 01:18:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:41:21 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:45:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int			no_symlinks(int ac, char *const av[])
 	return (nosym);
 }
 
-static t_err		get_newwd(t_sh_env *env, const char *arg, const char **pwd)
+static t_sh_err		get_newwd(t_sh_env *env, const char *arg, const char **pwd)
 {
 	*pwd = NULL;
 	if (!arg)
@@ -59,12 +59,12 @@ static t_err		get_newwd(t_sh_env *env, const char *arg, const char **pwd)
 	return (SH_ERR_OK);
 }
 
-static t_err		change_wd(t_sh_env *env, const char *path,
+static t_sh_err		change_wd(t_sh_env *env, const char *path,
 						int nosym, int print_dir)
 {
-	t_err	err;
-	char	*oldpwd;
-	char	*newpwd;
+	t_sh_err	err;
+	char		*oldpwd;
+	char		*newpwd;
 
 	oldpwd = NULL;
 	newpwd = NULL;
@@ -88,7 +88,7 @@ static t_err		change_wd(t_sh_env *env, const char *path,
 int					sh_builtin_cd(int ac, char *const av[], t_sh_env *env)
 {
 	const char	*dir;
-	t_err		err;
+	t_sh_err	err;
 	int			nosym;
 
 	dir = NULL;

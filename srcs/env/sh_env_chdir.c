@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 01:48:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:54:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:41:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 #include "ft_debug.h"
 #include <unistd.h>
 
-static t_err	get_newwd(const char *cwd, const char *path, char **newwd)
+static t_sh_err	get_newwd(const char *cwd, const char *path, char **newwd)
 {
-	t_err	err;
-	char	*joined;
+	t_sh_err	err;
+	char		*joined;
 
 	*newwd = NULL;
 	joined = NULL;
@@ -40,7 +40,7 @@ static t_err	get_newwd(const char *cwd, const char *path, char **newwd)
 	return (err);
 }
 
-static t_err	change_dir(t_sh_env *env, char *path, int nosym)
+static t_sh_err	change_dir(t_sh_env *env, char *path, int nosym)
 {
 	if (chdir(path))
 	{
@@ -59,11 +59,11 @@ static t_err	change_dir(t_sh_env *env, char *path, int nosym)
 	return (SH_ERR_OK);
 }
 
-t_err			sh_env_chdir(t_sh_env *env, const char *path, int nosym)
+t_sh_err			sh_env_chdir(t_sh_env *env, const char *path, int nosym)
 {
-	char	*oldwd;
-	char	*newwd;
-	t_err	err;
+	char		*oldwd;
+	char		*newwd;
+	t_sh_err	err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(path != NULL);

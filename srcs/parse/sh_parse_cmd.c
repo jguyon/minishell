@@ -6,17 +6,17 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 19:39:08 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 20:03:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:53:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_parse.h"
 #include "ft_debug.h"
 
-static t_err	parse_name(t_sh_lexer *lex, t_sh_cmd **cmd, t_sh_token *delim)
+static t_sh_err	parse_name(t_sh_lexer *lex, t_sh_cmd **cmd, t_sh_token *delim)
 {
 	t_sh_word	*name;
-	t_err		err;
+	t_sh_err		err;
 
 	*cmd = NULL;
 	if ((err = sh_lexer_token(lex, delim))
@@ -31,10 +31,10 @@ static t_err	parse_name(t_sh_lexer *lex, t_sh_cmd **cmd, t_sh_token *delim)
 	return (SH_ERR_OK);
 }
 
-t_err			sh_parse_args(t_sh_lexer *lex, t_sh_cmd **cmd,
+static t_sh_err	sh_parse_args(t_sh_lexer *lex, t_sh_cmd **cmd,
 					t_sh_token *delim)
 {
-	t_err		err;
+	t_sh_err		err;
 	t_sh_word	*arg;
 
 	while ((err = sh_lexer_token(lex, delim)) == SH_ERR_OK
@@ -56,10 +56,10 @@ t_err			sh_parse_args(t_sh_lexer *lex, t_sh_cmd **cmd,
 	return (SH_ERR_OK);
 }
 
-t_err			sh_parse_cmd(t_sh_lexer *lex, t_sh_cmd **cmd,
+t_sh_err		sh_parse_cmd(t_sh_lexer *lex, t_sh_cmd **cmd,
 					t_sh_token *delim)
 {
-	t_err	err;
+	t_sh_err	err;
 
 	FT_ASSERT(lex != NULL);
 	FT_ASSERT(cmd != NULL);

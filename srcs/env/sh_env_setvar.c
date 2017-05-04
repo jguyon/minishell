@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:49:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:52:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:40:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char		*new_var(const char *name, size_t namlen, const char *val)
 	return (var);
 }
 
-static t_err	set_var(t_darray *arr, const char *name, const char *val,
+static t_sh_err	set_var(t_darray *arr, const char *name, const char *val,
 						size_t i)
 {
 	size_t	namlen;
@@ -72,7 +72,7 @@ static t_err	set_var(t_darray *arr, const char *name, const char *val,
 	return (SH_ERR_OK);
 }
 
-int				sh_env_setvar(t_sh_env *env, const char *name, const char *val)
+t_sh_err		sh_env_setvar(t_sh_env *env, const char *name, const char *val)
 {
 	size_t	i;
 

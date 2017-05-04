@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 00:01:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:34:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:43:11 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_sh_builtin	g_builtins[] = {
 	{ "exit", &sh_builtin_exit },
 };
 
-t_err				sh_env_builtin(t_sh_env *env, const char *name,
+t_sh_err			sh_env_builtin(t_sh_env *env, const char *name,
 						t_sh_builtin **builtin)
 {
 	size_t	i;

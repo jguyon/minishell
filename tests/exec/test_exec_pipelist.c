@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/15 18:40:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/15 19:55:25 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:56:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	test_multiple(t_tap *t)
 	t_sh_pipelist	*lst;
 	t_sh_cmd		*cmd;
 	t_sh_env		env;
-	t_err			err;
+	t_sh_err		err;
 	int				outfd;
 	int				tmpfd;
 	char			buf[256] = {0};

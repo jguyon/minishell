@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:48:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 22:20:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:56:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	exec_input(t_sh_env *env)
 {
 	t_sh_lexer		lex;
 	t_sh_seqlist	*lst;
-	t_err			err;
+	t_sh_err		err;
 	t_sh_token		delim;
 
 	if ((err = sh_lexer_init(&lex, FT_STDIN))

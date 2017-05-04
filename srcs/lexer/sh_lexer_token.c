@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 11:23:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 17:40:02 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:49:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static void		skip_whitespace(t_sh_lexer *lex)
 		sh_lexer_translate(lex);
 }
 
-t_err			sh_lexer_token(t_sh_lexer *lex, t_sh_token *token)
+t_sh_err		sh_lexer_token(t_sh_lexer *lex, t_sh_token *token)
 {
-	t_err	err;
+	t_sh_err	err;
 
 	FT_ASSERT(lex != NULL);
 	FT_ASSERT(token != NULL);

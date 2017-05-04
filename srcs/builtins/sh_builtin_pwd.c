@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:18:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:42:11 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:46:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			sh_builtin_pwd(int ac, char *const av[], t_sh_env *env)
 {
 	int			nosym;
 	char		*cwd;
-	t_err		err;
+	t_sh_err	err;
 
 	if ((nosym = no_symlinks(ac, av)) < 0)
 		return (FT_EXIT_FAILURE);

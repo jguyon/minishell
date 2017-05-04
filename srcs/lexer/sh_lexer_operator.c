@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 15:00:13 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/13 16:28:09 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:51:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int		find_operator(t_sh_operator *ops[SH_OP_COUNT], size_t curr,
 	return (0);
 }
 
-t_err			sh_lexer_operator(t_sh_lexer *lex, t_sh_token *tok)
+t_sh_err		sh_lexer_operator(t_sh_lexer *lex, t_sh_token *tok)
 {
 	t_sh_operator	*ops[SH_OP_COUNT];
 	size_t			curr;

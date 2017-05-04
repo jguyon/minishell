@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/13 17:02:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/15 18:32:13 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:55:14 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "ft_memory.h"
 #include "ft_debug.h"
 
-static t_err	pipe_cmd(t_sh_env *env, t_sh_cmd **cmd,
+static t_sh_err	pipe_cmd(t_sh_env *env, t_sh_cmd **cmd,
 					int fds[2], pid_t *child)
 {
-	t_err	err;
-	char	**argv;
-	size_t	i;
+	t_sh_err	err;
+	char		**argv;
+	size_t		i;
 
 	if (!(argv = sh_cmd_toargv(cmd)))
 		return (SH_ERR_NOMEM);
@@ -48,21 +48,21 @@ static void		close_fds(int fds[2])
 	}
 }
 
-static t_err	pipe_fds(int fds[2])
+static t_sh_err	pipe_fds(int fds[2])
 {
 	if (pipe(fds) == -1)
 		return (SH_ERR_IO);
 	return (SH_ERR_OK);
 }
 
-static t_err	pipe_and_exec(t_sh_env *env, t_sh_pipelist *pipelst,
+static t_sh_err	pipe_and_exec(t_sh_env *env, t_sh_pipelist *pipelst,
 								int fdin)
 {
 	t_sh_cmd	*cmd;
 	int			fds[2];
 	int			pipefds[2];
 	pid_t		pid;
-	t_err		err;
+	t_sh_err	err;
 
 	err = SH_ERR_OK;
 	fds[0] = fdin;
@@ -82,10 +82,10 @@ static t_err	pipe_and_exec(t_sh_env *env, t_sh_pipelist *pipelst,
 	return (err);
 }
 
-t_err			sh_exec_pipelist(t_sh_env *env, t_sh_pipelist **pipe)
+t_sh_err		sh_exec_pipelist(t_sh_env *env, t_sh_pipelist **pipe)
 {
 	t_sh_cmd	*cmd;
-	t_err		err;
+	t_sh_err	err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(pipe != NULL);

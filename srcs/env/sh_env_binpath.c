@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 22:20:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:57:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:42:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "ft_debug.h"
 #include <unistd.h>
 
-static char		*join_paths(const char *dir, size_t dirlen,
+static char	*join_paths(const char *dir, size_t dirlen,
 				const char *name, size_t namlen)
 {
 	char	*filepath;
@@ -37,9 +37,9 @@ static char		*join_paths(const char *dir, size_t dirlen,
 	return (filepath);
 }
 
-static t_err	check_absolute(const char *name, char **path)
+static t_sh_err	check_absolute(const char *name, char **path)
 {
-	t_err	err;
+	t_sh_err	err;
 
 	if (!(*path = ft_strdup(name)))
 		return (SH_ERR_NOMEM);
@@ -52,11 +52,11 @@ static t_err	check_absolute(const char *name, char **path)
 	return (err == SH_ERR_NOENT ? SH_ERR_NOCMD : err);
 }
 
-static t_err	check_paths(const char *envpaths, const char *name, char **path)
+static t_sh_err	check_paths(const char *envpaths, const char *name, char **path)
 {
 	const char	*start;
 	const char	*end;
-	t_err		err;
+	t_sh_err		err;
 
 	start = envpaths;
 	err = SH_ERR_OK;
@@ -75,7 +75,7 @@ static t_err	check_paths(const char *envpaths, const char *name, char **path)
 	return (!err || err == SH_ERR_NOENT ? SH_ERR_NOCMD : err);
 }
 
-t_err			sh_env_binpath(t_sh_env *env, const char *name, char **path)
+t_sh_err		sh_env_binpath(t_sh_env *env, const char *name, char **path)
 {
 	const char	*envpaths;
 

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 14:26:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/05/04 14:03:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:51:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	is_word_char(t_sh_lexer *lex)
 }
 
 static int	push_char(t_darray *word, size_t *i,
-					enum e_sh_char_type type, char c)
+				enum e_sh_char_type type, char c)
 {
 	char	slash;
 
@@ -59,7 +59,7 @@ static int	push_char(t_darray *word, size_t *i,
 	return (0);
 }
 
-t_err		sh_lexer_word(t_sh_lexer *lex, t_sh_token *tok)
+t_sh_err	sh_lexer_word(t_sh_lexer *lex, t_sh_token *tok)
 {
 	t_darray	word;
 	size_t		i;

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:23:01 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:43:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:48:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void		print_env(t_sh_env *env)
 	}
 }
 
-static t_err	check_varname(const char *name)
+static t_sh_err	check_varname(const char *name)
 {
 	if (!name)
 		return (0);
@@ -50,7 +50,7 @@ static t_err	check_varname(const char *name)
 
 int				sh_builtin_setenv(int ac, char *const av[], t_sh_env *env)
 {
-	t_err	err;
+	t_sh_err	err;
 
 	if (ac > 3)
 	{

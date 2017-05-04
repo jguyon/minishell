@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/24 01:31:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:28:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:41:20 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "ft_memory.h"
 #include "ft_debug.h"
 
-t_err	sh_env_exec(t_sh_env *env, char *const argv[])
+t_sh_err	sh_env_exec(t_sh_env *env, char *const argv[])
 {
 	t_sh_builtin	*builtin;
 	char			*binpath;
-	t_err			err;
+	t_sh_err		err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(argv != NULL);

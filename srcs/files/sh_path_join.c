@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 15:38:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:16:15 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:37:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ft_memory.h"
 #include "ft_debug.h"
 
-t_err	sh_path_join(const char *parent, const char *child, char **joined)
+t_sh_err	sh_path_join(const char *parent, const char *child, char **joined)
 {
 	size_t		parent_len;
 	size_t		child_len;

@@ -6,14 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 11:22:35 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/06 13:01:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:49:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_lexer.h"
 #include "ft_debug.h"
 
-t_err	sh_lexer_init(t_sh_lexer *lex, t_stream *stm)
+t_sh_err	sh_lexer_init(t_sh_lexer *lex, t_stream *stm)
 {
 	FT_ASSERT(lex != NULL);
 	FT_ASSERT(stm != NULL);

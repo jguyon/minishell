@@ -6,18 +6,18 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/06 20:09:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/13 16:52:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:53:57 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh_parse.h"
 #include "ft_debug.h"
 
-t_err	sh_parse_seqlist(t_sh_lexer *lex, t_sh_seqlist **lst,
+t_sh_err	sh_parse_seqlist(t_sh_lexer *lex, t_sh_seqlist **lst,
 			t_sh_token *delim)
 {
 	t_sh_pipelist	*pipe;
-	t_err			err;
+	t_sh_err		err;
 
 	FT_ASSERT(lex != NULL);
 	FT_ASSERT(lst != NULL);

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 15:18:02 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:15:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:38:02 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_debug.h"
 #include <unistd.h>
 
-t_err	sh_check_bin(const char *path)
+t_sh_err	sh_check_bin(const char *path)
 {
 	struct stat	st;
 

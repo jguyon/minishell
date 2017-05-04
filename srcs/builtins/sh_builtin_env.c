@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 02:44:17 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 13:18:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:47:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 
 static int	start_env(int ac, char *const av[], t_sh_env *old, t_sh_env *new)
 {
-	int		clear;
-	char	*empty[1];
-	int		opt;
-	t_err	err;
+	int			clear;
+	char		*empty[1];
+	int			opt;
+	t_sh_err	err;
 
 	g_ft_opterr = 0;
 	g_ft_optind = 0;
@@ -47,7 +47,7 @@ static int	start_env(int ac, char *const av[], t_sh_env *old, t_sh_env *new)
 
 static int	edit_env(t_sh_env *env, int ac, char *const av[])
 {
-	t_err	err;
+	t_sh_err	err;
 
 	while (g_ft_optind < ac)
 	{
@@ -82,9 +82,9 @@ static void	print_env(t_sh_env *env)
 
 static int	exec_util(t_sh_env *env, char *const av[])
 {
-	char	*binpath;
-	int		err;
-	int		status;
+	char		*binpath;
+	t_sh_err	err;
+	int			status;
 
 	binpath = NULL;
 	if ((err = sh_env_binpath(env, av[g_ft_optind], &binpath)) == SH_ERR_OK)

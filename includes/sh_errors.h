@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 15:19:37 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 11:45:37 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:33:50 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** Meant to be used with ft_error.
 */
 
-typedef int	t_err;
+typedef int	t_sh_err;
 
 /*
 ** Error numbers

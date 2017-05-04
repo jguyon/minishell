@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/25 15:12:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 13:19:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:55:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 #include "ft_debug.h"
 #include <unistd.h>
 
-static t_err	set_path(t_sh_env *env)
+static t_sh_err	set_path(t_sh_env *env)
 {
 	if (sh_env_getvar(env, "PATH"))
 		return (SH_ERR_OK);
 	return (sh_env_setvar(env, "PATH", SH_DEFAULT_PATH));
 }
 
-static t_err	set_pwd(t_sh_env *env)
+static t_sh_err	set_pwd(t_sh_env *env)
 {
 	const char	*envpwd;
 	char		*syspwd;
-	t_err		err;
+	t_sh_err	err;
 
 	if ((envpwd = sh_env_getvar(env, "PWD")) && !sh_env_chdir(env, envpwd, 0))
 		return (SH_ERR_OK);
@@ -38,10 +38,10 @@ static t_err	set_pwd(t_sh_env *env)
 	return (err);
 }
 
-static t_err	set_home(t_sh_env *env)
+static t_sh_err	set_home(t_sh_env *env)
 {
 	const char	*pwd;
-	t_err		err;
+	t_sh_err		err;
 
 	if (sh_env_getvar(env, "HOME"))
 		return (SH_ERR_OK);
@@ -51,7 +51,7 @@ static t_err	set_home(t_sh_env *env)
 	return (SH_ERR_OK);
 }
 
-static t_err	set_prompt(t_sh_env *env)
+static t_sh_err	set_prompt(t_sh_env *env)
 {
 	if (sh_env_getvar(env, "PS1"))
 		return (SH_ERR_OK);
@@ -60,7 +60,7 @@ static t_err	set_prompt(t_sh_env *env)
 
 int				sh_shell_start(t_sh_env *env, char *const envp[])
 {
-	t_err	err;
+	t_sh_err	err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(envp != NULL);

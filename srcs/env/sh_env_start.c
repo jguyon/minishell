@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 16:29:20 by jguyon            #+#    #+#             */
-/*   Updated: 2017/04/04 12:20:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:39:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "ft_debug.h"
 #include <unistd.h>
 
-static t_err	get_wd(char **wd)
+static t_sh_err	get_wd(char **wd)
 {
 	if (!(*wd = getcwd(NULL, 0)))
 		return (SH_ERR_IO);
 	return (SH_ERR_OK);
 }
 
-static t_err	copy_env(t_darray *arr, char *const envp[])
+static t_sh_err	copy_env(t_darray *arr, char *const envp[])
 {
 	size_t	size;
 	char	*var;
@@ -46,9 +46,9 @@ static t_err	copy_env(t_darray *arr, char *const envp[])
 	return (SH_ERR_OK);
 }
 
-t_err			sh_env_start(t_sh_env *env, char *const envp[])
+t_sh_err		sh_env_start(t_sh_env *env, char *const envp[])
 {
-	t_err	err;
+	t_sh_err	err;
 
 	FT_ASSERT(env != NULL);
 	FT_ASSERT(envp != NULL);

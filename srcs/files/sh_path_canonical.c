@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/26 16:16:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/05/04 16:59:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/05/04 17:37:44 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "ft_memory.h"
 #include "ft_debug.h"
 
-static t_err	process_element(char *root, char **curr,
+static t_sh_err	process_element(char *root, char **curr,
 					const char *start, const char *end)
 {
-	t_err	err;
+	t_sh_err	err;
 
 	if (start[0] == '.' && start[1] == '.' && end == start + 2)
 	{
@@ -44,12 +44,12 @@ static t_err	process_element(char *root, char **curr,
 	return (SH_ERR_OK);
 }
 
-t_err			sh_path_canonical(const char *path, char **canon)
+t_sh_err			sh_path_canonical(const char *path, char **canon)
 {
 	const char	*start;
 	const char	*end;
 	char		*curr;
-	t_err		err;
+	t_sh_err		err;
 
 	FT_ASSERT(path != NULL);
 	FT_ASSERT(canon != NULL);
