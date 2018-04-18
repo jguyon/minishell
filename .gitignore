@@ -1,7 +1,0 @@
-minishell
-*.a
-*.t
-*.o
-*.d
-*.dSYM
-local.mk
