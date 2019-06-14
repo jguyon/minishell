@@ -1,15 +1,15 @@
-# 42 template c
+# minishell
 
-Template to base [42 school](https://en.wikipedia.org/wiki/42_(school)) C projects on.
+A minimal shell. A [42 school](<https://en.wikipedia.org/wiki/42_(school)>) project.
 
 ## Usage
 
 ```sh
-git clone https://github.com/jguyon/42-template-c.git new_project && cd new_project
-echo "NAME = progname" >> config.mk && echo "progname" >> .gitignore # Set executable name
-rm srcs/hello.c includes/hello.h tests/test_hello.h # Remove example program and tests
-# Write some code and tests
-make && ./progname # Compile the program and run it
+# Clone the project
+git clone git@github.com:jguyon/minishell.git && cd minishell
+git submodule init && git submodule update
+
+make && ./minishell # Compile the program and run it
 make fclean debug # Recompile with debug flags
 make check # Compile and run the tests
 make fclean && make release check # Test the release version
